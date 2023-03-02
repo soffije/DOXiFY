@@ -18,3 +18,14 @@ body {
   position: relative;
   height: 100%;
 }
+
+.chat-container {
+  border-radius: 0.7rem;
+  background-color: white;
+}
+
+.chat-message {
+  border-radius: 0.7rem;
+  width: fit-content;
+  padding: 5px;
+}
