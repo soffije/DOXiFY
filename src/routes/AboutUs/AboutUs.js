@@ -1,23 +1,23 @@
-import React from "react";
-import { FormFloating } from "react-bootstrap";
-import myImage from "../images/hjo.png";
-import myImage2 from "../images/ing.png";
-import myImage3 from "../images/151.png";
-import myImage4 from "../images/26824.png";
-import myImage5 from "../images/156.png";
+import React from 'react'
+
+import './AboutUs.css'
+
+import aboutUsMission from '../../assets/aboutUsMission.png'
+import aboutUsStory from '../../assets/aboutUsStory.png'
+import aboutUsDecentralized from '../../assets/decentralized.png'
+import aboutUsConfidentiality from '../../assets/confidentiality.png'
+import aboutUsReliability from '../../assets/reliability.png'
 
 function AboutUs() {
   return (
-    <>
-      <h2 className="text-center my-5" style={{ color: "white" }}>
-        About us
-      </h2>
+    <div className="about-us">
+      <h1 className="text-center my-5 text-white">About us</h1>
       <section className="my-5">
         <div className="row">
-          <div className="col-6 d-flex align-items-center">
-            <img src={myImage2} style={{ width: "100%", height: "auto%" }} />
+          <div className="col-12 col-lg-6 d-flex align-items-center">
+            <img src={aboutUsMission} alt="Mission" />
           </div>
-          <div className="col-6 d-flex flex-column justify-content-center align-items-left ">
+          <div className="col-12 col-lg-6 d-flex flex-column justify-content-center align-items-left ">
             <h2 className="mb-3">Mission</h2>
             <p>
               Our mission is to provide users with a secure and decentralized
@@ -34,7 +34,7 @@ function AboutUs() {
 
       <section className="my-5">
         <div className="row d-flex justify-content-center">
-          <div className="col-7">
+          <div className="col-12 col-lg-7 order-2 order-lg-1">
             <h2 className="mb-3">Founding story</h2>
             <p>
               Once, a young team of developers decided to create a decentralized
@@ -58,8 +58,8 @@ function AboutUs() {
               way of communication in the online environment.
             </p>
           </div>
-          <div className="col-5 d-flex align-items-center">
-            <img src={myImage} style={{ width: "100%", height: "auto" }} />
+          <div className="col-12 order-1 order-lg-2 col-lg-5 d-flex align-items-center">
+            <img src={aboutUsStory} alt="Founding story" />
           </div>
         </div>
       </section>
@@ -75,11 +75,8 @@ function AboutUs() {
         <div className="row d-flex justify-content-center">
           <div className="col-10">
             <div className="row d-flex justify-content-center">
-              <div className="col-4 d-flex flex-column justify-content-center">
-                <img
-                  src={myImage3}
-                  style={{ width: "100%", height: "auto%" }}
-                />
+              <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
+                <img src={aboutUsConfidentiality} alt="Confidentiality" />
                 <h5 className="text-center pt-3">Confidentiality</h5>
                 <small className="text-center">
                   Users log in with MetaMask's secure cryptocurrency wallet and
@@ -90,12 +87,9 @@ function AboutUs() {
                   unlike those around you.
                 </small>
               </div>
-              <div className="col-4 d-flex flex-column justify-content-center">
-                <img
-                  src={myImage4}
-                  style={{ width: "100%", height: "auto%" }}
-                />
-                <h5 className="text-center pt-3">Decentralisation</h5>
+              <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
+                <img src={aboutUsDecentralized} alt="Decentralization" />
+                <h5 className="text-center pt-3">Decentralization</h5>
                 <small className="text-center">
                   Chat is implemented based on Ethereum's blockchain technology,
                   and its logic uses smart contracts directly to exchange
@@ -104,15 +98,37 @@ function AboutUs() {
                   of the whole system, etc.
                 </small>
               </div>
-              <div className="col-4 d-flex flex-column justify-content-center">
-                <img
-                  src={myImage5}
-                  style={{ width: "100%", height: "auto%" }}
-                />
+              <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
+                <img src={aboutUsReliability} alt="Reliability" />
                 <h5 className="text-center pt-3">Reliability</h5>
                 <small className="text-center">
                   This means that no one can get your chat data because it is
                   stored on decentralised nodes.
+                </small>
+              </div>
+
+              {/*need to replace*/}
+              <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
+                <img src={aboutUsConfidentiality} alt="Confidentiality" />
+                <h5 className="text-center pt-3">Confidentiality</h5>
+                <small className="text-center">
+                  Users log in with MetaMask's secure cryptocurrency wallet and
+                  do not enter any personal data, which prevents them from being
+                  intercepted by attackers. Only your wallet address is visible
+                  to the other person, which makes the chat indirectly anonymous
+                  - only the two of you can know who you are communicating with,
+                  unlike those around you.
+                </small>
+              </div>
+              <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
+                <img src={aboutUsDecentralized} alt="Decentralization" />
+                <h5 className="text-center pt-3">Decentralization</h5>
+                <small className="text-center">
+                  Chat is implemented based on Ethereum's blockchain technology,
+                  and its logic uses smart contracts directly to exchange
+                  messages. This solves many basic problems of centralised
+                  systems: censorship, threat to user data security, viability
+                  of the whole system, etc.
                 </small>
               </div>
             </div>
@@ -734,8 +750,8 @@ function AboutUs() {
           </div>
         </div>
       </section>
-    </>
-  );
+    </div>
+  )
 }
 
-export default AboutUs;
+export default AboutUs

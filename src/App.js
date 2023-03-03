@@ -4,10 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Home from './routes/Home'
 import Login from './routes/Login/Login'
-import AboutUs from './routes/AboutUs'
-import NotFound from './routes/NotFound'
+import AboutUs from './routes/AboutUs/AboutUs'
+import NotFound from './routes/NotFound/NotFound'
 
-import ContactUs from './routes/ContactUs'
+import ContactUs from './routes/ContactUs/ContactUs'
 import AppLayout from './components/AppLayout'
 
 function App() {
