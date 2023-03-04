@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Web3 from 'web3'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { Form, Button } from 'react-bootstrap'
 
+import home from '../../assets/Home.png'
+import './Home.css'
 const options = {
   weekday: 'long',
   year: 'numeric',
@@ -84,29 +87,36 @@ const abi = [
   },
 ]
 const web3 = new Web3(window.ethereum)
-
 function Home() {
   const [account, setAccount] = useState(null)
   const [contract, setContract] = useState(null)
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
+  const [isAutorized, setIsAutorized] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function init() {
-      // Load the contract
-      const contract = new web3.eth.Contract(abi, contractAddress)
-      setContract(contract)
-
-      // Get the current account
-      await window.ethereum.request({ method: 'eth_requestAccounts' })
-      const accounts = await web3.eth.getAccounts()
-      setAccount(accounts[0])
-      console.log(accounts)
-
-      // Load the existing messages
-      const messageCount = await contract.methods.getMessages().call()
-      console.log(messageCount)
-      setMessages(messageCount)
+      if (window.ethereum) {
+        // Get the current account
+        await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const accounts = await web3.eth.getAccounts()
+        setAccount(accounts[0])
+        if (accounts[0]) {
+          setIsAutorized(true)
+          // Load the contract
+          const contract = new web3.eth.Contract(abi, contractAddress)
+          setContract(contract)
+          // Load the existing messages
+          const messageCount = await contract.methods.getMessages().call()
+          console.log(messageCount)
+          setMessages(messageCount)
+        } else {
+          navigate('/login')
+        }
+      } else {
+        isAutorized(false)
+      }
     }
 
     init()
@@ -133,7 +143,36 @@ function Home() {
   function handleInputChange(e) {
     setInputValue(e.target.value)
   }
-
+  if (!isAutorized) {
+    return (
+      <div className="my-5">
+        <div className="row">
+          <div className="col-12 col-lg-7 d-flex flex-column ">
+            <h1 className="home-title mb-4 text-white">DOXiFY</h1>
+            <h5 className=" mb-3 text-white">
+              Fully secure decentralized communication <br></br>tool based on
+              state-of-the-art securitytechnology
+            </h5>
+            <Form>
+              <div>
+                <button
+                  type="button"
+                  id="loginbutton"
+                  className="btn btn-block btn-primary mb-3"
+                  onClick={() => navigate('/login')}
+                >
+                  Login
+                </button>
+              </div>
+            </Form>
+          </div>
+          <div className="col-12 col-lg-5">
+            <img src={home} alt="Home" className="home-image" />
+          </div>
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="chat-container my-5 p-3 shadow">
       <div>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import Home from './routes/Home'
+import Home from './routes/Home/Home'
 import Login from './routes/Login/Login'
 import AboutUs from './routes/AboutUs/AboutUs'
 import NotFound from './routes/NotFound/NotFound'

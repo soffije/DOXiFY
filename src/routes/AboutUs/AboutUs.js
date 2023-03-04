@@ -20,13 +20,12 @@ function AboutUs() {
           <div className="col-12 col-lg-6 d-flex flex-column justify-content-center align-items-left ">
             <h2 className="mb-3">Mission</h2>
             <p>
-              Our mission is to provide users with a secure and decentralized
-              way of communication through a chat platform built on smart
-              contracts. We aim to ensure maximum security and privacy for our
-              users by utilizing blockchain technology to store user data and
-              manage access to the platform. Our goal is to create a chat
-              platform that becomes the top choice for those seeking a secure
-              way to communicate in the online environment.
+              Our mission is to provide users with a secure and decentralised
+              way of communicating. We aim to provide maximum security and
+              privacy for our users by using blockchain technology to store user
+              data and manage access to the platform. Our goal is to create a
+              chat platform that is the best choice for those looking for a
+              secure way to communicate in an online environment.
             </p>
           </div>
         </div>
@@ -37,25 +36,22 @@ function AboutUs() {
           <div className="col-12 col-lg-7 order-2 order-lg-1">
             <h2 className="mb-3">Founding story</h2>
             <p>
-              Once, a young team of developers decided to create a decentralized
-              chat on smart contracts, providing users with a secure and
-              protected way of communication in the online environment. They
-              realized that existing chats are under threat as all data is
-              stored on centralized servers, and its leakage or hacker attack
-              can compromise users' confidentiality. The team began to create
-              the chat, using blockchain technology for decentralized storage of
-              user data and access management to the chat. They also applied
-              smart contracts for automatic processing of various operations
-              such as creating new chats, adding users, and managing access
-              rights. The project is in the development stage but has already
-              received a lot of positive feedback from the blockchain community
-              users. The team continues to improve the functionality and user
-              interface, striving to provide the highest level of security and
-              confidentiality for users. Additionally, they plan to add
-              additional features such as the ability to send encrypted messages
-              and create private chats. The team's goal is to create a chat that
-              will become the best choice for those who are looking for a secure
-              way of communication in the online environment.
+              One fine morning a young team of developers got together to solve
+              one of the most pressing problems at the moment - online privacy.
+              And they decided to create a decentralised chat room, providing
+              users with a safe and secure way to communicate in an online
+              environment. They realised that existing chat rooms were at risk
+              because all data was stored on centralised servers and a leak or
+              hacker attack could compromise user privacy. The team immediately
+              set about building the chat room, using blockchain technology to
+              decentralise the storage of user data and manage access to the
+              chat room. There were challenges along the way, but they pursued
+              their goal no matter what, never intending to stop, and they did
+              it! Until now, the team is continuing to improve the functionality
+              and user interface in an effort to provide the highest level of
+              security and privacy for users. They also plan to add additional
+              features, such as the ability to send encrypted messages and
+              create private chats. And yes, this team is us:)
             </p>
           </div>
           <div className="col-12 order-1 order-lg-2 col-lg-5 d-flex align-items-center">
@@ -79,56 +75,33 @@ function AboutUs() {
                 <img src={aboutUsConfidentiality} alt="Confidentiality" />
                 <h5 className="text-center pt-3">Confidentiality</h5>
                 <small className="text-center">
-                  Users log in with MetaMask's secure cryptocurrency wallet and
-                  do not enter any personal data, which prevents them from being
-                  intercepted by attackers. Only your wallet address is visible
-                  to the other person, which makes the chat indirectly anonymous
-                  - only the two of you can know who you are communicating with,
-                  unlike those around you.
+                  In today's world, privacy is one of the most significant
+                  issues that affect people's lives. In the digital age, with
+                  most human activity taking place online, maintaining privacy
+                  has become increasingly challenging. One of the major privacy
+                  concerns is the collection and storage of personal data.
                 </small>
               </div>
               <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
                 <img src={aboutUsDecentralized} alt="Decentralization" />
-                <h5 className="text-center pt-3">Decentralization</h5>
+                <h5 className="text-center pt-3">Centralization</h5>
                 <small className="text-center">
-                  Chat is implemented based on Ethereum's blockchain technology,
-                  and its logic uses smart contracts directly to exchange
-                  messages. This solves many basic problems of centralised
-                  systems: censorship, threat to user data security, viability
-                  of the whole system, etc.
+                  In today's society, the problem of centralisation is becoming
+                  more and more acute as it can lead to negative consequences
+                  for various areas of people's lives. We provide a solution to
+                  problems related to censorship and threats to data security.
                 </small>
               </div>
               <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
                 <img src={aboutUsReliability} alt="Reliability" />
                 <h5 className="text-center pt-3">Reliability</h5>
                 <small className="text-center">
-                  This means that no one can get your chat data because it is
-                  stored on decentralised nodes.
-                </small>
-              </div>
-
-              {/*need to replace*/}
-              <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
-                <img src={aboutUsConfidentiality} alt="Confidentiality" />
-                <h5 className="text-center pt-3">Confidentiality</h5>
-                <small className="text-center">
-                  Users log in with MetaMask's secure cryptocurrency wallet and
-                  do not enter any personal data, which prevents them from being
-                  intercepted by attackers. Only your wallet address is visible
-                  to the other person, which makes the chat indirectly anonymous
-                  - only the two of you can know who you are communicating with,
-                  unlike those around you.
-                </small>
-              </div>
-              <div className="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-center">
-                <img src={aboutUsDecentralized} alt="Decentralization" />
-                <h5 className="text-center pt-3">Decentralization</h5>
-                <small className="text-center">
-                  Chat is implemented based on Ethereum's blockchain technology,
-                  and its logic uses smart contracts directly to exchange
-                  messages. This solves many basic problems of centralised
-                  systems: censorship, threat to user data security, viability
-                  of the whole system, etc.
+                  Today's world depends on information, and more and more data
+                  is being stored and transmitted over the internet every day.
+                  However, the problem of data reliability on the Internet is
+                  becoming more and more acute. Decentralised data storage on
+                  independent nodes and blockchain security protocols are
+                  designed to solve this problem.
                 </small>
               </div>
             </div>

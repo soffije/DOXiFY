@@ -34,6 +34,7 @@ function Login() {
 
       // Clear the error message
       setErrorMsg(null)
+      navigate('/')
     } catch (error) {
       console.error(error)
 
