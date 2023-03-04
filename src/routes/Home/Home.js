@@ -147,11 +147,11 @@ function Home() {
     return (
       <div className="my-5">
         <div className="row">
-          <div className="col-12 col-lg-7 d-flex flex-column ">
-            <h1 className="home-title mb-4 text-white">DOXiFY</h1>
+          <div className="col-12 col-lg-7 d-flex flex-column">
+            <h1 className="home-title mb-2 text-white">DOXiFY</h1>
             <h5 className=" mb-3 text-white">
               Fully secure decentralized communication <br></br>tool based on
-              state-of-the-art securitytechnology
+              state-of-the-art security technology
             </h5>
             <Form>
               <div>
