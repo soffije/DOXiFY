@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Web3 from 'web3'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Form, Button, Carousel, Card } from 'react-bootstrap'
+import { Form, Button, Carousel } from 'react-bootstrap'
 
-import privacy from '../../assets/privacy.png'
-import scalability from '../../assets/scalability.png'
-import micropayments from '../../assets/micropayments.png'
-import resistant from '../../assets/resistant.png'
-import purpose from '../../assets/purpose.png'
 import choose from '../../assets/choose.png'
 import better from '../../assets/better.png'
+import privacy from '../../assets/privacy.png'
+import purpose from '../../assets/purpose.png'
+import resistant from '../../assets/resistant.png'
+import scalability from '../../assets/scalability.png'
+import micropayments from '../../assets/micropayments.png'
 
 import './Home.css'
 const options = {
