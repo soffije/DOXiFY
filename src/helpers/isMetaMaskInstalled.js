@@ -1,5 +1,5 @@
-const useIsMetaMaskInstalled = () => {
-  return window.ethereum
+const isMetaMaskInstalled = () => {
+  return typeof window.ethereum !== 'undefined'
 }
 
-export default useIsMetaMaskInstalled
+export default isMetaMaskInstalled
