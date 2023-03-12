@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import './Home.css'
 
 import Chat from '../../components/Chat/Chat'
+import Loading from '../../components/Loading/Loading'
 import LandingPage from '../../components/LandingPage/LandingPage'
 
 import { getUserAddress, getUserLoading } from '../../features/user/userSlice'
@@ -15,7 +16,7 @@ function Home() {
   return (
     <>
       {metaMaskLoading === 'pending' ? (
-        <div className="spinner-border" role="status"></div>
+        <Loading />
       ) : address ? (
         <Chat />
       ) : (
