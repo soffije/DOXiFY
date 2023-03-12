@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import './Login.css'
 
+import Loader from '../../components/Loader/Loader'
 import MetaMaskLogo from '../../components/MetaMaskLogo/MetaMaskLogo'
 
 import {
@@ -13,6 +14,7 @@ import {
 } from '../../features/user/userSlice'
 
 function Login() {
+  let button
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
@@ -33,12 +35,9 @@ function Login() {
     if (location.state?.from) navigate(-1)
     else navigate('/')
   }
-
-  return (
-    <>
-      {userLoading === 'pending' ? (
-        <div className="spinner-border" role="status"></div>
-      ) : (
+  {
+    return (
+      <>
         <div className="row h-100 d-flex justify-content-center align-items-center">
           <div className="col-12 col-md-6 d-flex justify-content-center py-5">
             <div className="login-container shadow py-5 p-3 px-md-5">
@@ -49,13 +48,11 @@ function Login() {
               </p>
               <div className="d-flex flex-column">
                 <MetaMaskLogo />
-                <button
-                  type="button"
-                  className="btn btn-block btn-primary mb-3"
+                <Loader
+                  userLoading={userLoading}
                   onClick={onConnectButtonClick}
-                >
-                  Login to doxify
-                </button>
+                  buttonText="Login to doxify"
+                />
                 <button
                   type="button"
                   className="btn btn-block btn-light"
@@ -67,9 +64,8 @@ function Login() {
             </div>
           </div>
         </div>
-      )}
-    </>
-  )
+      </>
+    )
+  }
 }
-
 export default Login
