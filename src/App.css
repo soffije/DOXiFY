@@ -16,10 +16,10 @@ body {
 .main-content {
   z-index: 0;
   position: relative;
-  height: 100%;
 }
 
 .chat-container {
+  height: 100%;
   border-radius: 0.7rem;
   background-color: white;
 }

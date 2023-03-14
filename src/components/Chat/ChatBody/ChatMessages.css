@@ -1,0 +1,4 @@
+.chat-messages {
+  height: 52vh;
+  overflow-y: auto;
+}
