@@ -30,7 +30,13 @@ function ChatBody() {
 
     const userMessage = web3.utils.fromAscii(message)
     await dispatch(
-      sendUserMessage({ contract, address, selectedUserAddress, userMessage })
+      sendUserMessage({
+        web3,
+        contract,
+        address,
+        selectedUserAddress,
+        userMessage,
+      })
     )
     setMessage('')
   }

@@ -1,0 +1,23 @@
+.friend-selection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.friend-selection-item {
+  flex-grow: 1;
+  border-radius: 5px;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.friend-selection-item:hover {
+  background-color: #d0d0d0;
+}
+
+.friend-selection-name {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
