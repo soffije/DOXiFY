@@ -6,6 +6,7 @@ function ContactForm() {
   const MIN_NAME_LENGTH = 2
 
   const [show, setShow] = useState(false)
+  const [message, setMessage] = useState('')
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -80,6 +81,7 @@ function ContactForm() {
       if (errorMessage) {
         errors[key] = errorMessage
         setShow(true)
+        setMessage('error')
       }
     })
     setFormErrors(errors)
@@ -87,12 +89,18 @@ function ContactForm() {
     if (isFormValid) {
       console.log(formData)
       setShow(true)
+      setMessage('Complited')
     }
   }
   return (
     <>
       {' '}
-      <ToastComponent show={show} setShow={setShow} message="X" />
+      <ToastComponent
+        show={show}
+        setShow={setShow}
+        setMessage={setMessage}
+        message={message}
+      />
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Floating>
