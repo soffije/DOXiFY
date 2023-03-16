@@ -1,9 +1,8 @@
 import React from 'react'
-import { Form, FloatingLabel, Button } from 'react-bootstrap'
 
 import './ContactUs.css'
 import contactUsImage from '../../assets/contactUs.png'
-
+import ContactForm from '../../components/ContactForm/ContactForm'
 function ContactUs() {
   return (
     <div className="my-5">
@@ -15,43 +14,18 @@ function ContactUs() {
             alt="Contact us"
             className="contact-us-image"
           />
-          <h5 className="text-center mb-4">
+          <h5
+            className="text-center mb-4 "
+            style={{
+              backgroundColor: 'white',
+              borderRadius: '10px',
+            }}
+          >
             If you require assistance, we are more than willing to help you
           </h5>
         </div>
         <div className="col-12 col-lg-5 shadow bg-white rounded p-4">
-          <Form>
-            <Form.Floating className="mb-3">
-              <Form.Control type="text" placeholder="Enter name" />
-              <label>First name</label>
-            </Form.Floating>
-
-            <Form.Floating className="mb-3">
-              <Form.Control type="text" placeholder="Last name" />
-              <label>Last name</label>
-            </Form.Floating>
-
-            <Form.Floating className="mb-3">
-              <Form.Control
-                id="floatingInputCustom"
-                type="email"
-                placeholder="name@example.com"
-              />
-              <label htmlFor="floatingInputCustom">Email address</label>
-            </Form.Floating>
-            <FloatingLabel label="Questions" className="mb-4">
-              <Form.Control
-                as="textarea"
-                placeholder="Leave your questions here"
-                style={{ height: '225px' }}
-              />
-            </FloatingLabel>
-            <div className="text-center">
-              <Button variant="primary" className="send-button">
-                Send message
-              </Button>
-            </div>
-          </Form>
+          <ContactForm />
         </div>
       </div>
     </div>
