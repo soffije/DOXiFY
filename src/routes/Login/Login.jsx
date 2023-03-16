@@ -14,7 +14,6 @@ import {
 } from '../../features/user/userSlice'
 
 function Login() {
-  let button
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
