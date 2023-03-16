@@ -8,13 +8,36 @@ const initialState = {
   error: null,
 }
 
+const contractAddress = '0xB6e268AfB84caf237EF5fBC42EEE247f2583935a'
+
 export const subscribeUser = createAsyncThunk(
   'chat/subscribeUser',
-  async ({ contract, address }) => {
+  async ({ web3, contract, address }) => {
     try {
-      console.log('Subscribe user', { contract, address })
-      await contract.methods.addMe().send({ from: address, gas: 30000 })
+      const gasPrice = await web3.eth.getGasPrice()
+
+      const functionAbi = contract.methods.addMe().encodeABI()
+      window.ethereum
+        .request({
+          method: 'eth_sendTransaction',
+          params: [
+            {
+              from: address,
+              to: contractAddress,
+              gas: web3.utils.toHex(300000),
+              gasPrice: web3.utils.toHex(gasPrice),
+              data: functionAbi,
+            },
+          ],
+        })
+        .then((txHash) => {
+          console.log(`Transaction hash: ${txHash}`)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     } catch (error) {
+      console.log(error)
       return { error: error.message }
     }
   }
@@ -22,13 +45,31 @@ export const subscribeUser = createAsyncThunk(
 
 export const addFriend = createAsyncThunk(
   'chat/addFriend',
-  async ({ contract, address, friendAddress }) => {
+  async ({ web3, contract, address, friendAddress }) => {
     try {
-      console.log('Adding friend', { contract, address, friendAddress })
-      await contract.methods
-        .addFriend(friendAddress)
-        .send({ from: address, gas: 30000 })
+      const gasPrice = await web3.eth.getGasPrice()
+      const functionAbi = contract.methods.addFriend(friendAddress).encodeABI()
+      window.ethereum
+        .request({
+          method: 'eth_sendTransaction',
+          params: [
+            {
+              from: address,
+              to: contractAddress,
+              gas: web3.utils.toHex(300000),
+              gasPrice: web3.utils.toHex(gasPrice),
+              data: functionAbi,
+            },
+          ],
+        })
+        .then((txHash) => {
+          console.log(`Transaction hash: ${txHash}`)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     } catch (error) {
+      console.log(error)
       return { error: error.message }
     }
   }
@@ -38,12 +79,12 @@ export const fetchFriends = createAsyncThunk(
   'chat/fetchFriends',
   async ({ contract, address }) => {
     try {
-      console.log('Fetch friend', { contract, address })
-      const friends = await contract.methods
-        .getFriends()
-        .call({ from: address })
-      return { friends }
+      console.log('Fetch friends', { contract, address })
+      const friends = await contract.methods.getUser().call({ from: address })
+      console.log('Fetched friends', friends.friends)
+      return friends.friends
     } catch (error) {
+      console.log(error)
       return { error: error.message }
     }
   }
@@ -63,6 +104,7 @@ export const sendUserMessage = createAsyncThunk(
         .sendMessage(selectedUserAddress, userMessage)
         .send({ from: address, gas: 300000 })
     } catch (error) {
+      console.log(error)
       return { error: error.message }
     }
   }
@@ -83,6 +125,7 @@ export const fetchSelectedAccountMessages = createAsyncThunk(
 
       return { selectedAccountMessages }
     } catch (error) {
+      console.log(error)
       return { error: error.message }
     }
   }
@@ -126,7 +169,7 @@ export const chatSlice = createSlice({
       })
       .addCase(fetchFriends.fulfilled, (state, action) => {
         state.loading = 'idle'
-        state.friends = action.payload.friends
+        state.friends = action.payload
       })
       .addCase(fetchFriends.rejected, (state, action) => {
         state.loading = 'idle'

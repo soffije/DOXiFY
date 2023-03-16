@@ -13,16 +13,20 @@ function ChatBar() {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
 
-  const { contract } = useContext(ChatContext)
+  const { web3, contract } = useContext(ChatContext)
 
   const [friendAddress, setFriendAddress] = useState('')
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   dispatch(fetchFriends({ contract, address }))
+  // }, [contract, address])
+
+  const handleButtonGetFriendsClick = async () => {
     dispatch(fetchFriends({ contract, address }))
-  }, [contract, address])
+  }
 
   const handleButtonClick = async () => {
-    await dispatch(addFriend({ contract, address, friendAddress }))
+    await dispatch(addFriend({ web3, contract, address, friendAddress }))
     setFriendAddress('')
   }
 
@@ -50,6 +54,13 @@ function ChatBar() {
           onClick={handleButtonClick}
         >
           Add Friend
+        </Button>
+        <Button
+          variant="primary"
+          className="float-right mt-1"
+          onClick={handleButtonGetFriendsClick}
+        >
+          Get Friends
         </Button>
       </div>
       <Friends />

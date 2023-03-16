@@ -15,19 +15,19 @@ function Chat() {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
 
-  const web3 = new Web3('http://localhost:7545')
+  const web3 = new Web3('https://api.avax-test.network/ext/bc/C/rpc')
   const contract = new web3.eth.Contract(
     abi,
-    '0x7CE801444d00E8B81729F42e23bD399aEE97aA65'
+    '0xB6e268AfB84caf237EF5fBC42EEE247f2583935a'
   )
   const [chatInstances] = useState({
     web3: web3,
     contract: contract,
   })
 
-  // optimize this function
+  //optimize this function
   useEffect(() => {
-    dispatch(subscribeUser({ contract, address }))
+    dispatch(subscribeUser({ web3, contract, address }))
   }, [address])
 
   return (
