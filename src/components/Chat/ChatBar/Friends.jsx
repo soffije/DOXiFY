@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import './Friends.css'
 import {
   getFriends,
   setSelectedAccount,
@@ -16,15 +17,15 @@ function Friends() {
 
   const friendsArray = useMemo(
     () =>
-      friends?.map((friend) => (
+      friends?.map((friend, index) => (
         <div
-          key={friend}
-          className="my-3 text-center"
+          key={index}
+          className="friend-selection-item my-3 text-center"
           onClick={() => {
             handleAccountSelection(friend)
           }}
         >
-          <h6>
+          <h6 className="friend-selection-name">
             {friend.slice(0, 5)}...{friend.slice(-4)}
           </h6>
         </div>

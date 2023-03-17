@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-
+import contractAddress from '../../app/contract'
 const initialState = {
   selectedAccount: null,
   selectedAccountMessages: [],
@@ -7,8 +7,6 @@ const initialState = {
   loading: 'idle',
   error: null,
 }
-
-const contractAddress = '0xB6e268AfB84caf237EF5fBC42EEE247f2583935a'
 
 export const subscribeUser = createAsyncThunk(
   'chat/subscribeUser',
@@ -92,17 +90,32 @@ export const fetchFriends = createAsyncThunk(
 
 export const sendUserMessage = createAsyncThunk(
   'chat/sendMessage',
-  async ({ contract, address, selectedUserAddress, userMessage }) => {
+  async ({ web3, contract, address, selectedUserAddress, userMessage }) => {
     try {
-      console.log('Send message', {
-        contract,
-        address,
-        selectedUserAddress,
-        userMessage,
-      })
-      await contract.methods
+      const gasPrice = await web3.eth.getGasPrice()
+
+      const functionAbi = contract.methods
         .sendMessage(selectedUserAddress, userMessage)
-        .send({ from: address, gas: 300000 })
+        .encodeABI()
+      window.ethereum
+        .request({
+          method: 'eth_sendTransaction',
+          params: [
+            {
+              from: address,
+              to: contractAddress,
+              gas: web3.utils.toHex(300000),
+              gasPrice: web3.utils.toHex(gasPrice),
+              data: functionAbi,
+            },
+          ],
+        })
+        .then((txHash) => {
+          console.log(`Transaction hash: ${txHash}`)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     } catch (error) {
       console.log(error)
       return { error: error.message }
@@ -122,7 +135,7 @@ export const fetchSelectedAccountMessages = createAsyncThunk(
       const selectedAccountMessages = await contract.methods
         .getMessages(selectedUserAddress)
         .call({ from: address })
-
+      console.log(selectedAccountMessages)
       return { selectedAccountMessages }
     } catch (error) {
       console.log(error)

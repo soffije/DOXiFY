@@ -4,6 +4,7 @@ import { Toast } from 'react-bootstrap'
 function ToastComponent({ show, setShow, setMessage, message }) {
   return (
     <Toast
+      className="position-absolute"
       onClose={() => (setShow(false), setMessage(message))}
       show={show}
       delay={3000}
