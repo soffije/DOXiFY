@@ -42,8 +42,14 @@ const abi = [
       },
       {
         indexed: false,
+        internalType: 'string',
+        name: 'fileHash',
+        type: 'string',
+      },
+      {
+        indexed: false,
         internalType: 'uint256',
-        name: 'carrentTime',
+        name: 'timestamp',
         type: 'uint256',
       },
     ],
@@ -62,6 +68,11 @@ const abi = [
         name: 'content',
         type: 'string',
       },
+      {
+        internalType: 'string',
+        name: 'fileHash',
+        type: 'string',
+      },
     ],
     name: 'sendMessage',
     outputs: [],
@@ -76,6 +87,25 @@ const abi = [
         internalType: 'address[]',
         name: '',
         type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    name: 'getMessageFileHash',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -112,6 +142,11 @@ const abi = [
             internalType: 'uint256',
             name: 'timestamp',
             type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'fileHash',
+            type: 'string',
           },
         ],
         internalType: 'struct Chat.Message[]',
