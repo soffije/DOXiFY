@@ -29,7 +29,7 @@ function ChatMessages() {
   }, [selectedUserAddress])
 
   return (
-    <div className="flex-grow-1 chat-messages">
+    <div className="flex-grow-1 chat-messages mb-3">
       {selectedAccountMessages?.map((message, index) => (
         <ChatMessage
           key={index}

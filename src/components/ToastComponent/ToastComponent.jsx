@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Toast } from 'react-bootstrap'
 
 import './Toast.css'
+
 function ToastComponent({ show, setShow, setMessage, message, variant }) {
   const toastClasses = `Toast ${variant}`
   return (

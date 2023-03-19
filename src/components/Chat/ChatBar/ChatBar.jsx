@@ -1,11 +1,9 @@
 import React, { useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Button } from 'react-bootstrap'
-import AddFriendModal from '../../Modal/AddFriend'
-
 import Friends from './Friends'
 import { ChatContext } from '../Chat'
+import AddFriendModal from '../../Modal/AddFriend'
 
 import {
   getUserAddress,

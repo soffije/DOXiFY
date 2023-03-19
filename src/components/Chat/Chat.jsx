@@ -35,7 +35,7 @@ function Chat() {
   }, [address])
 
   return (
-    <div className="row chat-container shadow">
+    <div className="row chat-container shadow my-4">
       <ChatContext.Provider value={chatInstances}>
         <ChatBar />
         <ChatBody />

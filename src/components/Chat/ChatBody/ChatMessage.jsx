@@ -11,13 +11,6 @@ function ChatMessage({ address, message }) {
           : 'align-items-start'
       } d-flex flex-column`}
     >
-      <div>
-        {message.sender.toLowerCase() === address
-          ? `You`
-          : message.sender.substring(0, 5) +
-            '...' +
-            message.sender.substring(38)}
-      </div>
       <div
         className={`${
           message.sender.toLowerCase() === address

@@ -26,6 +26,5 @@ body {
 
 .chat-message {
   border-radius: 0.7rem;
-  width: fit-content;
   padding: 5px;
 }
