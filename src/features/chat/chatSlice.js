@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
+
 import contractAddress from '../../app/contract'
+
 const initialState = {
   selectedAccount: null,
   selectedAccountMessages: [],
@@ -92,10 +95,23 @@ export const sendUserMessage = createAsyncThunk(
   'chat/sendMessage',
   async ({ web3, contract, address, selectedUserAddress, userMessage }) => {
     try {
+      const request = await axios({
+        method: 'post',
+        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+        // prettier-ignore
+        data: { "message": userMessage },
+        headers: {
+          pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
+          pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      console.log('Hash', request.data.IpfsHash)
+
       const gasPrice = await web3.eth.getGasPrice()
 
       const functionAbi = contract.methods
-        .sendMessage(selectedUserAddress, userMessage)
+        .sendMessage(selectedUserAddress, 'text', request.data.IpfsHash)
         .encodeABI()
       window.ethereum
         .request({
@@ -135,8 +151,27 @@ export const fetchSelectedAccountMessages = createAsyncThunk(
       const selectedAccountMessages = await contract.methods
         .getMessages(selectedUserAddress)
         .call({ from: address })
-      console.log(selectedAccountMessages)
-      return { selectedAccountMessages }
+
+      const promises = selectedAccountMessages
+        .map((message) => message.fileHash)
+        .map((hash) =>
+          axios.get(`https://gateway.pinata.cloud/ipfs/${hash}`, {
+            headers: {
+              Accept: 'text/plain',
+            },
+          })
+        )
+
+      const response = await Promise.all(promises)
+      const retrievedHashes = response.map((item) => item.data)
+      const result = selectedAccountMessages.map((item, index) => {
+        return {
+          ...item,
+          fileHash: retrievedHashes[index].message,
+        }
+      })
+
+      return { result }
     } catch (error) {
       console.log(error)
       return { error: error.message }
@@ -205,7 +240,7 @@ export const chatSlice = createSlice({
       })
       .addCase(fetchSelectedAccountMessages.fulfilled, (state, action) => {
         state.loading = 'idle'
-        state.selectedAccountMessages = action.payload.selectedAccountMessages
+        state.selectedAccountMessages = action.payload.result
       })
       .addCase(fetchSelectedAccountMessages.rejected, (state, action) => {
         state.loading = 'idle'
