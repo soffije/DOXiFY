@@ -24,18 +24,10 @@ function Chat() {
 
   useEffect(() => {
     dispatch(subscribeUser({ web3, contract, address }))
-    contract.events
-      .MessageSent()
-      .on('data', (event) => {
-        console.log(event)
-      })
-      .on('error', (error) => {
-        console.error(error)
-      })
   }, [address])
 
   return (
-    <div className="row chat-container shadow my-4">
+    <div className="row chat-container shadow">
       <ChatContext.Provider value={chatInstances}>
         <ChatBar />
         <ChatBody />

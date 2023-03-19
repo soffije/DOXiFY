@@ -26,7 +26,7 @@ export default function AppLayout() {
     <>
       <Header />
       <Container className="flex-grow-1">
-        <div className="main-content">
+        <div className="main-content py-4">
           <Outlet />
         </div>
       </Container>

@@ -1,4 +1,10 @@
 .chat-messages {
-  height: 52vh;
+  height: 100vh;
   overflow-y: auto;
+}
+
+.chat-message {
+  border-radius: 0.7rem;
+  padding: 5px;
+  max-width: 75%;
 }
