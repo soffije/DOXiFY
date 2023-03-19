@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import './ChatMessages.css'
@@ -21,12 +21,27 @@ function ChatMessages() {
 
   const { web3, contract } = useContext(ChatContext)
 
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   useEffect(() => {
-    if (selectedUserAddress)
+    if (selectedUserAddress) {
       dispatch(
-        fetchSelectedAccountMessages({ contract, address, selectedUserAddress })
+        fetchSelectedAccountMessages({
+          contract,
+          address,
+          selectedUserAddress,
+        })
       )
+    }
   }, [selectedUserAddress])
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [selectedAccountMessages])
 
   return (
     <div className="flex-grow-1 chat-messages mb-3">
@@ -38,6 +53,7 @@ function ChatMessages() {
           message={message}
         />
       ))}
+      <div ref={messagesEndRef} />
     </div>
   )
 }
