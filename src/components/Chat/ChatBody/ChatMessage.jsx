@@ -25,10 +25,7 @@ function ChatMessage({ address, message }) {
             : 'bg-light text-black'
         } chat-message`}
       >
-        {message.content
-          .match(/.{1,2}/g)
-          .map((byte) => String.fromCharCode(parseInt(byte, 16)))
-          .join('')}
+        {message.fileHash}
       </div>
       <small className="text-secondary">
         {formatMessageDate(message.timestamp)}

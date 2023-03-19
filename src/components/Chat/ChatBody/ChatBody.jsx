@@ -19,16 +19,14 @@ function ChatBody() {
 
   const { web3, contract } = useContext(ChatContext)
 
-  const [message, setMessage] = useState('')
+  const [userMessage, setUserMessage] = useState('')
 
   function handleInputChange(e) {
-    setMessage(e.target.value)
+    setUserMessage(e.target.value)
   }
 
   const sendMessage = async () => {
-    if (!message) return
-
-    const userMessage = web3.utils.fromAscii(message)
+    if (!userMessage) return
     await dispatch(
       sendUserMessage({
         web3,
@@ -38,7 +36,7 @@ function ChatBody() {
         userMessage,
       })
     )
-    setMessage('')
+    setUserMessage('')
   }
 
   return (
@@ -57,7 +55,7 @@ function ChatBody() {
         <Form.Control
           type="text"
           placeholder="Enter message"
-          value={message}
+          value={userMessage}
           onChange={handleInputChange}
         />
         <Button variant="primary" className="float-right" onClick={sendMessage}>
