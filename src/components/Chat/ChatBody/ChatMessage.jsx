@@ -2,7 +2,7 @@ import React from 'react'
 
 import formatMessageDate from '../../../helpers/formatMessageDate'
 
-function ChatMessage({ web3, address, message }) {
+function ChatMessage({ address, message }) {
   return (
     <div
       className={`mb-2 ${
@@ -25,7 +25,10 @@ function ChatMessage({ web3, address, message }) {
             : 'bg-light text-black'
         } chat-message`}
       >
-        {web3.utils.hexToUtf8(message.content)}
+        {message.content
+          .match(/.{1,2}/g)
+          .map((byte) => String.fromCharCode(parseInt(byte, 16)))
+          .join('')}
       </div>
       <small className="text-secondary">
         {formatMessageDate(message.timestamp)}

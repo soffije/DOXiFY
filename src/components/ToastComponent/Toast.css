@@ -1,0 +1,32 @@
+.Toast {
+  top: -30px;
+  right: -175px;
+  position: absolute;
+  z-index: 9999;
+}
+
+@media (max-width: 576px) {
+  .Toast {
+    top: 70px;
+    right: 10px;
+  }
+}
+.Toast.error {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.Toast.success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.Toast.warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.Toast.problem {
+  background-color: #6c757d;
+  color: #fff;
+}

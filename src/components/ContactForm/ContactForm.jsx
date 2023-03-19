@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { Form, FloatingLabel, Button, Toast } from 'react-bootstrap'
-import ToastComponent from '../ToastComponent/toastComponent'
+import ToastComponent from '../ToastComponent/ToastComponent'
 
 function ContactForm() {
   const MIN_NAME_LENGTH = 2
 
   const [show, setShow] = useState(false)
   const [message, setMessage] = useState('')
+  const [variant, setVariant] = useState('')
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -81,15 +82,18 @@ function ContactForm() {
       if (errorMessage) {
         errors[key] = errorMessage
         setShow(true)
-        setMessage('error')
+        setVariant('error')
+        setMessage('Error: Check all fields')
       }
     })
     setFormErrors(errors)
     const isFormValid = Object.keys(errors).every((key) => errors[key] === '')
     if (isFormValid) {
       console.log(formData)
+
       setShow(true)
-      setMessage('Complited')
+      setVariant('success')
+      setMessage('Form sended success!')
     }
   }
   return (
@@ -100,6 +104,7 @@ function ContactForm() {
         setShow={setShow}
         setMessage={setMessage}
         message={message}
+        variant={variant}
       />
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Toast } from 'react-bootstrap'
 
-function ToastComponent({ show, setShow, setMessage, message }) {
+import './Toast.css'
+function ToastComponent({ show, setShow, setMessage, message, variant }) {
+  const toastClasses = `Toast ${variant}`
   return (
     <Toast
-      className="position-absolute"
+      className={toastClasses}
       onClose={() => (setShow(false), setMessage(message))}
       show={show}
       delay={3000}
@@ -12,7 +14,7 @@ function ToastComponent({ show, setShow, setMessage, message }) {
     >
       <Toast.Header>
         <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-        <strong className="me-auto">Contact Form</strong>
+        <strong className="me-auto">Notification</strong>
       </Toast.Header>
       <Toast.Body>{message}</Toast.Body>
     </Toast>
