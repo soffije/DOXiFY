@@ -42,26 +42,29 @@ function ChatBody() {
   return (
     <div className="col-8 d-flex flex-column py-3">
       {selectedUserAddress && (
-        <h6 className="text-center mb-0">
-          {selectedUserAddress.slice(0, 5)}...{selectedUserAddress.slice(-4)}
-        </h6>
+        <>
+          <h6 className="text-center mb-0">
+            {selectedUserAddress.slice(0, 5)}...{selectedUserAddress.slice(-4)}
+          </h6>{' '}
+          <hr />
+          <ChatMessages />
+          <div className="d-flex flex-row gap-2">
+            <Form.Control
+              type="text"
+              placeholder="Enter message"
+              value={userMessage}
+              onChange={handleInputChange}
+            />
+            <Button
+              variant="primary"
+              className="float-right"
+              onClick={sendMessage}
+            >
+              Send
+            </Button>
+          </div>
+        </>
       )}
-
-      <hr />
-
-      <ChatMessages />
-
-      <div className="d-flex flex-row gap-2">
-        <Form.Control
-          type="text"
-          placeholder="Enter message"
-          value={userMessage}
-          onChange={handleInputChange}
-        />
-        <Button variant="primary" className="float-right" onClick={sendMessage}>
-          Send
-        </Button>
-      </div>
     </div>
   )
 }

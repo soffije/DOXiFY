@@ -43,9 +43,17 @@ function ChatMessages() {
     scrollToBottom()
   }, [selectedAccountMessages])
 
+  if (!selectedAccountMessages.length) {
+    return (
+      <div className="d-flex flex-grow-1 justify-content-center align-items-center mb-3">
+        <h6>Say hi to your friend!</h6>
+      </div>
+    )
+  }
+
   return (
     <div className="flex-grow-1 chat-messages mb-3">
-      {selectedAccountMessages?.map((message, index) => (
+      {selectedAccountMessages.map((message, index) => (
         <ChatMessage
           key={index}
           web3={web3}
