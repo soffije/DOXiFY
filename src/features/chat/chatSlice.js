@@ -7,6 +7,7 @@ const initialState = {
   selectedAccount: null,
   selectedAccountMessages: [],
   friends: [],
+  friendSearchQuery: '',
   loading: 'idle',
   error: null,
 }
@@ -80,10 +81,16 @@ export const fetchFriends = createAsyncThunk(
   'chat/fetchFriends',
   async ({ contract, address }) => {
     try {
-      console.log('Fetch friends', { contract, address })
-      const friends = await contract.methods.getUser().call({ from: address })
-      console.log('Fetched friends', friends.friends)
-      return friends.friends
+      const { friends } = await contract.methods
+        .getUser()
+        .call({ from: address })
+
+      const result = friends.map((friend) => {
+        return {
+          address: friend,
+        }
+      })
+      return result
     } catch (error) {
       console.log(error)
       return { error: error.message }
@@ -106,7 +113,6 @@ export const sendUserMessage = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
-      console.log('Hash', request.data.IpfsHash)
 
       const gasPrice = await web3.eth.getGasPrice()
 
@@ -143,11 +149,6 @@ export const fetchSelectedAccountMessages = createAsyncThunk(
   'chat/fetchSelectedAccountMessages',
   async ({ contract, address, selectedUserAddress }) => {
     try {
-      console.log('Fetch selected account messages', {
-        contract,
-        address,
-        selectedUserAddress,
-      })
       const selectedAccountMessages = await contract.methods
         .getMessages(selectedUserAddress)
         .call({ from: address })
@@ -185,6 +186,9 @@ export const chatSlice = createSlice({
   reducers: {
     setSelectedAccount: (state, action) => {
       state.selectedAccount = action.payload
+    },
+    setFriendSearchQuery: (state, props) => {
+      state.friendSearchQuery = props.payload
     },
   },
   extraReducers: (builder) => {
@@ -254,6 +258,8 @@ export const getSelectedAccount = (state) => state.chat.selectedAccount
 export const getSelectedAccountMessages = (state) =>
   state.chat.selectedAccountMessages
 
-export const { setSelectedAccount } = chatSlice.actions
+export const getFriendsSearchQuery = (state) => state.chat.friendSearchQuery
+
+export const { setSelectedAccount, setFriendSearchQuery } = chatSlice.actions
 
 export default chatSlice.reducer

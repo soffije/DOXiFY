@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import './Friend.css'
 
-import { getSelectedAccount } from '../../../features/chat/chatSlice'
+import { getSelectedAccount } from '../../../../features/chat/chatSlice'
 
 function Friend({ handleAccountSelection, friend }) {
   const selectedUser = useSelector(getSelectedAccount)
@@ -15,7 +15,7 @@ function Friend({ handleAccountSelection, friend }) {
           friend === selectedUser ? 'selected' : ''
         }`}
         onClick={() => {
-          handleAccountSelection(friend)
+          handleAccountSelection(friend.address)
         }}
       >
         <div>
@@ -28,7 +28,7 @@ function Friend({ handleAccountSelection, friend }) {
         </div>
         <div className="pt-1">
           <p className="fw-bold mb-0">
-            {friend.slice(0, 5)}...{friend.slice(-4)}
+            {friend.address.slice(0, 5)}...{friend.address.slice(-4)}
           </p>
         </div>
       </div>

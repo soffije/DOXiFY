@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Form, FloatingLabel, Button, Toast } from 'react-bootstrap'
+
 import ToastComponent from '../ToastComponent/ToastComponent'
 
 function ContactForm() {
