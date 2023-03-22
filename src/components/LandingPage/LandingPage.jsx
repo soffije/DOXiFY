@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { Form, Button, Carousel } from 'react-bootstrap'
 
+import CheckboxModal from '../Modal/ConfirmRules'
+
 import choose from '../../assets/choose.png'
 import better from '../../assets/better.png'
 import privacy from '../../assets/privacy.png'
@@ -16,6 +18,7 @@ function LandingPage() {
 
   return (
     <div className="my-5">
+      <CheckboxModal />
       <div className="row">
         <div className="col-12 col-lg-6 d-flex flex-column">
           <h1 className="home-title text-white">DOXiFY</h1>
