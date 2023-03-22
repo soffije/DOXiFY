@@ -53,6 +53,7 @@ function AddFriendModal() {
   return (
     <>
       <Button
+        style={{ width: '100%' }}
         variant="primary"
         onClick={handleShowModal}
         className="float-right mt-1"

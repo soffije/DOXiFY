@@ -1,9 +1,11 @@
 import React, { useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { Tab, Tabs } from 'react-bootstrap'
+
 import { ChatContext } from '../Chat'
 import Friends from './FriendsList/Friends'
-import AddFriendModal from '../../Modal/AddFriend'
+import ChatHeader from './ChatHeader/ChatHeader'
 import UsersSearch from '../../Forms/Search/UsersSearch'
 
 import {
@@ -32,21 +34,29 @@ function ChatBar() {
   }, [contract, address])
 
   return (
-    <div className="col-4 py-3">
-      <div className="text-center">
-        <h6>
-          Me: {address.slice(0, 5)}...{address.slice(-4)}
-        </h6>
-      </div>
-      <div className="mb-3 d-flex flex-column">
-        <AddFriendModal />
-      </div>
+    <div className="col-4 py-3" style={{ borderLeft: '5' }}>
+      <ChatHeader />
       <UsersSearch
         placeholder="Find friend"
         value={searchQuery}
         onChange={onFormControlChange}
       />
-      <Friends />
+      <Tabs
+        defaultActiveKey="all"
+        id="justify-tab-example"
+        className="mb-3"
+        justify
+      >
+        <Tab eventKey="friends" title="Friends">
+          <Friends />
+        </Tab>
+        <Tab eventKey="request" title="Requests">
+          <h1>request</h1>
+        </Tab>
+        <Tab eventKey="pending" title="Pending">
+          <h1>Pending</h1>
+        </Tab>
+      </Tabs>
     </div>
   )
 }
