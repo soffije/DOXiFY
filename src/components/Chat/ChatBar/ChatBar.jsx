@@ -42,7 +42,7 @@ function ChatBar() {
         onChange={onFormControlChange}
       />
       <Tabs
-        defaultActiveKey="all"
+        defaultActiveKey="friends"
         id="justify-tab-example"
         className="mb-3"
         justify
