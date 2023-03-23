@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import contractAddress from '../../app/contract'
-
 const initialState = {
   selectedAccount: null,
   selectedAccountMessages: [],
@@ -25,7 +23,7 @@ export const subscribeUser = createAsyncThunk(
           params: [
             {
               from: address,
-              to: contractAddress,
+              to: process.env.REACT_APP_CONTRACT_ADDRESS,
               gas: web3.utils.toHex(300000),
               gasPrice: web3.utils.toHex(gasPrice),
               data: functionAbi,
@@ -57,7 +55,7 @@ export const addFriend = createAsyncThunk(
           params: [
             {
               from: address,
-              to: contractAddress,
+              to: process.env.REACT_APP_CONTRACT_ADDRESS,
               gas: web3.utils.toHex(300000),
               gasPrice: web3.utils.toHex(gasPrice),
               data: functionAbi,
@@ -125,7 +123,7 @@ export const sendUserMessage = createAsyncThunk(
           params: [
             {
               from: address,
-              to: contractAddress,
+              to: process.env.REACT_APP_CONTRACT_ADDRESS,
               gas: web3.utils.toHex(300000),
               gasPrice: web3.utils.toHex(gasPrice),
               data: functionAbi,
@@ -189,6 +187,9 @@ export const chatSlice = createSlice({
     },
     setFriendSearchQuery: (state, props) => {
       state.friendSearchQuery = props.payload
+    },
+    addIncomingMessage: (state, action) => {
+      state.selectedAccountMessages.push(action.payload)
     },
   },
   extraReducers: (builder) => {
@@ -260,6 +261,7 @@ export const getSelectedAccountMessages = (state) =>
 
 export const getFriendsSearchQuery = (state) => state.chat.friendSearchQuery
 
-export const { setSelectedAccount, setFriendSearchQuery } = chatSlice.actions
+export const { setSelectedAccount, setFriendSearchQuery, addIncomingMessage } =
+  chatSlice.actions
 
 export default chatSlice.reducer

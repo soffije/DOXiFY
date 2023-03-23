@@ -1,68 +1,90 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import Web3 from 'web3'
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { w3cwebsocket as W3CWebSocket } from 'websocket'
 
+import abi from '../../app/abi'
 import ChatBar from './ChatBar/ChatBar'
 import ChatBody from './ChatBody/ChatBody'
 
-import abi from '../../app/abi'
-import contractAddress from '../../app/contract'
-import { subscribeUser } from '../../features/chat/chatSlice'
+import {
+  addIncomingMessage,
+  getSelectedAccount,
+  subscribeUser,
+} from '../../features/chat/chatSlice'
 import { getUserAddress } from '../../features/user/userSlice'
-export const ChatContext = createContext()
 
-const WEBSOCKET_URL = 'wss://api.avax-test.network/ext/bc/C/ws'; // URL веб-сокета Avalanche Fuji Testnet
+export const ChatContext = createContext()
 
 function Chat() {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
+  const selectedAccount = useSelector(getSelectedAccount)
 
-  const [chatInstances, setChatInstances] = useState(null);
+  const [chatInstances, setChatInstances] = useState(null)
 
   useEffect(() => {
-    const web3 = new Web3(new Web3.providers.WebsocketProvider(WEBSOCKET_URL));
-    const contract = new web3.eth.Contract(abi, contractAddress);
+    const client = new W3CWebSocket(process.env.REACT_APP_PROVIDER)
+    const web3 = new Web3(
+      new Web3.providers.WebsocketProvider(process.env.REACT_APP_PROVIDER)
+    )
+    const contract = new web3.eth.Contract(
+      abi,
+      process.env.REACT_APP_CONTRACT_ADDRESS
+    )
 
     setChatInstances({
       web3: web3,
+      client: client,
       contract: contract,
-    });
+    })
+
+    dispatch(subscribeUser({ web3, contract, address }))
 
     return () => {
-      web3.currentProvider.disconnect();
+      web3.currentProvider.disconnect()
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    if (chatInstances) {
-      const { web3, contract } = chatInstances;
+    if (!chatInstances) return
 
-      const client = new W3CWebSocket(WEBSOCKET_URL);
-      client.onopen = () => {
-        console.log('WebSocket Client Connected');
+    const { client, contract } = chatInstances
 
-        contract.events.MessageSent({})
-          .on('data', (event) => {
-            console.log('Event data:', event.returnValues);
-            dispatch(subscribeUser({ web3, contract, address }));
-          })
-          .on('error', console.error);
-      };
+    client.onopen = () => {
+      contract.events
+        .MessageSent()
+        .on('data', async (event) => {
+          const { data } = await axios(
+            `https://gateway.pinata.cloud/ipfs/${event.returnValues.fileHash}`,
+            {
+              headers: {
+                Accept: 'text/plain',
+              },
+            }
+          )
+          const message = {
+            content: event.returnValues.content,
+            fileHash: data.message,
+            recipient: event.returnValues.recipient,
+            sender: event.returnValues.sender,
+            timestamp: event.returnValues.timestamp,
+          }
 
-      client.onclose = () => {
-        console.log('WebSocket Client Disconnected');
-      };
-
-      return () => {
-        client.close();
-      }
+          if (
+            selectedAccount === event.returnValues.recipient ||
+            selectedAccount === event.returnValues.sender
+          )
+            dispatch(addIncomingMessage(message))
+        })
+        .on('error', console.error)
     }
-  }, [chatInstances, dispatch, address]);
 
-  if (!chatInstances) {
-    return null;
-  }
+    return () => {
+      client.close()
+    }
+  }, [address, selectedAccount])
 
   return (
     <div className="row chat-container shadow">
@@ -75,6 +97,3 @@ function Chat() {
 }
 
 export default Chat
-
-
-

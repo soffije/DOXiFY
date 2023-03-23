@@ -43,7 +43,7 @@ function ChatMessages() {
     scrollToBottom()
   }, [selectedAccountMessages])
 
-  if (!selectedAccountMessages.length) {
+  if (!selectedAccountMessages?.length) {
     return (
       <div className="d-flex flex-grow-1 justify-content-center align-items-center mb-3">
         <h6>Say hi to your friend!</h6>
