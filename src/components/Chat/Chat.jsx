@@ -17,28 +17,28 @@ import { getUserAddress } from '../../features/user/userSlice'
 
 export const ChatContext = createContext()
 
+const web3 = new Web3(
+  new Web3.providers.WebsocketProvider(process.env.REACT_APP_PROVIDER)
+)
+const client = new W3CWebSocket(process.env.REACT_APP_PROVIDER)
+const contract = new web3.eth.Contract(
+  abi,
+  process.env.REACT_APP_CONTRACT_ADDRESS
+)
+
 function Chat() {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
   const selectedAccount = useSelector(getSelectedAccount)
 
-  const [chatInstances, setChatInstances] = useState(null)
+  const [chatInstances] = useState({
+    web3: web3,
+    client: client,
+    contract: contract,
+  })
 
   useEffect(() => {
-    const client = new W3CWebSocket(process.env.REACT_APP_PROVIDER)
-    const web3 = new Web3(
-      new Web3.providers.WebsocketProvider(process.env.REACT_APP_PROVIDER)
-    )
-    const contract = new web3.eth.Contract(
-      abi,
-      process.env.REACT_APP_CONTRACT_ADDRESS
-    )
-
-    setChatInstances({
-      web3: web3,
-      client: client,
-      contract: contract,
-    })
+    const { web3, contract } = chatInstances
 
     dispatch(subscribeUser({ web3, contract, address }))
 
