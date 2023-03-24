@@ -31,6 +31,15 @@ function Friend({ handleAccountSelection, friend }) {
             {friend.address.slice(0, 5)}...{friend.address.slice(-4)}
           </p>
         </div>
+        <div>
+          {friend.numberOfUnreadMessages !== 0 ? (
+            <span className="badge bg-danger rounded-pill float-end">
+              {friend.numberOfUnreadMessages}
+            </span>
+          ) : (
+            ''
+          )}
+        </div>
       </div>
     </li>
   )

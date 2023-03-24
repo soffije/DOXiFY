@@ -10,6 +10,14 @@ const initialState = {
   error: null,
 }
 
+const getMessageByIPFSHash = async (fileHash) => {
+  return await axios(`https://gateway.pinata.cloud/ipfs/${fileHash}`, {
+    headers: {
+      Accept: 'text/plain',
+    },
+  })
+}
+
 export const subscribeUser = createAsyncThunk(
   'chat/subscribeUser',
   async ({ web3, contract, address }) => {
@@ -86,6 +94,7 @@ export const fetchFriends = createAsyncThunk(
       const result = friends.map((friend) => {
         return {
           address: friend,
+          numberOfUnreadMessages: 0,
         }
       })
       return result
@@ -178,6 +187,50 @@ export const fetchSelectedAccountMessages = createAsyncThunk(
   }
 )
 
+export const handleIncomingMessageEvent = createAsyncThunk(
+  'chat/sendMessage',
+  async (args, { getState, dispatch }) => {
+    try {
+      const state = getState()
+      const address = state.user.address.toLowerCase()
+      const sender = args.returnValues.sender.toLowerCase()
+      const recipient = args.returnValues.recipient.toLowerCase()
+      let selectedAccount = state.chat.selectedAccount
+      if (selectedAccount !== null)
+        selectedAccount = state.chat.selectedAccount.toLowerCase()
+
+      if (address === recipient)
+        if (selectedAccount !== sender) {
+          const updatedFriends = state.chat.friends.map((friend) => {
+            if (friend.address.toLowerCase() === sender) {
+              return {
+                ...friend,
+                numberOfUnreadMessages: friend.numberOfUnreadMessages + 1,
+              }
+            }
+            return friend
+          })
+          dispatch(setFriendsArray(updatedFriends))
+        } else {
+          const { data } = await getMessageByIPFSHash(
+            args.returnValues.fileHash
+          )
+          const message = {
+            content: args.returnValues.content,
+            fileHash: data.message,
+            recipient: recipient,
+            sender: sender,
+            timestamp: args.returnValues.timestamp,
+          }
+          dispatch(addIncomingMessage(message))
+        }
+    } catch (error) {
+      console.log(error)
+      return { error: error.message }
+    }
+  }
+)
+
 export const chatSlice = createSlice({
   name: 'chat',
   initialState,
@@ -190,6 +243,22 @@ export const chatSlice = createSlice({
     },
     addIncomingMessage: (state, action) => {
       state.selectedAccountMessages.push(action.payload)
+    },
+    setFriendsArray: (state, props) => {
+      state.friends = props.payload
+    },
+    resetNumberOfUnreadMessages: (state, action) => {
+      const userAddress = action.payload.toLowerCase()
+      console.log(userAddress)
+      const index = state.friends.findIndex(
+        (friend) => friend.address.toLowerCase() === userAddress
+      )
+      if (index !== -1) {
+        state.friends[index] = {
+          ...state.friends[index],
+          numberOfUnreadMessages: 0,
+        }
+      }
     },
   },
   extraReducers: (builder) => {
@@ -261,7 +330,12 @@ export const getSelectedAccountMessages = (state) =>
 
 export const getFriendsSearchQuery = (state) => state.chat.friendSearchQuery
 
-export const { setSelectedAccount, setFriendSearchQuery, addIncomingMessage } =
-  chatSlice.actions
+export const {
+  setSelectedAccount,
+  setFriendSearchQuery,
+  addIncomingMessage,
+  setFriendsArray,
+  resetNumberOfUnreadMessages,
+} = chatSlice.actions
 
 export default chatSlice.reducer

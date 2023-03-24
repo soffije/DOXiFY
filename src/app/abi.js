@@ -1,25 +1,5 @@
 const abi = [
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'friendAddress',
-        type: 'address',
-      },
-    ],
-    name: 'addFriend',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'addMe',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -60,21 +40,18 @@ const abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'recipient',
+        name: 'friendAddress',
         type: 'address',
       },
-      {
-        internalType: 'string',
-        name: 'content',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: 'fileHash',
-        type: 'string',
-      },
     ],
-    name: 'sendMessage',
+    name: 'addFriend',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'addMe',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -180,6 +157,29 @@ const abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: 'content',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'fileHash',
+        type: 'string',
+      },
+    ],
+    name: 'sendMessage',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
 ]

@@ -7,6 +7,7 @@ import { FRIEND_SEARCH_PARAM } from '../../../../app/constants'
 import {
   getFriends,
   getFriendsSearchQuery,
+  resetNumberOfUnreadMessages,
   setSelectedAccount,
 } from '../../../../features/chat/chatSlice'
 
@@ -17,6 +18,7 @@ function Friends() {
 
   const handleAccountSelection = (userAddress) => {
     dispatch(setSelectedAccount(userAddress))
+    dispatch(resetNumberOfUnreadMessages(userAddress))
   }
 
   const friendsArray = useMemo(

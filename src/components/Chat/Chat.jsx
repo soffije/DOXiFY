@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
 import Web3 from 'web3'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { w3cwebsocket as W3CWebSocket } from 'websocket'
 
@@ -9,7 +8,7 @@ import ChatBar from './ChatBar/ChatBar'
 import ChatBody from './ChatBody/ChatBody'
 
 import {
-  addIncomingMessage,
+  handleIncomingMessageEvent,
   getSelectedAccount,
   subscribeUser,
 } from '../../features/chat/chatSlice'
@@ -55,28 +54,8 @@ function Chat() {
     client.onopen = () => {
       contract.events
         .MessageSent()
-        .on('data', async (event) => {
-          const { data } = await axios(
-            `https://gateway.pinata.cloud/ipfs/${event.returnValues.fileHash}`,
-            {
-              headers: {
-                Accept: 'text/plain',
-              },
-            }
-          )
-          const message = {
-            content: event.returnValues.content,
-            fileHash: data.message,
-            recipient: event.returnValues.recipient,
-            sender: event.returnValues.sender,
-            timestamp: event.returnValues.timestamp,
-          }
-
-          if (
-            selectedAccount === event.returnValues.recipient ||
-            selectedAccount === event.returnValues.sender
-          )
-            dispatch(addIncomingMessage(message))
+        .on('data', (event) => {
+          dispatch(handleIncomingMessageEvent(event))
         })
         .on('error', console.error)
     }
