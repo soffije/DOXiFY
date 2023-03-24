@@ -18,3 +18,9 @@
   border-radius: 0.4rem;
   color: #fff;
 }
+.friend-unread-badge {
+  position: relative;
+  margin: auto;
+  display: flex !important;
+  justify-content: flex-end !important;
+}

@@ -12,10 +12,11 @@ function Friend({ handleAccountSelection, friend }) {
     <li className="py-1">
       <div
         className={`d-flex flex-row border-bottom friend ${
-          friend === selectedUser ? 'selected' : ''
+          friend.address === selectedUser ? 'selected' : ''
         }`}
         onClick={() => {
           handleAccountSelection(friend.address)
+          console.log(friend, selectedUser)
         }}
       >
         <div>
@@ -31,9 +32,9 @@ function Friend({ handleAccountSelection, friend }) {
             {friend.address.slice(0, 5)}...{friend.address.slice(-4)}
           </p>
         </div>
-        <div>
+        <div className="friend-unread-badge d-flex justify-content-end">
           {friend.numberOfUnreadMessages !== 0 ? (
-            <span className="badge bg-danger rounded-pill float-end">
+            <span className="badge bg-primary">
               {friend.numberOfUnreadMessages}
             </span>
           ) : (
