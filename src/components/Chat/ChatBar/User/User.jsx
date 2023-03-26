@@ -1,22 +1,21 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import './Friend.css'
+import './User.css'
 
 import { getSelectedAccount } from '../../../../features/chat/chatSlice'
 
-function Friend({ handleAccountSelection, friend }) {
+function User({ user, handleUserClick }) {
   const selectedUser = useSelector(getSelectedAccount)
 
   return (
     <li className="py-1">
       <div
-        className={`d-flex flex-row border-bottom friend ${
-          friend.address === selectedUser ? 'selected' : ''
+        className={`d-flex flex-row border-bottom user ${
+          user.address === selectedUser ? 'selected' : ''
         }`}
         onClick={() => {
-          handleAccountSelection(friend.address)
-          console.log(friend, selectedUser)
+          handleUserClick(user.address)
         }}
       >
         <div>
@@ -29,13 +28,13 @@ function Friend({ handleAccountSelection, friend }) {
         </div>
         <div className="pt-1">
           <p className="fw-bold mb-0">
-            {friend.address.slice(0, 5)}...{friend.address.slice(-4)}
+            {user.address.slice(0, 5)}...{user.address.slice(-4)}
           </p>
         </div>
         <div className="friend-unread-badge d-flex justify-content-end">
-          {friend.numberOfUnreadMessages !== 0 ? (
+          {user.numberOfUnreadMessages !== 0 ? (
             <span className="badge bg-primary">
-              {friend.numberOfUnreadMessages}
+              {user.numberOfUnreadMessages}
             </span>
           ) : (
             ''
@@ -46,4 +45,4 @@ function Friend({ handleAccountSelection, friend }) {
   )
 }
 
-export default Friend
+export default User

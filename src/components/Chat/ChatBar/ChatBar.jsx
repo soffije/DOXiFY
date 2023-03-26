@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Tab, Tabs } from 'react-bootstrap'
 
 import { ChatContext } from '../Chat'
-import Friends from './FriendsList/Friends'
 import ChatHeader from './ChatHeader/ChatHeader'
+import PendingList from './PendingList/PendingList'
+import FriendsList from './FriendsList/FriendsList'
+import RequestsList from './RequestsList/RequestsList'
 import UsersSearch from '../../Forms/Search/UsersSearch'
 
 import {
@@ -14,6 +16,8 @@ import {
 } from '../../../features/user/userSlice'
 import {
   fetchFriends,
+  fetchPendings,
+  fetchRequests,
   getFriendsSearchQuery,
   setFriendSearchQuery,
 } from '../../../features/chat/chatSlice'
@@ -31,6 +35,8 @@ function ChatBar() {
   useEffect(() => {
     if (!address && !isUserConnected) return
     dispatch(fetchFriends({ contract, address }))
+    dispatch(fetchRequests({ contract, address }))
+    dispatch(fetchPendings({ contract, address }))
   }, [contract, address])
 
   return (
@@ -48,13 +54,13 @@ function ChatBar() {
         justify
       >
         <Tab eventKey="friends" title="Friends">
-          <Friends />
+          <FriendsList />
         </Tab>
         <Tab eventKey="request" title="Requests">
-          <h1>request</h1>
+          <RequestsList />
         </Tab>
-        <Tab eventKey="pending" title="Pending">
-          <h1>Pending</h1>
+        <Tab eventKey="pending" title="Pendings">
+          <PendingList />
         </Tab>
       </Tabs>
     </div>

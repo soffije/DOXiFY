@@ -32,7 +32,13 @@ function AddFriendModal() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    await dispatch(addFriend({ web3, contract, address, friendAddress }))
+    const args = {
+      web3: web3,
+      contract: contract,
+      address: address,
+      friendAddress: friendAddress,
+    }
+    await dispatch(addFriend(args))
     setShowModal(false)
   }
 

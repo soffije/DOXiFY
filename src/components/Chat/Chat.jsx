@@ -11,6 +11,8 @@ import {
   handleIncomingMessageEvent,
   getSelectedAccount,
   subscribeUser,
+  handleIncomingFriendRequestEvent,
+  handleRejectingFriendRequestEvent,
 } from '../../features/chat/chatSlice'
 import { getUserAddress } from '../../features/user/userSlice'
 
@@ -56,6 +58,20 @@ function Chat() {
         .MessageSent()
         .on('data', (event) => {
           dispatch(handleIncomingMessageEvent(event))
+        })
+        .on('error', console.error)
+
+      contract.events
+        .FriendRequestSent()
+        .on('data', (event) => {
+          dispatch(handleIncomingFriendRequestEvent(event))
+        })
+        .on('error', console.error)
+
+      contract.events
+        .FriendRequestReject()
+        .on('data', (event) => {
+          dispatch(handleRejectingFriendRequestEvent(event))
         })
         .on('error', console.error)
     }

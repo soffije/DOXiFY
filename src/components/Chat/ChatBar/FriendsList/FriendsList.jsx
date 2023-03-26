@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Friend from '../Friend/Friend'
+import User from '../User/User'
 import { FRIEND_SEARCH_PARAM } from '../../../../app/constants'
 
 import {
@@ -16,7 +16,7 @@ function Friends() {
   const friends = useSelector(getFriends)
   const friendsSearchQuery = useSelector(getFriendsSearchQuery)
 
-  const handleAccountSelection = (userAddress) => {
+  const handleUserClick = (userAddress) => {
     dispatch(setSelectedAccount(userAddress))
     dispatch(resetNumberOfUnreadMessages(userAddress))
   }
@@ -37,12 +37,8 @@ function Friends() {
   return (
     <div className="friends-container">
       <ul className="list-unstyled mb-0">
-        {friendsArray?.map((friend, index) => (
-          <Friend
-            key={index}
-            handleAccountSelection={handleAccountSelection}
-            friend={friend}
-          />
+        {friendsArray?.map((user, index) => (
+          <User key={index} user={user} handleUserClick={handleUserClick} />
         ))}
       </ul>
     </div>

@@ -1,24 +1,24 @@
-.friend {
+.user {
   border-radius: 0.4rem;
   transition: all 0.1s ease-in-out;
 }
 
-.friend img {
+.user img {
   margin-left: 0.3rem;
   margin-bottom: 0.375rem;
 }
 
-.friend:hover {
+.user:hover {
   background-color: #f8f9fa;
   transform: translateY(-0.05rem);
 }
 
-.friend.selected {
+.user.selected {
   background-color: #007bff;
   border-radius: 0.4rem;
   color: #fff;
 }
-.friend-unread-badge {
+.user-unread-badge {
   position: relative;
   margin: auto;
   display: flex !important;
