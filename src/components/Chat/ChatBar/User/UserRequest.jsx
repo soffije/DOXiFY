@@ -6,6 +6,9 @@ import { Button } from 'react-bootstrap'
 
 import { ChatContext } from '../../Chat'
 
+import ConfirmButton from '../../../Buttons/ConfirmButton'
+import DeclineButton from '../../../Buttons/DeclineButton'
+
 import { addFriend } from '../../../../features/chat/chatSlice'
 import { getUserAddress } from '../../../../features/user/userSlice'
 
@@ -41,32 +44,25 @@ function UserRequest({ user, userType = 'request', handleUserReject }) {
           </p>
         </div>
         {userType === 'request' ? (
-          <Button
-            variant="danger"
-            onClick={() => {
+          <DeclineButton
+            handleUserReject={() => {
               handleUserReject(user.address)
             }}
-          >
-            Undo
-          </Button>
+          />
         ) : (
           <>
-            <Button
-              variant="success"
-              onClick={() => {
-                handleUserAccept(user.address)
-              }}
-            >
-              Accept
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => {
-                handleUserReject(user.address)
-              }}
-            >
-              Reject
-            </Button>
+            <div className="d-flex mx-2">
+              <ConfirmButton
+                handleUserAccept={() => {
+                  handleUserAccept(user.address)
+                }}
+              />
+              <DeclineButton
+                handleUserReject={() => {
+                  handleUserReject(user.address)
+                }}
+              />
+            </div>
           </>
         )}
       </div>

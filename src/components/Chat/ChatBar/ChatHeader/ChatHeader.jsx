@@ -44,7 +44,7 @@ function ChatHeader() {
             style={{ cursor: 'pointer' }}
             onClick={handleOpen}
           />
-          <Dropdown show={isOpen} onHide={handleClose}>
+          <Dropdown show={isOpen} onBlur={handleClose}>
             <Dropdown.Menu>
               <Dropdown.Item onClick={handleClose}>Action 1</Dropdown.Item>
               <Dropdown.Item onClick={handleClose}>Action 2</Dropdown.Item>

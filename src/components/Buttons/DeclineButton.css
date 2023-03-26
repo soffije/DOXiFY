@@ -1,0 +1,12 @@
+.decline-button:hover {
+  background-color: red;
+}
+
+.decline-button .icon-container svg {
+  stroke: black;
+}
+
+.decline-button:hover .icon-container svg {
+  stroke: white;
+  fill: white;
+}

@@ -10,6 +10,7 @@
 
 .user:hover {
   background-color: #f8f9fa;
+  cursor: pointer;
   transform: translateY(-0.05rem);
 }
 

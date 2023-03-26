@@ -1,0 +1,12 @@
+.confirm-button:hover {
+  background-color: #198754;
+}
+
+.confirm-button .icon-container svg {
+  stroke: black;
+}
+
+.confirm-button:hover .icon-container svg {
+  stroke: white;
+  fill: white;
+}
