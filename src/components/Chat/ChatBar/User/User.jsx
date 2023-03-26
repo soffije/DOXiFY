@@ -31,7 +31,7 @@ function User({ user, handleUserClick }) {
             {user.address.slice(0, 5)}...{user.address.slice(-4)}
           </p>
         </div>
-        <div className="friend-unread-badge d-flex justify-content-end">
+        <div className="user-unread-badge d-flex justify-content-end">
           {user.numberOfUnreadMessages !== 0 ? (
             <span className="badge bg-primary">
               {user.numberOfUnreadMessages}
