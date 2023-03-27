@@ -21,9 +21,7 @@ export default function Header() {
           <div className="menu">
             <NavLink to="/">Home</NavLink>
             <NavLink to="about">About us</NavLink>
-            <NavLink to="https://doxify.gitbook.io/doxify/">
-              Documentanion
-            </NavLink>
+            <NavLink to="documentation">Documentation</NavLink>
             <NavLink to="contact">Contact</NavLink>
           </div>
           <button
@@ -46,10 +44,7 @@ export default function Header() {
         <NavLink to="about" onClick={hideMobileMenu}>
           About us
         </NavLink>
-        <NavLink
-          to="https://doxify.gitbook.io/doxify/"
-          onClick={hideMobileMenu}
-        >
+        <NavLink to="documentation" onClick={hideMobileMenu}>
           Documentanion
         </NavLink>
         <NavLink to="contact" onClick={hideMobileMenu}>

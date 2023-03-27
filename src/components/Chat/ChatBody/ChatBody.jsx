@@ -5,22 +5,25 @@ import { Form, Button } from 'react-bootstrap'
 
 import { ChatContext } from '../Chat'
 import ChatMessages from './ChatMessages'
+import Loader from '../../Loader/Loader'
 
 import {
   getSelectedAccount,
+  getSendigMessageLoading,
   sendUserMessage,
 } from '../../../features/chat/chatSlice'
+
 import { getUserAddress } from '../../../features/user/userSlice'
 
 function ChatBody() {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
   const selectedUserAddress = useSelector(getSelectedAccount)
+  const sendingButtonLoadig = useSelector(getSendigMessageLoading)
 
   const { web3, contract } = useContext(ChatContext)
 
   const [userMessage, setUserMessage] = useState('')
-  const [isSending, setIsSending] = useState(false)
 
   function handleInputChange(e) {
     setUserMessage(e.target.value)
@@ -28,23 +31,16 @@ function ChatBody() {
 
   const sendMessage = async () => {
     if (!userMessage) return
-
-    setIsSending(true)
-
-    try {
-      await dispatch(
-        sendUserMessage({
-          web3,
-          contract,
-          address,
-          selectedUserAddress,
-          userMessage,
-        })
-      )
-    } finally {
-      setUserMessage('')
-      setIsSending(false)
-    }
+    await dispatch(
+      sendUserMessage({
+        web3,
+        contract,
+        address,
+        selectedUserAddress,
+        userMessage,
+      })
+    )
+    setUserMessage('')
   }
 
   return (
@@ -63,14 +59,11 @@ function ChatBody() {
               value={userMessage}
               onChange={handleInputChange}
             />
-            <Button
-              variant="primary"
-              className="float-right"
+            <Loader
+              userLoading={sendingButtonLoadig}
               onClick={sendMessage}
-              disabled={isSending}
-            >
-              {isSending ? 'Sending...' : 'Send'}
-            </Button>
+              buttonText="Send"
+            ></Loader>
           </div>
         </>
       )}

@@ -6,6 +6,7 @@ import formatMessageDate from '../../helpers/formatMessageDate'
 const initialState = {
   selectedAccount: null,
   selectedAccountMessages: [],
+  sendingMessageLoading: 'idle',
   friends: [],
   requests: [],
   pendings: [],
@@ -296,7 +297,7 @@ export const sendUserMessage = createAsyncThunk(
         .sendMessage(selectedUserAddress, 'text', request.data.IpfsHash)
         .encodeABI()
 
-      window.ethereum
+      await window.ethereum
         .request({
           method: 'eth_sendTransaction',
           params: [
@@ -584,13 +585,16 @@ export const chatSlice = createSlice({
       })
       .addCase(sendUserMessage.pending, (state) => {
         state.loading = 'pending'
+        state.sendingMessageLoading = 'pending'
         state.error = null
       })
       .addCase(sendUserMessage.fulfilled, (state) => {
         state.loading = 'idle'
+        state.sendingMessageLoading = 'idle'
       })
       .addCase(sendUserMessage.rejected, (state, action) => {
         state.loading = 'idle'
+        state.sendingMessageLoading = 'idle'
         state.error = action.error.message
       })
       .addCase(fetchSelectedAccountMessages.pending, (state) => {
@@ -614,6 +618,8 @@ export const getPendings = (state) => state.chat.pendings
 export const getSelectedAccount = (state) => state.chat.selectedAccount
 export const getSelectedAccountMessages = (state) =>
   state.chat.selectedAccountMessages
+export const getSendigMessageLoading = (state) =>
+  state.chat.sendingMessageLoading
 
 export const getFriendsSearchQuery = (state) => state.chat.friendSearchQuery
 
