@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+import formatMessageDate from '../../helpers/formatMessageDate'
+
 const initialState = {
   selectedAccount: null,
   selectedAccountMessages: [],
@@ -271,7 +273,10 @@ export const fetchPendings = createAsyncThunk(
 
 export const sendUserMessage = createAsyncThunk(
   'chat/sendUserMessage',
-  async ({ web3, contract, address, selectedUserAddress, userMessage }) => {
+  async (
+    { web3, contract, address, selectedUserAddress, userMessage },
+    { dispatch }
+  ) => {
     try {
       const request = await axios({
         method: 'post',
@@ -306,6 +311,14 @@ export const sendUserMessage = createAsyncThunk(
         })
         .then((txHash) => {
           console.log(`Transaction hash: ${txHash}`)
+          const message = {
+            content: 'text',
+            fileHash: userMessage,
+            recipient: selectedUserAddress,
+            sender: address,
+            timestamp: Math.floor(new Date().getTime() / 1000),
+          }
+          dispatch(addIncomingMessage(message))
         })
     } catch (error) {
       console.log(error)
