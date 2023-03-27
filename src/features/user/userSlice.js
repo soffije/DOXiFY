@@ -8,9 +8,7 @@ const initialState = {
   error: null,
   loading: 'idle',
 }
-// export function isMobileDevice() {
-//   return 'ontouchstart' in window || 'onmsgesturechange' in window
-// }
+
 export const connectUser = createAsyncThunk('user/connect', async () => {
   try {
     if (!isMetaMaskInstalled())
@@ -43,15 +41,6 @@ export const isUserConnected = createAsyncThunk(
           return { isConnected: true, address }
         }
       }
-      // if (isMobileDevice()) {
-      //   const accounts = await window.ethereum.request({
-      //     method: 'eth_requestAccounts',
-      //   })
-      //   if (accounts.length > 0) {
-      //     const address = accounts[0]
-      //     return { isConnected: true, address }
-      //   }
-      // }
       return { isConnected: false, address: null }
     } catch (error) {
       return { error: error.message }

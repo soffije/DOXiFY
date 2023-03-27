@@ -14,8 +14,12 @@ export default function Header() {
     <header className="border-bottom">
       <nav className={isMobileMenuActive ? 'mobile-view' : ''}>
         <div className="nav-container">
-          <NavLink to="/" className="app-logo" onClick={hideMobileMenu}>
-            <img src="logo512.png" className="logo" />
+          <NavLink
+            to="/"
+            className="app-logo d-flex align-items-center"
+            onClick={hideMobileMenu}
+          >
+            <img src="logo512.png" className="logo" alt="Logo" />
             DOXiFY
           </NavLink>
           <div className="menu">

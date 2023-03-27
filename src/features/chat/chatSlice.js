@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import formatMessageDate from '../../helpers/formatMessageDate'
-
 const initialState = {
   selectedAccount: null,
   selectedAccountMessages: [],
