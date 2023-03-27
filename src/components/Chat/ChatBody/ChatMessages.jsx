@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import './ChatMessages.css'
 
-import { ChatContext } from '../Chat'
+import { WebSocketContext } from '../../../api/WebSocketProvider'
 import ChatMessage from './ChatMessage'
 
 import {
@@ -19,7 +19,7 @@ function ChatMessages() {
   const selectedUserAddress = useSelector(getSelectedAccount)
   const selectedAccountMessages = useSelector(getSelectedAccountMessages)
 
-  const { web3, contract } = useContext(ChatContext)
+  const { web3, contract } = useContext(WebSocketContext)
 
   const messagesEndRef = useRef(null)
 

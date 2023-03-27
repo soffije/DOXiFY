@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { ChatContext } from '../../Chat'
+import { WebSocketContext } from '../../../../api/WebSocketProvider'
 import UserRequest from '../User/UserRequest'
 
 import { getUserAddress } from '../../../../features/user/userSlice'
@@ -11,7 +11,7 @@ function RequestsList() {
   const dispatch = useDispatch()
   const requests = useSelector(getRequests)
   const address = useSelector(getUserAddress)
-  const { web3, contract } = useContext(ChatContext)
+  const { web3, contract } = useContext(WebSocketContext)
 
   const handleUserReject = (friendAddress) => {
     const args = {

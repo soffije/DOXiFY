@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Form, Button } from 'react-bootstrap'
 
-import { ChatContext } from '../Chat'
+import { WebSocketContext } from '../../../api/WebSocketProvider'
 import ChatMessages from './ChatMessages'
 import Loader from '../../Loader/Loader'
 
@@ -21,7 +21,7 @@ function ChatBody() {
   const selectedUserAddress = useSelector(getSelectedAccount)
   const sendingButtonLoadig = useSelector(getSendigMessageLoading)
 
-  const { web3, contract } = useContext(ChatContext)
+  const { web3, contract } = useContext(WebSocketContext)
 
   const [userMessage, setUserMessage] = useState('')
 

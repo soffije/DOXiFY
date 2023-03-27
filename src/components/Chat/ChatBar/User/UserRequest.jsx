@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import './User.css'
 import { Button } from 'react-bootstrap'
 
-import { ChatContext } from '../../Chat'
+import { WebSocketContext } from '../../../../api/WebSocketProvider'
 
 import ConfirmButton from '../../../Buttons/ConfirmButton'
 import DeclineButton from '../../../Buttons/DeclineButton'
@@ -15,7 +15,7 @@ import { getUserAddress } from '../../../../features/user/userSlice'
 function UserRequest({ user, userType = 'request', handleUserReject }) {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
-  const { web3, contract } = useContext(ChatContext)
+  const { web3, contract } = useContext(WebSocketContext)
 
   const handleUserAccept = (friendAddress) => {
     const args = {

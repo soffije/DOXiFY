@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { ChatContext } from '../Chat/Chat'
+import { WebSocketContext } from '../../api/WebSocketProvider'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { addFriend } from '../../features/chat/chatSlice'
 import { getUserAddress } from '../../features/user/userSlice'
@@ -11,7 +11,7 @@ function AddFriendModal() {
 
   const address = useSelector(getUserAddress)
 
-  const { web3, contract } = useContext(ChatContext)
+  const { web3, contract } = useContext(WebSocketContext)
 
   const [friendAddress, setFriendAddress] = useState('')
   const [validAddress, setValidAddress] = useState(false)

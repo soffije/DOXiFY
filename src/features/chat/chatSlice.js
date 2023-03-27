@@ -41,9 +41,6 @@ export const subscribeUser = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
-        })
         .catch((error) => {
           console.error(error)
         })
@@ -76,9 +73,7 @@ export const addFriend = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
-
+        .then(() => {
           const pendings = state.chat.pendings
           if (pendings.length > 0) {
             pendings.forEach((element) => {
@@ -108,7 +103,6 @@ export const rejectRequest = createAsyncThunk(
   'chat/rejectRequest',
   async (args, { getState, dispatch }) => {
     try {
-      console.log('reject request')
       const state = getState()
       const gasPrice = await args.web3.eth.getGasPrice()
       const functionAbi = args.contract.methods
@@ -127,9 +121,7 @@ export const rejectRequest = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
-
+        .then(() => {
           const requests = state.chat.requests
           if (requests.length > 0) {
             requests.forEach((element) => {
@@ -156,7 +148,6 @@ export const rejectPendings = createAsyncThunk(
   'chat/rejectPendings',
   async (args, { getState, dispatch }) => {
     try {
-      console.log('reject pending')
       const state = getState()
       const gasPrice = await args.web3.eth.getGasPrice()
       const functionAbi = args.contract.methods
@@ -175,9 +166,7 @@ export const rejectPendings = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
-
+        .then(() => {
           const pendings = state.chat.pendings
           if (pendings.length > 0) {
             pendings.forEach((element) => {
@@ -208,8 +197,6 @@ export const fetchFriends = createAsyncThunk(
         .getFriends()
         .call({ from: address })
 
-      console.log('Friends', friends)
-
       const result = friends?.map((friend) => {
         return {
           address: friend,
@@ -232,8 +219,6 @@ export const fetchRequests = createAsyncThunk(
         .getRequests()
         .call({ from: address })
 
-      console.log('Requests', requests)
-
       const result = requests?.map((user) => {
         return {
           address: user,
@@ -254,8 +239,6 @@ export const fetchPendings = createAsyncThunk(
       const pendinds = await contract.methods
         .getPending()
         .call({ from: address })
-
-      console.log('Pendinds', pendinds)
 
       const result = pendinds?.map((user) => {
         return {
@@ -308,8 +291,7 @@ export const sendUserMessage = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
+        .then(() => {
           const message = {
             content: 'text',
             fileHash: userMessage,

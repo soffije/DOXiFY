@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { ChatContext } from '../../Chat'
+import { WebSocketContext } from '../../../../api/WebSocketProvider'
 import UserRequest from '../User/UserRequest'
 
 import {
@@ -14,7 +14,7 @@ function PendingList() {
   const dispatch = useDispatch()
   const pendings = useSelector(getPendings)
   const address = useSelector(getUserAddress)
-  const { web3, contract } = useContext(ChatContext)
+  const { web3, contract } = useContext(WebSocketContext)
 
   const handleUserReject = (friendAddress) => {
     const args = {
