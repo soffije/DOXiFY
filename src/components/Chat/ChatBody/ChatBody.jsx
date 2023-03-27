@@ -20,6 +20,7 @@ function ChatBody() {
   const { web3, contract } = useContext(ChatContext)
 
   const [userMessage, setUserMessage] = useState('')
+  const [isSending, setIsSending] = useState(false)
 
   function handleInputChange(e) {
     setUserMessage(e.target.value)
@@ -27,16 +28,23 @@ function ChatBody() {
 
   const sendMessage = async () => {
     if (!userMessage) return
-    await dispatch(
-      sendUserMessage({
-        web3,
-        contract,
-        address,
-        selectedUserAddress,
-        userMessage,
-      })
-    )
-    setUserMessage('')
+
+    setIsSending(true)
+
+    try {
+      await dispatch(
+        sendUserMessage({
+          web3,
+          contract,
+          address,
+          selectedUserAddress,
+          userMessage,
+        })
+      )
+    } finally {
+      setUserMessage('')
+      setIsSending(false)
+    }
   }
 
   return (
@@ -59,8 +67,9 @@ function ChatBody() {
               variant="primary"
               className="float-right"
               onClick={sendMessage}
+              disabled={isSending}
             >
-              Send
+              {isSending ? 'Sending...' : 'Send'}
             </Button>
           </div>
         </>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import './Header.css'
 
@@ -15,12 +15,13 @@ export default function Header() {
       <nav className={isMobileMenuActive ? 'mobile-view' : ''}>
         <div className="nav-container">
           <NavLink to="/" className="app-logo" onClick={hideMobileMenu}>
+            <img src="logo512.png" className="logo" />
             DOXiFY
           </NavLink>
           <div className="menu">
             <NavLink to="/">Home</NavLink>
             <NavLink to="about">About us</NavLink>
-            <NavLink togi="https://doxify.gitbook.io/doxify/">
+            <NavLink to="https://doxify.gitbook.io/doxify/">
               Documentanion
             </NavLink>
             <NavLink to="contact">Contact</NavLink>
