@@ -2,20 +2,18 @@ import React from 'react'
 
 import formatMessageDate from '../../../helpers/formatMessageDate'
 
-import convertAddress from '../../../helpers/convertAddress'
-
 function ChatMessage({ address, message }) {
   return (
     <div
       className={`mb-2 ${
-        convertAddress(message.sender) === address
+        message.sender.toLowerCase() === address
           ? 'align-items-end'
           : 'align-items-start'
       } d-flex flex-column`}
     >
       <div
         className={`${
-          convertAddress(message.sender) === address
+          message.sender.toLowerCase() === address
             ? 'bg-primary text-white'
             : 'bg-light text-black'
         } chat-message`}

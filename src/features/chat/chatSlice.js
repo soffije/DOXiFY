@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import convertAddress from '../../helpers/convertAddress'
 
 const initialState = {
   selectedAccount: null,
@@ -79,8 +78,8 @@ export const addFriend = createAsyncThunk(
           if (pendings.length > 0) {
             pendings.forEach((element) => {
               if (
-                convertAddress(element.address) ===
-                convertAddress(args.friendAddress)
+                element.address.toLowerCase() ===
+                args.friendAddress.toLowerCase()
               ) {
                 dispatch(removeUserFromPendings(args.friendAddress))
                 dispatch(addUserToFriendsList({ address: args.friendAddress }))
@@ -127,8 +126,8 @@ export const rejectRequest = createAsyncThunk(
           if (requests.length > 0) {
             requests.forEach((element) => {
               if (
-                convertAddress(element.address) ===
-                convertAddress(args.friendAddress)
+                element.address.toLowerCase() ===
+                args.friendAddress.toLowerCase()
               ) {
                 dispatch(removeUserFromRequests(args.friendAddress))
               }
@@ -172,8 +171,8 @@ export const rejectPendings = createAsyncThunk(
           if (pendings.length > 0) {
             pendings.forEach((element) => {
               if (
-                convertAddress(element.address) ===
-                convertAddress(args.friendAddress)
+                element.address.toLowerCase() ===
+                args.friendAddress.toLowerCase()
               ) {
                 dispatch(removeUserFromPendings(args.friendAddress))
               }
@@ -349,17 +348,17 @@ export const handleIncomingMessageEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = convertAddress(state.user.address)
-      const sender = convertAddress(args.returnValues.sender)
-      const recipient = convertAddress(args.returnValues.recipient)
+      const address = state.user.address.toLowerCase()
+      const sender = args.returnValues.sender.toLowerCase()
+      const recipient = args.returnValues.recipient.toLowerCase()
       let selectedAccount = state.chat.selectedAccount
       if (selectedAccount !== null)
-        selectedAccount = convertAddress(state.chat.selectedAccount)
+        selectedAccount = state.chat.selectedAccount.toLowerCase()
 
       if (address === recipient)
         if (selectedAccount !== sender) {
           const updatedFriends = state.chat.friends.map((friend) => {
-            if (convertAddress(friend.address) === sender) {
+            if (friend.address.toLowerCase() === sender) {
               return {
                 ...friend,
                 numberOfUnreadMessages: friend.numberOfUnreadMessages + 1,
@@ -393,15 +392,15 @@ export const handleIncomingFriendRequestEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = convertAddress(state.user.address)
-      const requester = convertAddress(args.returnValues.requester)
-      const recipient = convertAddress(args.returnValues.recipient)
+      const address = state.user.address.toLowerCase()
+      const requester = args.returnValues.requester.toLowerCase()
+      const recipient = args.returnValues.recipient.toLowerCase()
 
       if (address === recipient) {
         const requests = state.chat.requests
         if (requests.length > 0) {
           requests.forEach((element) => {
-            if (convertAddress(element.address) === requester) {
+            if (element.address.toLowerCase() === requester) {
               dispatch(removeUserFromRequests(requester))
               dispatch(addUserToFriendsList({ address: requester }))
             }
@@ -422,16 +421,16 @@ export const handleRejectingFriendRequestEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = convertAddress(state.user.address)
-      const requester = convertAddress(args.returnValues.requester)
-      const recipient = convertAddress(args.returnValues.recipient)
+      const address = state.user.address.toLowerCase()
+      const requester = args.returnValues.requester.toLowerCase()
+      const recipient = args.returnValues.recipient.toLowerCase()
 
       if (address === recipient) {
         const indexRequests = state.chat.requests.findIndex(
-          (friend) => convertAddress(friend.address) === requester
+          (friend) => friend.address.toLowerCase() === requester
         )
         const indexPendings = state.chat.pendings.findIndex(
-          (friend) => convertAddress(friend.address) === requester
+          (friend) => friend.address.toLowerCase() === requester
         )
 
         if (indexRequests > -1) dispatch(removeUserFromRequests(requester))
@@ -464,9 +463,9 @@ export const chatSlice = createSlice({
       state.requests.push(action.payload)
     },
     removeUserFromPendings: (state, action) => {
-      const userAddress = convertAddress(action.payload)
+      const userAddress = action.payload.toLowerCase()
       const index = state.pendings.findIndex(
-        (friend) => convertAddress(friend.address) === userAddress
+        (friend) => friend.address.toLowerCase() === userAddress
       )
       if (index > -1) {
         const newArray = state.pendings
@@ -475,9 +474,9 @@ export const chatSlice = createSlice({
       }
     },
     removeUserFromRequests: (state, action) => {
-      const userAddress = convertAddress(action.payload)
+      const userAddress = action.payload.toLowerCase()
       const index = state.requests.findIndex(
-        (friend) => convertAddress(friend.address) === userAddress
+        (friend) => friend.address.toLowerCase() === userAddress
       )
       if (index > -1) {
         const newArray = state.requests
@@ -492,9 +491,9 @@ export const chatSlice = createSlice({
       state.friends.push(action.payload)
     },
     resetNumberOfUnreadMessages: (state, action) => {
-      const userAddress = convertAddress(action.payload)
+      const userAddress = action.payload.toLowerCase()
       const index = state.friends.findIndex(
-        (friend) => convertAddress(friend.address) === userAddress
+        (friend) => friend.address.toLowerCase() === userAddress
       )
       if (index !== -1) {
         state.friends[index] = {
