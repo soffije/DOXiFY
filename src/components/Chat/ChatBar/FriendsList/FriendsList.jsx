@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import User from '../User/User'
 import { FRIEND_SEARCH_PARAM } from '../../../../app/constants'
+import convertAddress from '../../../../helpers/convertAddress'
 
 import {
   getFriends,
@@ -28,7 +29,7 @@ function Friends() {
           object[objectKeyName]
             ?.toString()
             .toLowerCase()
-            .includes(friendsSearchQuery.toLowerCase())
+            .includes(convertAddress(friendsSearchQuery))
         )
       ),
     [friends, friendsSearchQuery]
