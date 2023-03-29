@@ -37,41 +37,38 @@ function WebSocketProvider({ Chat }) {
 
       dispatch(subscribeUser({ web3, contract, address }))
 
-      contract.events.MessageSent(
-        {
+      contract.events
+        .MessageSent({
           filter: {
             recipient: address,
           },
-        },
-        (error, event) => {
-          if (error) console.error('Error: ', error)
+        })
+        .on('data', (event) => {
           dispatch(handleIncomingMessageEvent(event))
-        }
-      )
+        })
+        .on('error', console.error)
 
-      contract.events.FriendRequestSent(
-        {
+      contract.events
+        .FriendRequestSent({
           filter: {
             recipient: address,
           },
-        },
-        (error, event) => {
-          if (error) console.error('Error: ', error)
+        })
+        .on('data', (event) => {
           dispatch(handleIncomingFriendRequestEvent(event))
-        }
-      )
+        })
+        .on('error', console.error)
 
-      contract.events.FriendRequestReject(
-        {
+      contract.events
+        .FriendRequestReject({
           filter: {
             recipient: address,
           },
-        },
-        (error, event) => {
-          if (error) console.error('Error: ', error)
+        })
+        .on('data', (event) => {
           dispatch(handleRejectingFriendRequestEvent(event))
-        }
-      )
+        })
+        .on('error', console.error)
     }
 
     return () => {

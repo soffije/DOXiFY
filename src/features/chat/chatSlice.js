@@ -348,38 +348,35 @@ export const handleIncomingMessageEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = state.user.address.toLowerCase()
+
       const sender = args.returnValues.sender.toLowerCase()
       const recipient = args.returnValues.recipient.toLowerCase()
       let selectedAccount = state.chat.selectedAccount
       if (selectedAccount !== null)
         selectedAccount = state.chat.selectedAccount.toLowerCase()
 
-      if (address === recipient)
-        if (selectedAccount !== sender) {
-          const updatedFriends = state.chat.friends.map((friend) => {
-            if (friend.address.toLowerCase() === sender) {
-              return {
-                ...friend,
-                numberOfUnreadMessages: friend.numberOfUnreadMessages + 1,
-              }
+      if (selectedAccount !== sender) {
+        const updatedFriends = state.chat.friends.map((friend) => {
+          if (friend.address.toLowerCase() === sender) {
+            return {
+              ...friend,
+              numberOfUnreadMessages: friend.numberOfUnreadMessages + 1,
             }
-            return friend
-          })
-          dispatch(setFriendsArray(updatedFriends))
-        } else {
-          const { data } = await getMessageByIPFSHash(
-            args.returnValues.fileHash
-          )
-          const message = {
-            content: args.returnValues.content,
-            fileHash: data.message,
-            recipient: recipient,
-            sender: sender,
-            timestamp: args.returnValues.timestamp,
           }
-          dispatch(addIncomingMessage(message))
+          return friend
+        })
+        dispatch(setFriendsArray(updatedFriends))
+      } else {
+        const { data } = await getMessageByIPFSHash(args.returnValues.fileHash)
+        const message = {
+          content: args.returnValues.content,
+          fileHash: data.message,
+          recipient: recipient,
+          sender: sender,
+          timestamp: args.returnValues.timestamp,
         }
+        dispatch(addIncomingMessage(message))
+      }
     } catch (error) {
       console.log(error)
       return { error: error.message }
@@ -392,22 +389,19 @@ export const handleIncomingFriendRequestEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = state.user.address.toLowerCase()
-      const requester = args.returnValues.requester.toLowerCase()
-      const recipient = args.returnValues.recipient.toLowerCase()
 
-      if (address === recipient) {
-        const requests = state.chat.requests
-        if (requests.length > 0) {
-          requests.forEach((element) => {
-            if (element.address.toLowerCase() === requester) {
-              dispatch(removeUserFromRequests(requester))
-              dispatch(addUserToFriendsList({ address: requester }))
-            }
-          })
-        } else {
-          dispatch(addIncomingFriendRequest({ address: requester }))
-        }
+      const requester = args.returnValues.requester.toLowerCase()
+
+      const requests = state.chat.requests
+      if (requests.length > 0) {
+        requests.forEach((element) => {
+          if (element.address.toLowerCase() === requester) {
+            dispatch(removeUserFromRequests(requester))
+            dispatch(addUserToFriendsList({ address: requester }))
+          }
+        })
+      } else {
+        dispatch(addIncomingFriendRequest({ address: requester }))
       }
     } catch (error) {
       console.log(error)
@@ -421,21 +415,18 @@ export const handleRejectingFriendRequestEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = state.user.address.toLowerCase()
+
       const requester = args.returnValues.requester.toLowerCase()
-      const recipient = args.returnValues.recipient.toLowerCase()
 
-      if (address === recipient) {
-        const indexRequests = state.chat.requests.findIndex(
-          (friend) => friend.address.toLowerCase() === requester
-        )
-        const indexPendings = state.chat.pendings.findIndex(
-          (friend) => friend.address.toLowerCase() === requester
-        )
+      const indexRequests = state.chat.requests.findIndex(
+        (friend) => friend.address.toLowerCase() === requester
+      )
+      const indexPendings = state.chat.pendings.findIndex(
+        (friend) => friend.address.toLowerCase() === requester
+      )
 
-        if (indexRequests > -1) dispatch(removeUserFromRequests(requester))
-        if (indexPendings > -1) dispatch(removeUserFromPendings(requester))
-      }
+      if (indexRequests > -1) dispatch(removeUserFromRequests(requester))
+      if (indexPendings > -1) dispatch(removeUserFromPendings(requester))
     } catch (error) {
       console.log(error)
       return { error: error.message }
