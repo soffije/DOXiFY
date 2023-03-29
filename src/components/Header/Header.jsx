@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { Navbar } from 'react-bootstrap'
 
 import './Header.css'
 
@@ -19,7 +20,9 @@ export default function Header() {
             className="app-logo d-flex align-items-center"
             onClick={hideMobileMenu}
           >
-            <img src="logo512.png" className="logo" alt="Logo" />
+            <Navbar.Brand className="logo">
+              <img src="/Logo.svg" width="40" height="40" />
+            </Navbar.Brand>
             DOXiFY
           </NavLink>
           <div className="menu">
