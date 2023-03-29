@@ -142,8 +142,7 @@ nav {
   background-color: var(--primary);
 }
 .logo {
-  max-width: 2rem;
-  height: auto;
+  flex: 0 0 auto;
   margin-right: 0.5rem;
 }
 
