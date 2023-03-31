@@ -5,7 +5,7 @@ import { WebSocketContext } from '../../api/WebSocketProvider'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { addFriend } from '../../features/chat/chatSlice'
 import { getUserAddress } from '../../features/user/userSlice'
-import { adduser } from '../../api/indexDB'
+import { addUser } from '../../api/indexDB'
 
 function AddFriendModal() {
   const dispatch = useDispatch()
@@ -46,7 +46,10 @@ function AddFriendModal() {
       friendAddress: friendAddress,
     }
     await dispatch(addFriend(args))
-    adduser({ address: friendAddress, avatar: 'sdfsdf', name: friendName })
+    await addUser({
+      address: friendAddress,
+      name: friendName,
+    })
     setShowModal(false)
   }
 

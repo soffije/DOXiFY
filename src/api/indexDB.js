@@ -50,7 +50,7 @@ export async function getUser(user) {
     }
   })
 }
-export async function adduser(user) {
+export async function addUser(user) {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION)
 
