@@ -5,6 +5,7 @@ import { WebSocketContext } from '../../api/WebSocketProvider'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { addFriend } from '../../features/chat/chatSlice'
 import { getUserAddress } from '../../features/user/userSlice'
+import { adduser } from '../../api/indexDB'
 
 function AddFriendModal() {
   const dispatch = useDispatch()
@@ -14,6 +15,7 @@ function AddFriendModal() {
   const { web3, contract } = useContext(WebSocketContext)
 
   const [friendAddress, setFriendAddress] = useState('')
+  const [friendName, setFriendName] = useState('')
   const [validAddress, setValidAddress] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
@@ -30,6 +32,11 @@ function AddFriendModal() {
     }
   }
 
+  const handleNameChange = (event) => {
+    const inputName = event.target.value
+    setFriendName(inputName)
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     const args = {
@@ -39,6 +46,7 @@ function AddFriendModal() {
       friendAddress: friendAddress,
     }
     await dispatch(addFriend(args))
+    adduser({ address: friendAddress, avatar: 'sdfsdf', name: friendName })
     setShowModal(false)
   }
 
@@ -87,6 +95,12 @@ function AddFriendModal() {
                     ? 'green'
                     : 'red',
                 }}
+              />
+              <Form.Label>Friend name</Form.Label>
+              <Form.Control
+                placeholder="Enter Name"
+                value={friendName}
+                onChange={handleNameChange}
               />
             </Form.Group>
             <Modal.Footer>
