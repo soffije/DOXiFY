@@ -55,6 +55,9 @@ function ChatBody() {
           <div className="d-flex flex-row gap-2">
             <Form.Control
               type="text"
+              as="textarea"
+              rows={1}
+              maxLength="4096"
               placeholder="Enter message"
               value={userMessage}
               onChange={handleInputChange}
