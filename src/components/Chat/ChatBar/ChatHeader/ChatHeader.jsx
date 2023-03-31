@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
 import React, { useState, useRef } from 'react'
-import { Dropdown, Button } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap'
 
-import AddFriendModal from '../../../Modal/AddFriend'
+import FriendModal from '../../../Modal/FriendModal'
 
 import { getUserAddress } from '../../../../features/user/userSlice'
 
@@ -60,7 +60,7 @@ function ChatHeader() {
           </h6>
         </div>
         <div className="flex-grow-1">
-          <AddFriendModal />
+          <FriendModal />
         </div>
       </div>
     </>

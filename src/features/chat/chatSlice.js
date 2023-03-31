@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { getUser } from '../../api/indexDB'
 
 const initialState = {
   selectedAccount: null,
@@ -199,6 +200,7 @@ export const fetchFriends = createAsyncThunk(
 
       const result = friends?.map((friend) => {
         return {
+          name: '',
           address: friend,
           numberOfUnreadMessages: 0,
         }
