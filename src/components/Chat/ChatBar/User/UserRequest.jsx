@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import './User.css'
-import { Button } from 'react-bootstrap'
 
 import { WebSocketContext } from '../../../../api/WebSocketProvider'
 

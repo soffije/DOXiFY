@@ -27,10 +27,13 @@ function User({ user, handleUserClick }) {
           />
         </div>
         <div className="pt-1">
-          {user.name && <p className="fw-bold mb-0">{user.name}</p>}
-          <p className="fw-bold mb-0">
-            {user.address.slice(0, 5)}...{user.address.slice(-4)}
-          </p>
+          {user.name ? (
+            <p className="fw-bold mb-0">{user.name}</p>
+          ) : (
+            <p className="fw-bold mb-0">
+              {user.address.slice(0, 5)}...{user.address.slice(-4)}
+            </p>
+          )}
         </div>
         <div className="user-unread-badge d-flex justify-content-end">
           {user.numberOfUnreadMessages !== 0 ? (

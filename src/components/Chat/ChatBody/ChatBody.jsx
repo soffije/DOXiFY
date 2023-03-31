@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 
 import { WebSocketContext } from '../../../api/WebSocketProvider'
 import ChatMessages from './ChatMessages'
@@ -49,7 +49,7 @@ function ChatBody() {
         <>
           <h6 className="text-center mb-0">
             {selectedUserAddress.slice(0, 5)}...{selectedUserAddress.slice(-4)}
-          </h6>{' '}
+          </h6>
           <hr />
           <ChatMessages />
           <div className="d-flex flex-row gap-2">

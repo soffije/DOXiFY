@@ -105,7 +105,7 @@ export async function addUser(user) {
       const tx = db.transaction(STORE_NAME, 'readwrite')
       const store = tx.objectStore(STORE_NAME)
 
-      const requestAdd = store.add(user, user.address)
+      const requestAdd = store.add(user, user.address.toLowerCase())
 
       requestAdd.onsuccess = function () {
         resolve()
@@ -130,7 +130,7 @@ export async function addUser(user) {
     }
   })
 }
-export async function deleteUser(user) {
+export async function deleteUser(address) {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION)
 
@@ -144,7 +144,7 @@ export async function deleteUser(user) {
       const tx = db.transaction(STORE_NAME, 'readwrite')
       const store = tx.objectStore(STORE_NAME)
 
-      const requestDelete = store.delete(user.address)
+      const requestDelete = store.delete(address)
 
       requestDelete.onsuccess = function () {
         resolve()

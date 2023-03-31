@@ -1,1 +1,1 @@
-export const FRIEND_SEARCH_PARAM = ['address', 'username']
+export const FRIEND_SEARCH_PARAM = ['address', 'name']

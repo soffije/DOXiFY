@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { getUser } from '../../api/indexDB'
+import { deleteUser, getAllUsers } from '../../api/indexDB'
 
 const initialState = {
   selectedAccount: null,
@@ -130,6 +130,7 @@ export const rejectRequest = createAsyncThunk(
                 element.address.toLowerCase() ===
                 args.friendAddress.toLowerCase()
               ) {
+                deleteUser(args.friendAddress.toLowerCase())
                 dispatch(removeUserFromRequests(args.friendAddress))
               }
             })
@@ -198,13 +199,19 @@ export const fetchFriends = createAsyncThunk(
         .getFriends()
         .call({ from: address })
 
-      const result = friends?.map((friend) => {
+      const savedFriends = await getAllUsers()
+
+      const result = friends.map((item) => {
+        const matchingItem = savedFriends.find(
+          (firstItem) => firstItem.address === item
+        )
         return {
-          name: '',
-          address: friend,
+          address: item,
+          name: matchingItem?.name,
           numberOfUnreadMessages: 0,
         }
       })
+
       return result
     } catch (error) {
       console.log(error)
@@ -429,6 +436,8 @@ export const handleRejectingFriendRequestEvent = createAsyncThunk(
 
       if (indexRequests > -1) dispatch(removeUserFromRequests(requester))
       if (indexPendings > -1) dispatch(removeUserFromPendings(requester))
+
+      deleteUser(requester)
     } catch (error) {
       console.log(error)
       return { error: error.message }
