@@ -38,8 +38,8 @@ export default function AppLayout() {
             <Outlet />
           </div>
         </Container>
+        <Footer />
       </section>
-      <Footer />
     </>
   )
 }
