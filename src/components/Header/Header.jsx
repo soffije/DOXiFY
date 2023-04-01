@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { Navbar } from 'react-bootstrap'
 
 import './Header.css'
@@ -28,7 +28,7 @@ export default function Header() {
           <div className="menu">
             <NavLink to="/">Home</NavLink>
             <NavLink to="about">About us</NavLink>
-            <NavLink to="documentation">Documentation</NavLink>
+            <Link to="https://doxify.gitbook.io/doxify/">Documentanion</Link>
             <NavLink to="contact">Contact</NavLink>
           </div>
           <button
@@ -51,9 +51,9 @@ export default function Header() {
         <NavLink to="about" onClick={hideMobileMenu}>
           About us
         </NavLink>
-        <NavLink to="documentation" onClick={hideMobileMenu}>
+        <Link to="https://doxify.gitbook.io/doxify/" onClick={hideMobileMenu}>
           Documentanion
-        </NavLink>
+        </Link>
         <NavLink to="contact" onClick={hideMobileMenu}>
           Contact
         </NavLink>

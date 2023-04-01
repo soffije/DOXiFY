@@ -3,7 +3,7 @@ import './ConfirmButton.css'
 
 const ConfirmButton = ({ handleUserAccept }) => {
   return (
-    <button className="btn confirm-button" onClick={handleUserAccept}>
+    <button className="btn-confirm confirm-button" onClick={handleUserAccept}>
       <span className="icon-container">
         <svg
           width="3rem"
