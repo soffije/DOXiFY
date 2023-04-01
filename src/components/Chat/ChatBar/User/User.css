@@ -24,3 +24,8 @@
   margin: auto;
   margin-right: 0.7rem;
 }
+.btn-container {
+  position: relative !important;
+  justify-self: flex-end !important;
+  margin: auto !important;
+}

@@ -58,7 +58,7 @@ function ChatBody() {
     <div className="col-8 d-flex flex-column py-3">
       {selectedUserAddress && (
         <>
-          {selectedUserName !== '' ? (
+          {selectedUserName !== 'Unknown' ? (
             <h6 className="text-center mb-0">{selectedUserName}</h6>
           ) : (
             <h6 className="text-center mb-0">

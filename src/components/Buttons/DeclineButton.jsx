@@ -3,12 +3,12 @@ import './DeclineButton.css'
 
 const DeclineButton = ({ handleUserReject }) => {
   return (
-    <button className="btn decline-button" onClick={handleUserReject}>
+    <button className="btn-decline decline-button" onClick={handleUserReject}>
       <span className="icon-container">
         <svg
-          width="2rem"
-          height="2rem"
-          viewBox="0 0 50 50"
+          width="3rem"
+          height="3rem"
+          viewBox="0 0 48 48"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path

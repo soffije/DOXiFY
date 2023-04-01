@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { Dropdown } from 'react-bootstrap'
 
 import FriendModal from '../../../Modal/FriendModal'
-import ConfirmButton from '../../../Buttons/ConfirmButton'
 
 import { getUserAddress } from '../../../../features/user/userSlice'
 
@@ -52,11 +51,13 @@ function ChatHeader() {
           />
           <Dropdown show={isOpen} onBlur={handleClose}>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={handleClose}>Action 1</Dropdown.Item>
-              <Dropdown.Item onClick={handleClose}>Action 2</Dropdown.Item>
-              <Dropdown.Item onClick={handleClose}>Action 3</Dropdown.Item>
-              <Dropdown.Item onClick={handleClose}>Action 4</Dropdown.Item>
-              <Dropdown.Item onClick={handleClose}>Artem Lentyai</Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  handleShowModal()
+                }}
+              >
+                Add new friend
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -66,11 +67,6 @@ function ChatHeader() {
           </h6>
         </div>
         <div className="flex-grow-1">
-          <ConfirmButton
-            handleUserAccept={() => {
-              handleShowModal()
-            }}
-          />
           <FriendModal
             type="add"
             show={showModal}

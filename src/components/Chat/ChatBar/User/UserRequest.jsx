@@ -40,7 +40,7 @@ function UserRequest({ user, userType = 'request', handleUserReject }) {
           />
         ) : (
           <>
-            <div className="d-flex mx-2">
+            <div className="d-flex mx-2 btn-container d-flex justify-content-end">
               <ConfirmButton
                 handleUserAccept={() => {
                   handleShowModal()
