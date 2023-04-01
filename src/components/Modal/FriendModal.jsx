@@ -43,11 +43,11 @@ function FriendModal({
         friendName: friendName,
       }
       await dispatch(addFriend(args))
+      handleClose()
       await addUser({
         address: friendAddress,
         name: friendName,
       })
-      handleClose()
     }
 
     if (type === 'request') {
@@ -59,6 +59,7 @@ function FriendModal({
         friendName: friendName,
       }
       await dispatch(addFriend(args))
+      handleClose()
       await addUser({
         address: friend_address,
         name: friendName,

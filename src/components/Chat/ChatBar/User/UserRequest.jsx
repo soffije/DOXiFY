@@ -24,9 +24,13 @@ function UserRequest({ user, userType = 'request', handleUserReject }) {
           />
         </div>
         <div className="pt-1">
-          <p className="fw-bold mb-0">
-            {user.address.slice(0, 5)}...{user.address.slice(-4)}
-          </p>
+          {user.name ? (
+            <p className="fw-bold mb-0">{user.name}</p>
+          ) : (
+            <p className="fw-bold mb-0">
+              {user.address.slice(0, 5)}...{user.address.slice(-4)}
+            </p>
+          )}
         </div>
         {userType === 'request' ? (
           <DeclineButton

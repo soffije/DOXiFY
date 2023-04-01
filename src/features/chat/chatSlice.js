@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { deleteUser, getAllUsers } from '../../api/indexDB'
+import { deleteUser, getAllUsers, getUser } from '../../api/indexDB'
 
 const initialState = {
   selectedAccount: null,
@@ -92,7 +92,12 @@ export const addFriend = createAsyncThunk(
               }
             })
           } else {
-            dispatch(addRequestToMyList({ address: args.friendAddress }))
+            dispatch(
+              addRequestToMyList({
+                address: args.friendAddress,
+                name: args.friendName,
+              })
+            )
           }
         })
         .catch((error) => {
@@ -233,11 +238,18 @@ export const fetchRequests = createAsyncThunk(
         .getRequests()
         .call({ from: address })
 
-      const result = requests?.map((user) => {
+      const savedFriends = await getAllUsers()
+
+      const result = requests?.map((item) => {
+        const matchingItem = savedFriends.find(
+          (firstItem) => firstItem.address.toLowerCase() === item.toLowerCase()
+        )
         return {
-          address: user,
+          address: item.toLowerCase(),
+          name: matchingItem?.name,
         }
       })
+
       return result
     } catch (error) {
       console.log(error)
@@ -406,12 +418,19 @@ export const handleIncomingFriendRequestEvent = createAsyncThunk(
 
       const requester = args.returnValues.requester.toLowerCase()
 
+      const savedFriend = await getUser(requester)
+
       const requests = state.chat.requests
       if (requests.length > 0) {
         requests.forEach((element) => {
           if (element.address.toLowerCase() === requester) {
             dispatch(removeUserFromRequests(requester))
-            dispatch(addUserToFriendsList({ address: requester }))
+            dispatch(
+              addUserToFriendsList({
+                address: requester,
+                name: savedFriend.name,
+              })
+            )
           }
         })
       } else {
