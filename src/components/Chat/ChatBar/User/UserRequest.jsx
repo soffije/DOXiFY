@@ -1,31 +1,16 @@
-import React, { useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
 
 import './User.css'
-import { Button } from 'react-bootstrap'
 
-import { WebSocketContext } from '../../../../api/WebSocketProvider'
-
+import FriendModal from '../../../Modal/FriendModal'
 import ConfirmButton from '../../../Buttons/ConfirmButton'
 import DeclineButton from '../../../Buttons/DeclineButton'
 
-import { addFriend } from '../../../../features/chat/chatSlice'
-import { getUserAddress } from '../../../../features/user/userSlice'
-
 function UserRequest({ user, userType = 'request', handleUserReject }) {
-  const dispatch = useDispatch()
-  const address = useSelector(getUserAddress)
-  const { web3, contract } = useContext(WebSocketContext)
+  const [showModal, setShowModal] = useState(false)
 
-  const handleUserAccept = (friendAddress) => {
-    const args = {
-      web3: web3,
-      contract: contract,
-      address: address,
-      friendAddress: friendAddress,
-    }
-    dispatch(addFriend(args))
-  }
+  const handleCloseModal = () => setShowModal(false)
+  const handleShowModal = () => setShowModal(true)
 
   return (
     <li className="py-1">
@@ -39,9 +24,13 @@ function UserRequest({ user, userType = 'request', handleUserReject }) {
           />
         </div>
         <div className="pt-1">
-          <p className="fw-bold mb-0">
-            {user.address.slice(0, 5)}...{user.address.slice(-4)}
-          </p>
+          {user.name ? (
+            <p className="fw-bold mb-0">{user.name}</p>
+          ) : (
+            <p className="fw-bold mb-0">
+              {user.address.slice(0, 5)}...{user.address.slice(-4)}
+            </p>
+          )}
         </div>
         {userType === 'request' ? (
           <DeclineButton
@@ -51,11 +40,18 @@ function UserRequest({ user, userType = 'request', handleUserReject }) {
           />
         ) : (
           <>
-            <div className="d-flex mx-2">
+            <div className="d-flex mx-2 btn-container d-flex justify-content-end">
               <ConfirmButton
                 handleUserAccept={() => {
-                  handleUserAccept(user.address)
+                  handleShowModal()
                 }}
+              />
+              <FriendModal
+                type="request"
+                show={showModal}
+                handleClose={handleCloseModal}
+                name={user.name}
+                friend_address={user.address}
               />
               <DeclineButton
                 handleUserReject={() => {

@@ -25,11 +25,20 @@ export default function AppLayout() {
   return (
     <>
       <Header />
-      <Container className="flex-grow-1">
-        <div className="main-content py-4">
-          <Outlet />
-        </div>
-      </Container>
+      <section
+        style={{
+          backgroundImage: `url('Wave.svg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          minHeight: '40rem',
+        }}
+      >
+        <Container className="flex-grow-1">
+          <div className="main-content py-4">
+            <Outlet />
+          </div>
+        </Container>
+      </section>
       <Footer />
     </>
   )

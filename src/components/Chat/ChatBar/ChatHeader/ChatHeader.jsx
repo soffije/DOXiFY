@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux'
 import React, { useState, useRef } from 'react'
-import { Dropdown, Button } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { Dropdown } from 'react-bootstrap'
 
-import AddFriendModal from '../../../Modal/AddFriend'
+import FriendModal from '../../../Modal/FriendModal'
 
 import { getUserAddress } from '../../../../features/user/userSlice'
 
@@ -10,6 +10,11 @@ function ChatHeader() {
   const address = useSelector(getUserAddress)
   const [isOpen, setIsOpen] = useState(false)
   const ref = useRef(null)
+
+  const [showModal, setShowModal] = useState(false)
+
+  const handleCloseModal = () => setShowModal(false)
+  const handleShowModal = () => setShowModal(true)
 
   const handleOpen = () => {
     setIsOpen(true)
@@ -46,11 +51,13 @@ function ChatHeader() {
           />
           <Dropdown show={isOpen} onBlur={handleClose}>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={handleClose}>Action 1</Dropdown.Item>
-              <Dropdown.Item onClick={handleClose}>Action 2</Dropdown.Item>
-              <Dropdown.Item onClick={handleClose}>Action 3</Dropdown.Item>
-              <Dropdown.Item onClick={handleClose}>Action 4</Dropdown.Item>
-              <Dropdown.Item onClick={handleClose}>Artem Lentyai</Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  handleShowModal()
+                }}
+              >
+                Add new friend
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -60,7 +67,11 @@ function ChatHeader() {
           </h6>
         </div>
         <div className="flex-grow-1">
-          <AddFriendModal />
+          <FriendModal
+            type="add"
+            show={showModal}
+            handleClose={handleCloseModal}
+          />
         </div>
       </div>
     </>
