@@ -83,7 +83,12 @@ export const addFriend = createAsyncThunk(
                 args.friendAddress.toLowerCase()
               ) {
                 dispatch(removeUserFromPendings(args.friendAddress))
-                dispatch(addUserToFriendsList({ address: args.friendAddress }))
+                dispatch(
+                  addUserToFriendsList({
+                    address: args.friendAddress,
+                    name: args.friendName,
+                  })
+                )
               }
             })
           } else {
@@ -203,10 +208,10 @@ export const fetchFriends = createAsyncThunk(
 
       const result = friends.map((item) => {
         const matchingItem = savedFriends.find(
-          (firstItem) => firstItem.address === item
+          (firstItem) => firstItem.address.toLowerCase() === item.toLowerCase()
         )
         return {
-          address: item,
+          address: item.toLowerCase(),
           name: matchingItem?.name,
           numberOfUnreadMessages: 0,
         }

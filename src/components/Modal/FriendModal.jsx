@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { WebSocketContext } from '../../api/WebSocketProvider'
@@ -9,8 +9,9 @@ import { addUser } from '../../api/indexDB'
 
 function FriendModal({
   type = 'add',
-  show = false,
-  name = null,
+  show,
+  handleClose,
+  userAction,
   friend_address = null,
 }) {
   const dispatch = useDispatch()
@@ -18,8 +19,6 @@ function FriendModal({
   const { web3, contract } = useContext(WebSocketContext)
 
   const [friendName, setFriendName] = useState('')
-  const [showModal, setShowModal] = useState(show)
-  const [isReadonly, setIsReadonly] = useState(false)
   const [friendAddress, setFriendAddress] = useState('')
 
   const handleAddressChange = (event) => {
@@ -33,6 +32,7 @@ function FriendModal({
   }
 
   const handleSubmit = async (event) => {
+    event.preventDefault()
     if (type === 'add') {
       event.preventDefault()
       const args = {
@@ -40,13 +40,14 @@ function FriendModal({
         contract: contract,
         address: address,
         friendAddress: friendAddress,
+        friendName: friendName,
       }
       await dispatch(addFriend(args))
       await addUser({
         address: friendAddress,
         name: friendName,
       })
-      setShowModal(false)
+      handleClose()
     }
 
     if (type === 'request') {
@@ -55,36 +56,19 @@ function FriendModal({
         contract: contract,
         address: address,
         friendAddress: friend_address,
+        friendName: friendName,
       }
-      dispatch(addFriend(args))
+      await dispatch(addFriend(args))
+      await addUser({
+        address: friend_address,
+        name: friendName,
+      })
     }
   }
-
-  const handleShowModal = () => {
-    setShowModal(true)
-    setFriendAddress('')
-    setFriendName('')
-  }
-
-  useEffect(() => {
-    if (name) setFriendName(name)
-
-    if (friend_address) {
-      setFriendAddress(friend_address)
-      setIsReadonly(true)
-    }
-  }, [])
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={handleShowModal}
-        className="float-right mt-1"
-      >
-        Add friend
-      </Button>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Friend</Modal.Title>
         </Modal.Header>
@@ -103,14 +87,20 @@ function FriendModal({
               <Form.Label>Address</Form.Label>
               <Form.Control
                 placeholder="Enter Address"
-                value={friendAddress}
+                value={friend_address}
                 onChange={handleAddressChange}
-                readOnly={isReadonly}
+                readOnly={type === 'request' ? true : false}
               />
             </Form.Group>
 
             <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShowModal(false)}>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  handleClose()
+                  userAction()
+                }}
+              >
                 Close
               </Button>
               <Button variant="primary" type="submit">
