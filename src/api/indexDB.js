@@ -105,7 +105,7 @@ export async function addUser(user) {
       const tx = db.transaction(STORE_NAME, 'readwrite')
       const store = tx.objectStore(STORE_NAME)
 
-      const requestAdd = store.add(user, user.address.toLowerCase())
+      const requestAdd = store.put(user, user.address.toLowerCase())
 
       requestAdd.onsuccess = function () {
         resolve()
@@ -166,6 +166,30 @@ export async function deleteUser(address) {
     request.onerror = function (event) {
       console.error('Error opening IndexedDB database', event.target.error)
       reject(event.target.error)
+    }
+  })
+}
+export async function deleteDatabase() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.deleteDatabase(DB_NAME)
+
+    request.onsuccess = function () {
+      console.log(`Database '${DB_NAME}' deleted successfully`)
+      resolve()
+    }
+
+    request.onerror = function (event) {
+      console.error(`Error deleting database '${DB_NAME}'`, event.target.error)
+      reject(event.target.error)
+    }
+
+    request.onblocked = function () {
+      console.error(
+        `Couldn't delete database '${DB_NAME}' because it is blocked`
+      )
+      reject(
+        new Error(`Couldn't delete database '${DB_NAME}' because it is blocked`)
+      )
     }
   })
 }
