@@ -169,7 +169,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
       <Form>
         <Row>
           <Col>
-            <FloatingLabel controlId="hairType" label="Hair Type">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="hairType"
+              label="Hair Type"
+            >
               <Form.Select
                 value={avatarOptions.topType}
                 onChange={(e) => handleChange('topType', e.target.value)}
@@ -184,7 +188,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
           </Col>
 
           <Col>
-            <FloatingLabel controlId="hairColor" label="Hair Color">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="hairColor"
+              label="Hair Color"
+            >
               <Form.Select
                 value={avatarOptions.hairColor}
                 onChange={(e) => handleChange('hairColor', e.target.value)}
@@ -203,6 +211,7 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
           <Col>
             {' '}
             <FloatingLabel
+              className="form-label-avatar"
               controlId="accessoriesType"
               label="Accessories Types"
             >
@@ -223,7 +232,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
 
           <Col>
             {' '}
-            <FloatingLabel controlId="facialHairType" label="Facial Hair Types">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="facialHairType"
+              label="Facial Hair Types"
+            >
               <Form.Select
                 value={avatarOptions.facialHairType}
                 onChange={(e) => handleChange('facialHairType', e.target.value)}
@@ -242,6 +255,7 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
           <Col>
             {' '}
             <FloatingLabel
+              className="form-label-avatar"
               controlId="facialHairColor"
               label="Facial Hair Colors"
             >
@@ -262,7 +276,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
 
           <Col>
             {' '}
-            <FloatingLabel controlId="clotheColor" label="Clothe Colors">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="clotheColor"
+              label="Clothe Colors"
+            >
               <Form.Select
                 value={avatarOptions.clotheColor}
                 onChange={(e) => handleChange('clotheColor', e.target.value)}
@@ -280,7 +298,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
         <Row>
           <Col>
             {' '}
-            <FloatingLabel controlId="clotheType" label="Clothe Types">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="clotheType"
+              label="Clothe Types"
+            >
               <Form.Select
                 value={avatarOptions.clotheType}
                 onChange={(e) => handleChange('clotheType', e.target.value)}
@@ -296,7 +318,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
 
           <Col>
             {' '}
-            <FloatingLabel controlId="eyeType" label="Eye Types">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="eyeType"
+              label="Eye Types"
+            >
               <Form.Select
                 value={avatarOptions.eyeType}
                 onChange={(e) => handleChange('eyeType', e.target.value)}
@@ -314,7 +340,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
         <Row>
           <Col>
             {' '}
-            <FloatingLabel controlId="eyebrowType" label="Eyebrow Types">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="eyebrowType"
+              label="Eyebrow Types"
+            >
               <Form.Select
                 value={avatarOptions.eyebrowType}
                 onChange={(e) => handleChange('eyebrowType', e.target.value)}
@@ -330,7 +360,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
 
           <Col>
             {' '}
-            <FloatingLabel controlId="mouthType" label="Mouth Types">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="mouthType"
+              label="Mouth Types"
+            >
               <Form.Select
                 value={avatarOptions.mouthType}
                 onChange={(e) => handleChange('mouthType', e.target.value)}
@@ -348,7 +382,11 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
         <Row>
           <Col>
             {' '}
-            <FloatingLabel controlId="skinColor" label="Skin Colors">
+            <FloatingLabel
+              className="form-label-avatar"
+              controlId="skinColor"
+              label="Skin Colors"
+            >
               <Form.Select
                 value={avatarOptions.skinColor}
                 onChange={(e) => handleChange('skinColor', e.target.value)}

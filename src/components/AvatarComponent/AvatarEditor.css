@@ -21,21 +21,7 @@
   height: auto;
 }
 
-.form-label {
+.form-label-avatar {
   font-weight: bold;
-}
-
-.form-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #f2f2f2;
   margin-bottom: 10px;
-}
-
-.form-select:focus {
-  box-shadow: none;
-  outline: none;
-  background-color: #f2f2f2;
 }
