@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import './User.css'
+import Avatar from 'avataaars'
 
 import FriendModal from '../../../Modal/FriendModal'
 import ConfirmButton from '../../../Buttons/ConfirmButton'
@@ -15,12 +16,11 @@ function UserRequest({ user, userType = 'request', handleUserReject }) {
   return (
     <li className="py-1">
       <div className="d-flex flex-row border-bottom user">
-        <div>
-          <img
-            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-            alt="avatar"
-            className="d-flex align-self-center me-3"
-            width="60"
+        <div className="avatar me-3">
+          <Avatar
+            style={{ borderRadius: '50%' }}
+            className="mx-auto d-block mb-3"
+            {...user.avatarOptions}
           />
         </div>
         <div className="pt-1">

@@ -3,21 +3,7 @@ import Avatar from 'avataaars'
 import { Form, FloatingLabel, Row, Col } from 'react-bootstrap'
 import './AvatarEditor.css'
 
-function AvatarComponent() {
-  const [avatarOptions, setAvatarOptions] = useState({
-    topType: 'ShortHairDreads01',
-    accessoriesType: 'Round',
-    hairColor: 'BrownDark',
-    facialHairType: 'BeardMajestic',
-    facialHairColor: 'BrownDark',
-    clotheType: 'Hoodie',
-    clotheColor: 'Black',
-    eyeType: 'Happy',
-    eyebrowType: 'UpDown',
-    mouthType: 'Smile',
-    skinColor: 'Light',
-  })
-
+function AvatarComponent({ avatarOptions, setAvatarOptions }) {
   const hairTypes = [
     'NoHair',
     'Eyepatch',

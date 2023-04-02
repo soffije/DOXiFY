@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import './User.css'
+import Avatar from 'avataaars'
 
 import { getSelectedAccount } from '../../../../features/chat/chatSlice'
 
@@ -18,15 +19,14 @@ function User({ user, handleUserClick }) {
           handleUserClick(user.address)
         }}
       >
-        <div>
-          <img
-            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-            alt="avatar"
-            className="d-flex align-self-center me-3"
-            width="60"
+        <div className="avatar me-3">
+          <Avatar
+            style={{ borderRadius: '50%' }}
+            className="mx-auto d-block mb-3"
+            {...user.avatarOptions}
           />
         </div>
-        <div className="pt-1">
+        <div className="pt-2">
           {user.name ? (
             <p className="fw-bold mb-0">{user.name}</p>
           ) : (

@@ -87,6 +87,7 @@ export const addFriend = createAsyncThunk(
                   addUserToFriendsList({
                     address: args.friendAddress,
                     name: args.friendName,
+                    avatarOptions: args.avatarOptions,
                   })
                 )
               }
@@ -96,6 +97,7 @@ export const addFriend = createAsyncThunk(
               addRequestToMyList({
                 address: args.friendAddress,
                 name: args.friendName,
+                avatarOptions: args.avatarOptions,
               })
             )
           }
@@ -218,6 +220,7 @@ export const fetchFriends = createAsyncThunk(
         return {
           address: item.toLowerCase(),
           name: matchingItem?.name,
+          avatarOptions: matchingItem?.avatarOptions,
           numberOfUnreadMessages: 0,
         }
       })
@@ -247,6 +250,7 @@ export const fetchRequests = createAsyncThunk(
         return {
           address: item.toLowerCase(),
           name: matchingItem?.name,
+          avatarOptions: matchingItem?.avatarOptions,
         }
       })
 
@@ -429,6 +433,7 @@ export const handleIncomingFriendRequestEvent = createAsyncThunk(
               addUserToFriendsList({
                 address: requester,
                 name: savedFriend.name,
+                avatarOptions: savedFriend?.avatarOptions,
               })
             )
           }

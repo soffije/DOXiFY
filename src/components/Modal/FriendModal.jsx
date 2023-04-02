@@ -23,6 +23,20 @@ function FriendModal({
   const [friendName, setFriendName] = useState('')
   const [friendAddress, setFriendAddress] = useState('')
 
+  const [avatarOptions, setAvatarOptions] = useState({
+    topType: 'ShortHairDreads01',
+    accessoriesType: 'Round',
+    hairColor: 'BrownDark',
+    facialHairType: 'BeardMajestic',
+    facialHairColor: 'BrownDark',
+    clotheType: 'Hoodie',
+    clotheColor: 'Black',
+    eyeType: 'Happy',
+    eyebrowType: 'UpDown',
+    mouthType: 'Smile',
+    skinColor: 'Light',
+  })
+
   const handleAddressChange = (event) => {
     const inputAddress = event.target.value
     setFriendAddress(inputAddress)
@@ -43,12 +57,14 @@ function FriendModal({
         address: address,
         friendAddress: friendAddress,
         friendName: friendName,
+        avatarOptions: avatarOptions,
       }
       await dispatch(addFriend(args))
       handleClose()
       await addUser({
         address: friendAddress,
         name: friendName,
+        avatarOptions: avatarOptions,
       })
     }
 
@@ -59,12 +75,14 @@ function FriendModal({
         address: address,
         friendAddress: friend_address,
         friendName: friendName,
+        avatarOptions: avatarOptions,
       }
       await dispatch(addFriend(args))
       handleClose()
       await addUser({
         address: friend_address,
         name: friendName,
+        avatarOptions: avatarOptions,
       })
     }
   }
@@ -75,7 +93,10 @@ function FriendModal({
         <Modal.Header closeButton>
           <Modal.Title>Friend</Modal.Title>
         </Modal.Header>
-        <AvatarComponent />
+        <AvatarComponent
+          avatarOptions={avatarOptions}
+          setAvatarOptions={setAvatarOptions}
+        />
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
