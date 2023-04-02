@@ -50,7 +50,7 @@ function LandingPage() {
             </div>
           </Form>
         </div>
-        <div className="col-12 col-lg-6 ">
+        <div className="col-12 col-lg-6 mt-4 mt-lg-0">
           <svg
             width="100%"
             height="100%"

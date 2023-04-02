@@ -17,7 +17,7 @@ function AboutUs() {
           <div className="col-12 col-lg-6 d-flex align-items-center">
             <img src={aboutUsMission} alt="Mission" />
           </div>
-          <div className="col-12 col-lg-6 d-flex flex-column justify-content-center align-items-left ">
+          <div className="col-12 col-lg-6 d-flex flex-column justify-content-end align-items-left ">
             <h2 className="mb-3">Mission</h2>
             <p>
               Our mission is to provide users with a secure and decentralised
