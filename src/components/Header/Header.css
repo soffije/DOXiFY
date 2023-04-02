@@ -141,6 +141,9 @@ nav {
   color: var(--light);
   background-color: var(--primary);
 }
+.logo {
+  margin-right: 0.5rem;
+}
 
 @media (min-width: 768px) {
   .mobile-menu,

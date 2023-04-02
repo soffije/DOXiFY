@@ -40,8 +40,6 @@ export const isUserConnected = createAsyncThunk(
           const address = accounts[0]
           return { isConnected: true, address }
         }
-
-        return { isConnected: false, address: null }
       }
       return { isConnected: false, address: null }
     } catch (error) {

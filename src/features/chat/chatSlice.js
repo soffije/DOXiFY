@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { deleteUser, getAllUsers, getUser } from '../../api/indexDB'
 
 const initialState = {
   selectedAccount: null,
   selectedAccountMessages: [],
+  sendingMessageLoading: 'idle',
   friends: [],
   requests: [],
   pendings: [],
@@ -40,9 +42,6 @@ export const subscribeUser = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
-        })
         .catch((error) => {
           console.error(error)
         })
@@ -75,9 +74,7 @@ export const addFriend = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
-
+        .then(() => {
           const pendings = state.chat.pendings
           if (pendings.length > 0) {
             pendings.forEach((element) => {
@@ -86,11 +83,23 @@ export const addFriend = createAsyncThunk(
                 args.friendAddress.toLowerCase()
               ) {
                 dispatch(removeUserFromPendings(args.friendAddress))
-                dispatch(addUserToFriendsList({ address: args.friendAddress }))
+                dispatch(
+                  addUserToFriendsList({
+                    address: args.friendAddress,
+                    name: args.friendName,
+                    avatarOptions: args.avatarOptions,
+                  })
+                )
               }
             })
           } else {
-            dispatch(addRequestToMyList({ address: args.friendAddress }))
+            dispatch(
+              addRequestToMyList({
+                address: args.friendAddress,
+                name: args.friendName,
+                avatarOptions: args.avatarOptions,
+              })
+            )
           }
         })
         .catch((error) => {
@@ -107,7 +116,6 @@ export const rejectRequest = createAsyncThunk(
   'chat/rejectRequest',
   async (args, { getState, dispatch }) => {
     try {
-      console.log('reject request')
       const state = getState()
       const gasPrice = await args.web3.eth.getGasPrice()
       const functionAbi = args.contract.methods
@@ -126,9 +134,7 @@ export const rejectRequest = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
-
+        .then(() => {
           const requests = state.chat.requests
           if (requests.length > 0) {
             requests.forEach((element) => {
@@ -136,6 +142,7 @@ export const rejectRequest = createAsyncThunk(
                 element.address.toLowerCase() ===
                 args.friendAddress.toLowerCase()
               ) {
+                deleteUser(args.friendAddress.toLowerCase())
                 dispatch(removeUserFromRequests(args.friendAddress))
               }
             })
@@ -155,7 +162,6 @@ export const rejectPendings = createAsyncThunk(
   'chat/rejectPendings',
   async (args, { getState, dispatch }) => {
     try {
-      console.log('reject pending')
       const state = getState()
       const gasPrice = await args.web3.eth.getGasPrice()
       const functionAbi = args.contract.methods
@@ -174,9 +180,7 @@ export const rejectPendings = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
-
+        .then(() => {
           const pendings = state.chat.pendings
           if (pendings.length > 0) {
             pendings.forEach((element) => {
@@ -207,14 +211,20 @@ export const fetchFriends = createAsyncThunk(
         .getFriends()
         .call({ from: address })
 
-      console.log('Friends', friends)
+      const savedFriends = await getAllUsers()
 
-      const result = friends?.map((friend) => {
+      const result = friends.map((item) => {
+        const matchingItem = savedFriends.find(
+          (firstItem) => firstItem.address.toLowerCase() === item.toLowerCase()
+        )
         return {
-          address: friend,
+          address: item.toLowerCase(),
+          name: matchingItem?.name,
+          avatarOptions: matchingItem?.avatarOptions,
           numberOfUnreadMessages: 0,
         }
       })
+
       return result
     } catch (error) {
       console.log(error)
@@ -231,13 +241,19 @@ export const fetchRequests = createAsyncThunk(
         .getRequests()
         .call({ from: address })
 
-      console.log('Requests', requests)
+      const savedFriends = await getAllUsers()
 
-      const result = requests?.map((user) => {
+      const result = requests?.map((item) => {
+        const matchingItem = savedFriends.find(
+          (firstItem) => firstItem.address.toLowerCase() === item.toLowerCase()
+        )
         return {
-          address: user,
+          address: item.toLowerCase(),
+          name: matchingItem?.name,
+          avatarOptions: matchingItem?.avatarOptions,
         }
       })
+
       return result
     } catch (error) {
       console.log(error)
@@ -254,8 +270,6 @@ export const fetchPendings = createAsyncThunk(
         .getPending()
         .call({ from: address })
 
-      console.log('Pendinds', pendinds)
-
       const result = pendinds?.map((user) => {
         return {
           address: user,
@@ -271,7 +285,10 @@ export const fetchPendings = createAsyncThunk(
 
 export const sendUserMessage = createAsyncThunk(
   'chat/sendUserMessage',
-  async ({ web3, contract, address, selectedUserAddress, userMessage }) => {
+  async (
+    { web3, contract, address, selectedUserAddress, userMessage },
+    { dispatch }
+  ) => {
     try {
       const request = await axios({
         method: 'post',
@@ -291,7 +308,7 @@ export const sendUserMessage = createAsyncThunk(
         .sendMessage(selectedUserAddress, 'text', request.data.IpfsHash)
         .encodeABI()
 
-      window.ethereum
+      await window.ethereum
         .request({
           method: 'eth_sendTransaction',
           params: [
@@ -304,8 +321,15 @@ export const sendUserMessage = createAsyncThunk(
             },
           ],
         })
-        .then((txHash) => {
-          console.log(`Transaction hash: ${txHash}`)
+        .then(() => {
+          const message = {
+            content: 'text',
+            fileHash: userMessage,
+            recipient: selectedUserAddress,
+            sender: address,
+            timestamp: Math.floor(new Date().getTime() / 1000),
+          }
+          dispatch(addIncomingMessage(message))
         })
     } catch (error) {
       console.log(error)
@@ -354,38 +378,35 @@ export const handleIncomingMessageEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = state.user.address.toLowerCase()
+
       const sender = args.returnValues.sender.toLowerCase()
       const recipient = args.returnValues.recipient.toLowerCase()
       let selectedAccount = state.chat.selectedAccount
       if (selectedAccount !== null)
         selectedAccount = state.chat.selectedAccount.toLowerCase()
 
-      if (address === recipient)
-        if (selectedAccount !== sender) {
-          const updatedFriends = state.chat.friends.map((friend) => {
-            if (friend.address.toLowerCase() === sender) {
-              return {
-                ...friend,
-                numberOfUnreadMessages: friend.numberOfUnreadMessages + 1,
-              }
+      if (selectedAccount !== sender) {
+        const updatedFriends = state.chat.friends.map((friend) => {
+          if (friend.address.toLowerCase() === sender) {
+            return {
+              ...friend,
+              numberOfUnreadMessages: friend.numberOfUnreadMessages + 1,
             }
-            return friend
-          })
-          dispatch(setFriendsArray(updatedFriends))
-        } else {
-          const { data } = await getMessageByIPFSHash(
-            args.returnValues.fileHash
-          )
-          const message = {
-            content: args.returnValues.content,
-            fileHash: data.message,
-            recipient: recipient,
-            sender: sender,
-            timestamp: args.returnValues.timestamp,
           }
-          dispatch(addIncomingMessage(message))
+          return friend
+        })
+        dispatch(setFriendsArray(updatedFriends))
+      } else {
+        const { data } = await getMessageByIPFSHash(args.returnValues.fileHash)
+        const message = {
+          content: args.returnValues.content,
+          fileHash: data.message,
+          recipient: recipient,
+          sender: sender,
+          timestamp: args.returnValues.timestamp,
         }
+        dispatch(addIncomingMessage(message))
+      }
     } catch (error) {
       console.log(error)
       return { error: error.message }
@@ -398,22 +419,27 @@ export const handleIncomingFriendRequestEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = state.user.address.toLowerCase()
-      const requester = args.returnValues.requester.toLowerCase()
-      const recipient = args.returnValues.recipient.toLowerCase()
 
-      if (address === recipient) {
-        const requests = state.chat.requests
-        if (requests.length > 0) {
-          requests.forEach((element) => {
-            if (element.address.toLowerCase() === requester) {
-              dispatch(removeUserFromRequests(requester))
-              dispatch(addUserToFriendsList({ address: requester }))
-            }
-          })
-        } else {
-          dispatch(addIncomingFriendRequest({ address: requester }))
-        }
+      const requester = args.returnValues.requester.toLowerCase()
+
+      const savedFriend = await getUser(requester)
+
+      const requests = state.chat.requests
+      if (requests.length > 0) {
+        requests.forEach((element) => {
+          if (element.address.toLowerCase() === requester) {
+            dispatch(removeUserFromRequests(requester))
+            dispatch(
+              addUserToFriendsList({
+                address: requester,
+                name: savedFriend.name,
+                avatarOptions: savedFriend?.avatarOptions,
+              })
+            )
+          }
+        })
+      } else {
+        dispatch(addIncomingFriendRequest({ address: requester }))
       }
     } catch (error) {
       console.log(error)
@@ -427,21 +453,20 @@ export const handleRejectingFriendRequestEvent = createAsyncThunk(
   async (args, { getState, dispatch }) => {
     try {
       const state = getState()
-      const address = state.user.address.toLowerCase()
+
       const requester = args.returnValues.requester.toLowerCase()
-      const recipient = args.returnValues.recipient.toLowerCase()
 
-      if (address === recipient) {
-        const indexRequests = state.chat.requests.findIndex(
-          (friend) => friend.address.toLowerCase() === requester
-        )
-        const indexPendings = state.chat.pendings.findIndex(
-          (friend) => friend.address.toLowerCase() === requester
-        )
+      const indexRequests = state.chat.requests.findIndex(
+        (friend) => friend.address.toLowerCase() === requester
+      )
+      const indexPendings = state.chat.pendings.findIndex(
+        (friend) => friend.address.toLowerCase() === requester
+      )
 
-        if (indexRequests > -1) dispatch(removeUserFromRequests(requester))
-        if (indexPendings > -1) dispatch(removeUserFromPendings(requester))
-      }
+      if (indexRequests > -1) dispatch(removeUserFromRequests(requester))
+      if (indexPendings > -1) dispatch(removeUserFromPendings(requester))
+
+      deleteUser(requester)
     } catch (error) {
       console.log(error)
       return { error: error.message }
@@ -571,13 +596,16 @@ export const chatSlice = createSlice({
       })
       .addCase(sendUserMessage.pending, (state) => {
         state.loading = 'pending'
+        state.sendingMessageLoading = 'pending'
         state.error = null
       })
       .addCase(sendUserMessage.fulfilled, (state) => {
         state.loading = 'idle'
+        state.sendingMessageLoading = 'idle'
       })
       .addCase(sendUserMessage.rejected, (state, action) => {
         state.loading = 'idle'
+        state.sendingMessageLoading = 'idle'
         state.error = action.error.message
       })
       .addCase(fetchSelectedAccountMessages.pending, (state) => {
@@ -601,6 +629,8 @@ export const getPendings = (state) => state.chat.pendings
 export const getSelectedAccount = (state) => state.chat.selectedAccount
 export const getSelectedAccountMessages = (state) =>
   state.chat.selectedAccountMessages
+export const getSendigMessageLoading = (state) =>
+  state.chat.sendingMessageLoading
 
 export const getFriendsSearchQuery = (state) => state.chat.friendSearchQuery
 

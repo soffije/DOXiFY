@@ -13,6 +13,42 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.main-section {
+  flex: 1;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+@media (min-width: 0px) and (max-width: 498px) {
+  .main-section {
+    background-image: url('../public/Wave_xss.svg');
+  }
+}
+@media (min-width: 498px) and (max-width: 575px) {
+  .main-section {
+    background-image: url('../public/Wave_xs.svg');
+  }
+}
+@media (min-width: 576px) and (max-width: 767px) {
+  .main-section {
+    background-image: url('../public/Wave_sm.svg');
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .main-section {
+    background-image: url('../public/Wave_md.svg');
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .main-section {
+    background-image: url('../public/Wave_lg.svg');
+  }
+}
+@media (min-width: 1200px) {
+  .main-section {
+    background-image: url('../public/Wave_xl.svg');
+  }
+}
+
 .main-content {
   z-index: 0;
   position: relative;
@@ -21,6 +57,7 @@ body {
 
 .chat-container {
   height: 100%;
+  min-height: 75vh;
   border-radius: 0.7rem;
   background-color: white;
 }

@@ -1,61 +1,59 @@
-import React, { useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
 
 import './User.css'
-import { Button } from 'react-bootstrap'
+import Avatar from 'avataaars'
 
-import { ChatContext } from '../../Chat'
-
+import FriendModal from '../../../Modal/FriendModal'
 import ConfirmButton from '../../../Buttons/ConfirmButton'
 import DeclineButton from '../../../Buttons/DeclineButton'
 
-import { addFriend } from '../../../../features/chat/chatSlice'
-import { getUserAddress } from '../../../../features/user/userSlice'
-
 function UserRequest({ user, userType = 'request', handleUserReject }) {
-  const dispatch = useDispatch()
-  const address = useSelector(getUserAddress)
-  const { web3, contract } = useContext(ChatContext)
+  const [showModal, setShowModal] = useState(false)
 
-  const handleUserAccept = (friendAddress) => {
-    const args = {
-      web3: web3,
-      contract: contract,
-      address: address,
-      friendAddress: friendAddress,
-    }
-    dispatch(addFriend(args))
-  }
+  const handleCloseModal = () => setShowModal(false)
+  const handleShowModal = () => setShowModal(true)
 
   return (
     <li className="py-1">
       <div className="d-flex flex-row border-bottom user">
-        <div>
-          <img
-            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-            alt="avatar"
-            className="d-flex align-self-center me-3"
-            width="60"
+        <div className="avatar me-3">
+          <Avatar
+            style={{ borderRadius: '50%' }}
+            className="mx-auto d-block mb-3"
+            {...user.avatarOptions}
           />
         </div>
         <div className="pt-1">
-          <p className="fw-bold mb-0">
-            {user.address.slice(0, 5)}...{user.address.slice(-4)}
-          </p>
+          {user.name ? (
+            <p className="fw-bold mb-0">{user.name}</p>
+          ) : (
+            <p className="fw-bold mb-0">
+              {user.address.slice(0, 5)}...{user.address.slice(-4)}
+            </p>
+          )}
         </div>
         {userType === 'request' ? (
-          <DeclineButton
-            handleUserReject={() => {
-              handleUserReject(user.address)
-            }}
-          />
+          <div className="d-flex  btn-container">
+            <DeclineButton
+              handleUserReject={() => {
+                handleUserReject(user.address)
+              }}
+            />
+          </div>
         ) : (
           <>
-            <div className="d-flex mx-2">
+            <div className="d-flex mx-2 btn-container d-flex justify-content-end">
               <ConfirmButton
                 handleUserAccept={() => {
-                  handleUserAccept(user.address)
+                  handleShowModal()
                 }}
+              />
+              <FriendModal
+                type="request"
+                show={showModal}
+                handleClose={handleCloseModal}
+                name={user.name}
+                friend_address={user.address}
               />
               <DeclineButton
                 handleUserReject={() => {

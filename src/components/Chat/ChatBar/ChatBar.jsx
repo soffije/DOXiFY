@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Tab, Tabs } from 'react-bootstrap'
 
-import { ChatContext } from '../Chat'
+import { WebSocketContext } from '../../../api/WebSocketProvider'
 import ChatHeader from './ChatHeader/ChatHeader'
 import PendingList from './PendingList/PendingList'
 import FriendsList from './FriendsList/FriendsList'
@@ -27,7 +27,7 @@ function ChatBar() {
   const address = useSelector(getUserAddress)
   const searchQuery = useSelector(getFriendsSearchQuery)
 
-  const { contract } = useContext(ChatContext)
+  const { contract } = useContext(WebSocketContext)
 
   const onFormControlChange = (event) =>
     dispatch(setFriendSearchQuery(event.target.value))

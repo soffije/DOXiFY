@@ -1,25 +1,31 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 
-import { ChatContext } from '../Chat'
+import { WebSocketContext } from '../../../api/WebSocketProvider'
 import ChatMessages from './ChatMessages'
+import Loader from '../../Loader/Loader'
 
 import {
   getSelectedAccount,
+  getSendigMessageLoading,
   sendUserMessage,
 } from '../../../features/chat/chatSlice'
+
 import { getUserAddress } from '../../../features/user/userSlice'
+import { getUser } from '../../../api/indexDB'
 
 function ChatBody() {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
   const selectedUserAddress = useSelector(getSelectedAccount)
+  const sendingButtonLoadig = useSelector(getSendigMessageLoading)
 
-  const { web3, contract } = useContext(ChatContext)
+  const { web3, contract } = useContext(WebSocketContext)
 
   const [userMessage, setUserMessage] = useState('')
+  const [selectedUserName, setSelectedUserName] = useState('')
 
   function handleInputChange(e) {
     setUserMessage(e.target.value)
@@ -39,29 +45,44 @@ function ChatBody() {
     setUserMessage('')
   }
 
+  useEffect(() => {
+    const getSavedFriend = async () => {
+      const savedFriend = await getUser(selectedUserAddress)
+      setSelectedUserName(savedFriend.name)
+    }
+
+    getSavedFriend()
+  })
+
   return (
     <div className="col-8 d-flex flex-column py-3">
       {selectedUserAddress && (
         <>
-          <h6 className="text-center mb-0">
-            {selectedUserAddress.slice(0, 5)}...{selectedUserAddress.slice(-4)}
-          </h6>{' '}
+          {selectedUserName !== 'Unknown' ? (
+            <h6 className="text-center mb-0">{selectedUserName}</h6>
+          ) : (
+            <h6 className="text-center mb-0">
+              {selectedUserAddress.slice(0, 5)}...
+              {selectedUserAddress.slice(-4)}
+            </h6>
+          )}
           <hr />
           <ChatMessages />
           <div className="d-flex flex-row gap-2">
             <Form.Control
               type="text"
+              as="textarea"
+              rows={1}
+              maxLength="4096"
               placeholder="Enter message"
               value={userMessage}
               onChange={handleInputChange}
             />
-            <Button
-              variant="primary"
-              className="float-right"
+            <Loader
+              userLoading={sendingButtonLoadig}
               onClick={sendMessage}
-            >
-              Send
-            </Button>
+              buttonText="Send"
+            ></Loader>
           </div>
         </>
       )}
