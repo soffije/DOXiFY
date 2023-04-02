@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Avatar from 'avataaars'
-import { Form, FloatingLabel, Row, Col } from 'react-bootstrap'
+import { Form, FloatingLabel, Row, Col, Accordion } from 'react-bootstrap'
 import './AvatarEditor.css'
 
 function AvatarComponent({ avatarOptions, setAvatarOptions }) {
@@ -166,203 +166,253 @@ function AvatarComponent({ avatarOptions, setAvatarOptions }) {
           {...avatarOptions}
         />
       </div>
-      <Form>
-        <Row>
-          <Col>
-            <FloatingLabel controlId="hairType" label="Hair Type">
-              <Form.Select
-                value={avatarOptions.topType}
-                onChange={(e) => handleChange('topType', e.target.value)}
-              >
-                {hairTypes.map((hairType) => (
-                  <option key={hairType} value={hairType}>
-                    {hairType}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
+      <Accordion className="my-3 w-100">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>Customize avatar</Accordion.Header>
+          <Accordion.Body>
+            <Form>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="hairType"
+                    label="Hair Type"
+                  >
+                    <Form.Select
+                      value={avatarOptions.topType}
+                      onChange={(e) => handleChange('topType', e.target.value)}
+                    >
+                      {hairTypes.map((hairType) => (
+                        <option key={hairType} value={hairType}>
+                          {hairType}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
 
-          <Col>
-            <FloatingLabel controlId="hairColor" label="Hair Color">
-              <Form.Select
-                value={avatarOptions.hairColor}
-                onChange={(e) => handleChange('hairColor', e.target.value)}
-              >
-                {hairColors.map((hairColor) => (
-                  <option key={hairColor} value={hairColor}>
-                    {hairColor}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
-        </Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="hairColor"
+                    label="Hair Color"
+                  >
+                    <Form.Select
+                      value={avatarOptions.hairColor}
+                      onChange={(e) =>
+                        handleChange('hairColor', e.target.value)
+                      }
+                    >
+                      {hairColors.map((hairColor) => (
+                        <option key={hairColor} value={hairColor}>
+                          {hairColor}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
+              </Row>
 
-        <Row>
-          <Col>
-            {' '}
-            <FloatingLabel
-              controlId="accessoriesType"
-              label="Accessories Types"
-            >
-              <Form.Select
-                value={avatarOptions.accessoriesType}
-                onChange={(e) =>
-                  handleChange('accessoriesType', e.target.value)
-                }
-              >
-                {accessoriesTypes.map((accessoriesType) => (
-                  <option key={accessoriesType} value={accessoriesType}>
-                    {accessoriesType}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="accessoriesType"
+                    label="Accessories Types"
+                  >
+                    <Form.Select
+                      value={avatarOptions.accessoriesType}
+                      onChange={(e) =>
+                        handleChange('accessoriesType', e.target.value)
+                      }
+                    >
+                      {accessoriesTypes.map((accessoriesType) => (
+                        <option key={accessoriesType} value={accessoriesType}>
+                          {accessoriesType}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
 
-          <Col>
-            {' '}
-            <FloatingLabel controlId="facialHairType" label="Facial Hair Types">
-              <Form.Select
-                value={avatarOptions.facialHairType}
-                onChange={(e) => handleChange('facialHairType', e.target.value)}
-              >
-                {facialHairTypes.map((facialHairType) => (
-                  <option key={facialHairType} value={facialHairType}>
-                    {facialHairType}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
-        </Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="facialHairType"
+                    label="Facial Hair Types"
+                  >
+                    <Form.Select
+                      value={avatarOptions.facialHairType}
+                      onChange={(e) =>
+                        handleChange('facialHairType', e.target.value)
+                      }
+                    >
+                      {facialHairTypes.map((facialHairType) => (
+                        <option key={facialHairType} value={facialHairType}>
+                          {facialHairType}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
+              </Row>
 
-        <Row>
-          <Col>
-            {' '}
-            <FloatingLabel
-              controlId="facialHairColor"
-              label="Facial Hair Colors"
-            >
-              <Form.Select
-                value={avatarOptions.facialHairColor}
-                onChange={(e) =>
-                  handleChange('facialHairColor', e.target.value)
-                }
-              >
-                {facialHairColors.map((facialHairColor) => (
-                  <option key={facialHairColor} value={facialHairColor}>
-                    {facialHairColor}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="facialHairColor"
+                    label="Facial Hair Colors"
+                  >
+                    <Form.Select
+                      value={avatarOptions.facialHairColor}
+                      onChange={(e) =>
+                        handleChange('facialHairColor', e.target.value)
+                      }
+                    >
+                      {facialHairColors.map((facialHairColor) => (
+                        <option key={facialHairColor} value={facialHairColor}>
+                          {facialHairColor}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
 
-          <Col>
-            {' '}
-            <FloatingLabel controlId="clotheColor" label="Clothe Colors">
-              <Form.Select
-                value={avatarOptions.clotheColor}
-                onChange={(e) => handleChange('clotheColor', e.target.value)}
-              >
-                {clotheColors.map((clotheColor) => (
-                  <option key={clotheColor} value={clotheColor}>
-                    {clotheColor}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
-        </Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="clotheColor"
+                    label="Clothe Colors"
+                  >
+                    <Form.Select
+                      value={avatarOptions.clotheColor}
+                      onChange={(e) =>
+                        handleChange('clotheColor', e.target.value)
+                      }
+                    >
+                      {clotheColors.map((clotheColor) => (
+                        <option key={clotheColor} value={clotheColor}>
+                          {clotheColor}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
+              </Row>
 
-        <Row>
-          <Col>
-            {' '}
-            <FloatingLabel controlId="clotheType" label="Clothe Types">
-              <Form.Select
-                value={avatarOptions.clotheType}
-                onChange={(e) => handleChange('clotheType', e.target.value)}
-              >
-                {clotheTypes.map((clotheType) => (
-                  <option key={clotheType} value={clotheType}>
-                    {clotheType}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="clotheType"
+                    label="Clothe Types"
+                  >
+                    <Form.Select
+                      value={avatarOptions.clotheType}
+                      onChange={(e) =>
+                        handleChange('clotheType', e.target.value)
+                      }
+                    >
+                      {clotheTypes.map((clotheType) => (
+                        <option key={clotheType} value={clotheType}>
+                          {clotheType}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
 
-          <Col>
-            {' '}
-            <FloatingLabel controlId="eyeType" label="Eye Types">
-              <Form.Select
-                value={avatarOptions.eyeType}
-                onChange={(e) => handleChange('eyeType', e.target.value)}
-              >
-                {eyeTypes.map((eyeType) => (
-                  <option key={eyeType} value={eyeType}>
-                    {eyeType}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
-        </Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="eyeType"
+                    label="Eye Types"
+                  >
+                    <Form.Select
+                      value={avatarOptions.eyeType}
+                      onChange={(e) => handleChange('eyeType', e.target.value)}
+                    >
+                      {eyeTypes.map((eyeType) => (
+                        <option key={eyeType} value={eyeType}>
+                          {eyeType}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
+              </Row>
 
-        <Row>
-          <Col>
-            {' '}
-            <FloatingLabel controlId="eyebrowType" label="Eyebrow Types">
-              <Form.Select
-                value={avatarOptions.eyebrowType}
-                onChange={(e) => handleChange('eyebrowType', e.target.value)}
-              >
-                {eyebrowTypes.map((eyebrowType) => (
-                  <option key={eyebrowType} value={eyebrowType}>
-                    {eyebrowType}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="eyebrowType"
+                    label="Eyebrow Types"
+                  >
+                    <Form.Select
+                      value={avatarOptions.eyebrowType}
+                      onChange={(e) =>
+                        handleChange('eyebrowType', e.target.value)
+                      }
+                    >
+                      {eyebrowTypes.map((eyebrowType) => (
+                        <option key={eyebrowType} value={eyebrowType}>
+                          {eyebrowType}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
 
-          <Col>
-            {' '}
-            <FloatingLabel controlId="mouthType" label="Mouth Types">
-              <Form.Select
-                value={avatarOptions.mouthType}
-                onChange={(e) => handleChange('mouthType', e.target.value)}
-              >
-                {mouthTypes.map((mouthType) => (
-                  <option key={mouthType} value={mouthType}>
-                    {mouthType}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
-        </Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="mouthType"
+                    label="Mouth Types"
+                  >
+                    <Form.Select
+                      value={avatarOptions.mouthType}
+                      onChange={(e) =>
+                        handleChange('mouthType', e.target.value)
+                      }
+                    >
+                      {mouthTypes.map((mouthType) => (
+                        <option key={mouthType} value={mouthType}>
+                          {mouthType}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
+              </Row>
 
-        <Row>
-          <Col>
-            {' '}
-            <FloatingLabel controlId="skinColor" label="Skin Colors">
-              <Form.Select
-                value={avatarOptions.skinColor}
-                onChange={(e) => handleChange('skinColor', e.target.value)}
-              >
-                {skinColors.map((skinColor) => (
-                  <option key={skinColor} value={skinColor}>
-                    {skinColor}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Col>
-        </Row>
-      </Form>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    className="form-label-avatar"
+                    controlId="skinColor"
+                    label="Skin Colors"
+                  >
+                    <Form.Select
+                      value={avatarOptions.skinColor}
+                      onChange={(e) =>
+                        handleChange('skinColor', e.target.value)
+                      }
+                    >
+                      {skinColors.map((skinColor) => (
+                        <option key={skinColor} value={skinColor}>
+                          {skinColor}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
+              </Row>
+            </Form>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </div>
   )
 }

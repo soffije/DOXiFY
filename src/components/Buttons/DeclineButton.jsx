@@ -6,8 +6,8 @@ const DeclineButton = ({ handleUserReject }) => {
     <button className="btn-decline decline-button" onClick={handleUserReject}>
       <span className="icon-container">
         <svg
-          width="3rem"
-          height="3rem"
+          width="2rem"
+          height="2rem"
           viewBox="0 0 48 48"
           xmlns="http://www.w3.org/2000/svg"
         >

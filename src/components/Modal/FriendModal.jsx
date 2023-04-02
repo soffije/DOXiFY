@@ -9,13 +9,7 @@ import { addUser } from '../../api/indexDB'
 
 import AvatarComponent from '../AvatarComponent/AvatarComponent'
 
-function FriendModal({
-  type = 'add',
-  show,
-  handleClose,
-  userAction,
-  friend_address = null,
-}) {
+function FriendModal({ type, show, handleClose, friend_address = null }) {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
   const { web3, contract } = useContext(WebSocketContext)
@@ -89,15 +83,15 @@ function FriendModal({
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal size="lg" fullscreen="md-down" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Friend</Modal.Title>
         </Modal.Header>
-        <AvatarComponent
-          avatarOptions={avatarOptions}
-          setAvatarOptions={setAvatarOptions}
-        />
         <Modal.Body>
+          <AvatarComponent
+            avatarOptions={avatarOptions}
+            setAvatarOptions={setAvatarOptions}
+          />
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
@@ -122,7 +116,6 @@ function FriendModal({
                 variant="secondary"
                 onClick={() => {
                   handleClose()
-                  userAction()
                 }}
               >
                 Close
