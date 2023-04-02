@@ -33,11 +33,13 @@ function UserRequest({ user, userType = 'request', handleUserReject }) {
           )}
         </div>
         {userType === 'request' ? (
-          <DeclineButton
-            handleUserReject={() => {
-              handleUserReject(user.address)
-            }}
-          />
+          <div className="d-flex  btn-container">
+            <DeclineButton
+              handleUserReject={() => {
+                handleUserReject(user.address)
+              }}
+            />
+          </div>
         ) : (
           <>
             <div className="d-flex mx-2 btn-container d-flex justify-content-end">
