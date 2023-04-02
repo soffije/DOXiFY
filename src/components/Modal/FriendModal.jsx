@@ -7,6 +7,8 @@ import { addFriend } from '../../features/chat/chatSlice'
 import { getUserAddress } from '../../features/user/userSlice'
 import { addUser } from '../../api/indexDB'
 
+import AvatarComponent from '../AvatarComponent/AvatarComponent'
+
 function FriendModal({
   type = 'add',
   show,
@@ -73,7 +75,7 @@ function FriendModal({
         <Modal.Header closeButton>
           <Modal.Title>Friend</Modal.Title>
         </Modal.Header>
-
+        <AvatarComponent />
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
