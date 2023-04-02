@@ -19,23 +19,25 @@ function User({ user, handleUserClick }) {
           handleUserClick(user.address)
         }}
       >
-        <div className="avatar me-3">
+        <div className="avatar flex-shrink-0 me-3">
           <Avatar
             style={{ borderRadius: '50%' }}
             className="mx-auto d-block mb-3"
             {...user.avatarOptions}
           />
         </div>
-        <div className="pt-2">
-          {user.name ? (
-            <p className="fw-bold mb-0">{user.name}</p>
-          ) : (
-            <p className="fw-bold mb-0">
-              {user.address.slice(0, 5)}...{user.address.slice(-4)}
-            </p>
-          )}
+        <div className="d-flex flex-grow-1">
+          <div className="name pt-2">
+            {user.name ? (
+              <p className="fw-bold mb-0">{user.name}</p>
+            ) : (
+              <p className="fw-bold mb-0">
+                {user.address.slice(0, 5)}...{user.address.slice(-4)}
+              </p>
+            )}
+          </div>
         </div>
-        <div className="user-unread-badge d-flex justify-content-end">
+        <div className="user-unread-badge">
           {user.numberOfUnreadMessages !== 0 ? (
             <span className="badge bg-primary">
               {user.numberOfUnreadMessages}
