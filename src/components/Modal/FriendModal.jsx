@@ -99,15 +99,15 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
 
   return (
     <>
-
       <Modal
+        size="lg"
+        fullscreen="md-down"
         show={show}
         onHide={() => {
           handleClose()
           resetForm()
         }}
       >
-
         <Modal.Header closeButton>
           <Modal.Title>Friend</Modal.Title>
         </Modal.Header>
@@ -139,7 +139,7 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
               <Button
                 variant="secondary"
                 onClick={() => {
-                  handleClose()  
+                  handleClose()
                   resetForm()
                 }}
               >
