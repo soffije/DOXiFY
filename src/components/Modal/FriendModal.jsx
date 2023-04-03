@@ -21,7 +21,7 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
     topType: 'ShortHairDreads01',
     accessoriesType: 'Round',
     hairColor: 'BrownDark',
-    facialHairType: 'BeardMajestic',
+    facialHairType: 'Blank',
     facialHairColor: 'BrownDark',
     clotheType: 'Hoodie',
     clotheColor: 'Black',
@@ -30,7 +30,23 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
     mouthType: 'Smile',
     skinColor: 'Light',
   })
-
+  const resetForm = () => {
+    setFriendName('')
+    setFriendAddress('')
+    setAvatarOptions({
+      topType: 'ShortHairDreads01',
+      accessoriesType: 'Round',
+      hairColor: 'BrownDark',
+      facialHairType: 'Blank',
+      facialHairColor: 'BrownDark',
+      clotheType: 'Hoodie',
+      clotheColor: 'Black',
+      eyeType: 'Happy',
+      eyebrowType: 'UpDown',
+      mouthType: 'Smile',
+      skinColor: 'Light',
+    })
+  }
   const handleAddressChange = (event) => {
     const inputAddress = event.target.value
     setFriendAddress(inputAddress)
@@ -83,7 +99,15 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
 
   return (
     <>
-      <Modal size="lg" fullscreen="md-down" show={show} onHide={handleClose}>
+
+      <Modal
+        show={show}
+        onHide={() => {
+          handleClose()
+          resetForm()
+        }}
+      >
+
         <Modal.Header closeButton>
           <Modal.Title>Friend</Modal.Title>
         </Modal.Header>
@@ -115,7 +139,8 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
               <Button
                 variant="secondary"
                 onClick={() => {
-                  handleClose()
+                  handleClose()  
+                  resetForm()
                 }}
               >
                 Close
