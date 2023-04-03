@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
 }
 
 .avatar {
@@ -16,7 +15,8 @@
   overflow: hidden;
 }
 
-.avatar img {
+.avatar svg {
+  margin-top: 8px;
   max-width: 100%;
   height: auto;
 }

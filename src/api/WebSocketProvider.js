@@ -30,13 +30,12 @@ function WebSocketProvider({ Chat }) {
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    dispatch(subscribeUser({ web3, contract, address }))
     if (isConnected) return
 
     client.onopen = () => {
       setIsConnected(true)
 
-      // dispatch(subscribeUser({ web3, contract, address }))
+      dispatch(subscribeUser({ web3, contract, address }))
 
       contract.events
         .MessageSent({
