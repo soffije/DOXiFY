@@ -306,6 +306,10 @@ function AboutUs() {
               </defs>
             </svg>
             <h5 className="text-center pt-3">Artem Burakov</h5>
+
+            <small className="text-center">
+              Former Co-Founder & CEO @ Allscreen (acquired)
+            </small>
           </div>
           <div className="col-auto d-flex flex-column justify-content-center shadow pb-5 bg-white rounded">
             <svg
@@ -519,6 +523,10 @@ function AboutUs() {
               />
             </svg>
             <h5 className="text-center pt-3">Sofiia Kireieva</h5>
+
+            <small className="text-center">
+              Former Co-Founder & CEO @ Allscreen (acquired)
+            </small>
           </div>
           <div className="col-auto d-flex flex-column justify-content-center shadow pb-5 bg-white rounded">
             <svg
@@ -707,6 +715,10 @@ function AboutUs() {
               </defs>
             </svg>
             <h5 className="text-center pt-3">Oleksandr Davydenko</h5>
+
+            <small className="text-center">
+              Former Co-Founder & CEO @ Allscreen (acquired)
+            </small>
           </div>
         </div>
       </section>
