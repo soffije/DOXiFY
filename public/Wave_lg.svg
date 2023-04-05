@@ -5,9 +5,9 @@
 <style type="text/css">
 	.st0{fill:url(#SVGID_1_);}
 </style>
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-0.5" y1="204.9874" x2="1366" y2="204.9874">
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="564.7626" x2="1366" y2="564.7626" gradientTransform="matrix(1 0 0 -1 0 770)">
 	<stop  offset="0" style="stop-color:#A02B85"/>
 	<stop  offset="1" style="stop-color:#4B5FA5"/>
 </linearGradient>
-<path class="st0" d="M1366,317V-0.5H-0.5L0,399c0,0,270,41,565-32c270.16-66.85,303.84,40.69,582-19"/>
+<path class="st0" d="M1366,317V0H0v399c0,0,270,41,565-32c270.2-66.9,303.8,40.7,582-19"/>
 </svg>

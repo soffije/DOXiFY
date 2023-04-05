@@ -2,14 +2,16 @@ import React from 'react'
 
 import formatMessageDate from '../../../helpers/formatMessageDate'
 
+import './ChatMessage.css'
+
 function ChatMessage({ address, message }) {
   return (
     <div
       className={`mb-2 ${
         message.sender.toLowerCase() === address
-          ? 'align-items-end'
+          ? 'align-items-end own-message'
           : 'align-items-start'
-      } d-flex flex-column`}
+      } d-flex flex-column `}
     >
       <div
         className={`${

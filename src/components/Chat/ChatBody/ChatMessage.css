@@ -1,0 +1,4 @@
+.own-message::selection {
+  background-color: #c2e6fd;
+  color: #0d6efd;
+}
