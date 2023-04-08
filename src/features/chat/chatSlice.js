@@ -85,10 +85,19 @@ export const fetchMessages = createAsyncThunk(
       const response = await Promise.all(promises)
       const retrievedHashes = response.map((item) => item.data)
       const result = selectedAccountMessages.map((item, index) => {
-        return {
-          ...item,
-          fileHash: retrievedHashes[index].message,
-        }
+        const newItem = {}
+        for (const key in item)
+          if (
+            key !== '0' &&
+            key !== '1' &&
+            key !== '2' &&
+            key !== '3' &&
+            key !== '4'
+          )
+            newItem[key] = item[key]
+
+        newItem.fileHash = retrievedHashes[index].message
+        return newItem
       })
 
       return { result }
