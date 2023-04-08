@@ -14,23 +14,21 @@ import {
   getUserAddress,
   isUserConnected,
 } from '../../../features/user/userSlice'
-import {
-  fetchFriends,
-  fetchPendings,
-  fetchRequests,
-  getFriendsSearchQuery,
-  setFriendSearchQuery,
-} from '../../../features/chat/chatSlice'
+import { fetchFriends } from '../../../features/chat/friendsSlice'
+import { fetchRequests } from '../../../features/chat/requestsSlice'
+import { fetchPendings } from '../../../features/chat/pendingsSlice'
+import { getSearchQuery } from '../../../features/chat/profileSlice'
+import { setSearchQuery } from '../../../features/chat/profileSlice'
 
 function ChatBar() {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
-  const searchQuery = useSelector(getFriendsSearchQuery)
+  const searchQuery = useSelector(getSearchQuery)
 
   const { contract } = useContext(WebSocketContext)
 
   const onFormControlChange = (event) =>
-    dispatch(setFriendSearchQuery(event.target.value))
+    dispatch(setSearchQuery(event.target.value))
 
   useEffect(() => {
     if (!address && !isUserConnected) return

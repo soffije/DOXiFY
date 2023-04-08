@@ -6,19 +6,19 @@ import { FRIEND_SEARCH_PARAM } from '../../../../app/constants'
 
 import {
   getFriends,
-  getFriendsSearchQuery,
   resetNumberOfUnreadMessages,
-  setSelectedAccount,
-} from '../../../../features/chat/chatSlice'
+} from '../../../../features/chat/friendsSlice'
+import { getSearchQuery } from '../../../../features/chat/profileSlice'
+import { setSelectedAccount } from '../../../../features/chat/chatSlice'
 
 function Friends() {
   const dispatch = useDispatch()
   const friends = useSelector(getFriends)
-  const friendsSearchQuery = useSelector(getFriendsSearchQuery)
+  const friendsSearchQuery = useSelector(getSearchQuery)
 
-  const handleUserClick = (userAddress) => {
-    dispatch(setSelectedAccount(userAddress))
-    dispatch(resetNumberOfUnreadMessages(userAddress))
+  const handleUserClick = (user) => {
+    dispatch(setSelectedAccount(user))
+    dispatch(resetNumberOfUnreadMessages(user.address))
   }
 
   const friendsArray = useMemo(
@@ -38,7 +38,11 @@ function Friends() {
     <div className="friends-container">
       <ul className="list-unstyled mb-0">
         {friendsArray?.map((user, index) => (
-          <User key={index} user={user} handleUserClick={handleUserClick} />
+          <User
+            key={index}
+            user={user}
+            handleUserClick={() => handleUserClick(user)}
+          />
         ))}
       </ul>
     </div>

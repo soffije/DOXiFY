@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { WebSocketContext } from '../../../../api/WebSocketProvider'
 import UserRequest from '../User/UserRequest'
 
+import {
+  getRequests,
+  rejectRequest,
+} from '../../../../features/chat/requestsSlice'
 import { getUserAddress } from '../../../../features/user/userSlice'
-import { getRequests, rejectRequest } from '../../../../features/chat/chatSlice'
 
 function RequestsList() {
   const dispatch = useDispatch()

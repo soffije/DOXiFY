@@ -3,40 +3,37 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import './ChatMessages.css'
 
-import { WebSocketContext } from '../../../api/WebSocketProvider'
 import ChatMessage from './ChatMessage'
+import { WebSocketContext } from '../../../api/WebSocketProvider'
 
 import {
-  fetchSelectedAccountMessages,
-  getSelectedAccount,
+  fetchMessages,
+  getSelectedAccountAddress,
   getSelectedAccountMessages,
 } from '../../../features/chat/chatSlice'
 import { getUserAddress } from '../../../features/user/userSlice'
 
 function ChatMessages() {
   const dispatch = useDispatch()
-  const address = useSelector(getUserAddress)
-  const selectedUserAddress = useSelector(getSelectedAccount)
-  const selectedAccountMessages = useSelector(getSelectedAccountMessages)
-
-  const { web3, contract } = useContext(WebSocketContext)
-
   const messagesEndRef = useRef(null)
+  const address = useSelector(getUserAddress)
+  const { web3, contract } = useContext(WebSocketContext)
+  const selectedUserAddress = useSelector(getSelectedAccountAddress)
+  const selectedAccountMessages = useSelector(getSelectedAccountMessages)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   useEffect(() => {
-    if (selectedUserAddress) {
+    if (selectedUserAddress)
       dispatch(
-        fetchSelectedAccountMessages({
+        fetchMessages({
           contract,
           address,
           selectedUserAddress,
         })
       )
-    }
   }, [selectedUserAddress])
 
   useEffect(() => {

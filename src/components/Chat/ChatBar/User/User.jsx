@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 
 import './User.css'
 import Avatar from 'avataaars'
-
-import { getSelectedAccount } from '../../../../features/chat/chatSlice'
+import { getSelectedAccountAddress } from '../../../../features/chat/chatSlice'
 
 function User({ user, handleUserClick }) {
-  const selectedUser = useSelector(getSelectedAccount)
+  const selectedUser = useSelector(getSelectedAccountAddress)
 
   return (
     <li className="py-1">
