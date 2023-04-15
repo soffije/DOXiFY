@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { WebSocketContext } from '../../api/WebSocketProvider'
 import { Button, Form, Modal } from 'react-bootstrap'
-import { addFriend } from '../../features/chat/chatSlice'
-import { getUserAddress } from '../../features/user/userSlice'
-import { addUser } from '../../api/indexDB'
 
+import { addUser } from '../../api/indexDB'
+import { WebSocketContext } from '../../api/WebSocketProvider'
 import AvatarComponent from '../AvatarComponent/AvatarComponent'
+
+import { addFriend } from '../../features/chat/profileSlice'
+import { getUserAddress } from '../../features/user/userSlice'
 
 function FriendModal({ type, show, handleClose, friend_address = null }) {
   const dispatch = useDispatch()
@@ -30,6 +31,7 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
     mouthType: 'Smile',
     skinColor: 'Light',
   })
+
   const resetForm = () => {
     setFriendName('')
     setFriendAddress('')
@@ -47,6 +49,7 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
       skinColor: 'Light',
     })
   }
+
   const handleAddressChange = (event) => {
     const inputAddress = event.target.value
     setFriendAddress(inputAddress)
@@ -98,61 +101,59 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
   }
 
   return (
-    <>
-      <Modal
-        size="lg"
-        fullscreen="md-down"
-        show={show}
-        onHide={() => {
-          handleClose()
-          resetForm()
-        }}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Friend</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AvatarComponent
-            avatarOptions={avatarOptions}
-            setAvatarOptions={setAvatarOptions}
-          />
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                placeholder="Enter Name"
-                value={friendName}
-                onChange={handleNameChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                placeholder="Enter Address"
-                value={friend_address}
-                onChange={handleAddressChange}
-                readOnly={type === 'request' ? true : false}
-              />
-            </Form.Group>
+    <Modal
+      size="lg"
+      fullscreen="md-down"
+      show={show}
+      onHide={() => {
+        handleClose()
+        resetForm()
+      }}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Friend</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <AvatarComponent
+          avatarOptions={avatarOptions}
+          setAvatarOptions={setAvatarOptions}
+        />
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              placeholder="Enter Name"
+              value={friendName}
+              onChange={handleNameChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              placeholder="Enter Address"
+              value={friend_address}
+              onChange={handleAddressChange}
+              readOnly={type === 'request' ? true : false}
+            />
+          </Form.Group>
 
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  handleClose()
-                  resetForm()
-                }}
-              >
-                Close
-              </Button>
-              <Button variant="primary" type="submit">
-                Add
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                handleClose()
+                resetForm()
+              }}
+            >
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Add
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal.Body>
+    </Modal>
   )
 }
 

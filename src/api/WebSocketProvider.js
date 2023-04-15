@@ -1,16 +1,16 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import Web3 from 'web3'
+import { useSelector, useDispatch } from 'react-redux'
 import { w3cwebsocket as W3CWebSocket } from 'websocket'
 
 import abi from '../app/abi'
 
 import {
-  handleIncomingMessageEvent,
-  subscribeUser,
   handleIncomingFriendRequestEvent,
+  handleIncomingMessageEvent,
   handleRejectingFriendRequestEvent,
-} from '../features/chat/chatSlice'
+  subscribeUser,
+} from '../features/chat/profileSlice'
 import { getUserAddress } from '../features/user/userSlice'
 
 const web3 = new Web3(

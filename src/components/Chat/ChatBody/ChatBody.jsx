@@ -3,38 +3,36 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Form } from 'react-bootstrap'
 
-import { WebSocketContext } from '../../../api/WebSocketProvider'
-import ChatMessages from './ChatMessages'
 import Loader from '../../Loader/Loader'
+import ChatMessages from './ChatMessages'
+import { getUser } from '../../../api/indexDB'
+import { WebSocketContext } from '../../../api/WebSocketProvider'
 
 import {
-  getSelectedAccount,
-  getSendigMessageLoading,
-  sendUserMessage,
+  getSelectedAccountAddress,
+  getSendingMessageLoading,
 } from '../../../features/chat/chatSlice'
-
+import { sendMessage } from '../../../features/chat/chatSlice'
 import { getUserAddress } from '../../../features/user/userSlice'
-import { getUser } from '../../../api/indexDB'
 
 function ChatBody() {
   const dispatch = useDispatch()
   const address = useSelector(getUserAddress)
-  const selectedUserAddress = useSelector(getSelectedAccount)
-  const sendingButtonLoadig = useSelector(getSendigMessageLoading)
-
   const { web3, contract } = useContext(WebSocketContext)
+  const selectedUserAddress = useSelector(getSelectedAccountAddress)
+  const sendingButtonLoading = useSelector(getSendingMessageLoading)
 
   const [userMessage, setUserMessage] = useState('')
-  const [selectedUserName, setSelectedUserName] = useState('')
 
   function handleInputChange(e) {
     setUserMessage(e.target.value)
   }
 
-  const sendMessage = async () => {
+  const onSendMessageClick = async () => {
     if (!userMessage) return
+
     await dispatch(
-      sendUserMessage({
+      sendMessage({
         web3,
         contract,
         address,
@@ -47,19 +45,19 @@ function ChatBody() {
 
   useEffect(() => {
     const getSavedFriend = async () => {
-      const savedFriend = await getUser(selectedUserAddress)
-      setSelectedUserName(savedFriend.name)
+      if (!selectedUserAddress?.address) return
+      await getUser(selectedUserAddress.address)
     }
 
     getSavedFriend()
-  })
+  }, [])
 
   return (
     <div className="col-8 d-flex flex-column py-3">
       {selectedUserAddress && (
         <>
-          {selectedUserName !== 'Unknown' ? (
-            <h6 className="text-center mb-0">{selectedUserName}</h6>
+          {selectedUserAddress.name !== 'Unknown' ? (
+            <h6 className="text-center mb-0">{selectedUserAddress.name}</h6>
           ) : (
             <h6 className="text-center mb-0">
               {selectedUserAddress.slice(0, 5)}...
@@ -79,8 +77,8 @@ function ChatBody() {
               onChange={handleInputChange}
             />
             <Loader
-              userLoading={sendingButtonLoadig}
-              onClick={sendMessage}
+              userLoading={sendingButtonLoading}
+              onClick={onSendMessageClick}
               buttonText="Send"
             ></Loader>
           </div>

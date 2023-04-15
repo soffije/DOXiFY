@@ -7,7 +7,7 @@ import UserRequest from '../User/UserRequest'
 import {
   getPendings,
   rejectPendings,
-} from '../../../../features/chat/chatSlice'
+} from '../../../../features/chat/pendingsSlice'
 import { getUserAddress } from '../../../../features/user/userSlice'
 
 function PendingList() {
