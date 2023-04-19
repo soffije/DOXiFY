@@ -1,5 +1,5 @@
 import Dexie from 'dexie'
-import avatarSettingsObj from '../utils/defoultAvatarSetting'
+import avatarSettings from '../utils/defaultAvatarSetting'
 
 const DB_NAME = 'Doxify-database'
 const DB_VERSION = 1
@@ -9,15 +9,13 @@ class FriendsDB extends Dexie {
     super(DB_NAME)
     this.version(DB_VERSION).stores({
       friends:
-        '&address, name, lastMessage, numberOfUnreadMessages, avatarSettingsObj',
+        '&address, name, lastMessage, numberOfUnreadMessages, avatarSettings',
     })
   }
 
   async getAllFriends() {
     try {
-      const friends = await this.table('friends').toArray()
-      console.log(friends)
-      return friends
+      return await this.table('friends').toArray()
     } catch (error) {
       console.error('Error getting friends from IndexedDB', error)
       throw error
@@ -27,14 +25,14 @@ class FriendsDB extends Dexie {
   async getFriend(address) {
     try {
       const friend = await this.table('friends').get(address.toLowerCase())
-      if (!friend) {
+      if (!friend)
         return {
           name: 'Unknown',
           lastMessage: '',
           numberOfUnreadMessages: 0,
-          avatarSettingsObj,
+          avatarSettings,
         }
-      }
+
       return friend
     } catch (error) {
       console.error('Error getting friend from IndexedDB', error)

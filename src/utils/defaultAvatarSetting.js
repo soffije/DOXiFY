@@ -1,4 +1,4 @@
-const avatarSettingsObj = {
+const avatarSettings = {
   topType: 'ShortHairDreads01',
   accessoriesType: 'Round',
   hairColor: 'BrownDark',
@@ -11,4 +11,4 @@ const avatarSettingsObj = {
   mouthType: 'Smile',
   skinColor: 'Light',
 }
-export default avatarSettingsObj
+export default avatarSettings

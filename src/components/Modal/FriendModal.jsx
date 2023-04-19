@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, Form, Modal } from 'react-bootstrap'
 
 import { db } from '../../api/indexDB'
+import avatarSettings from '../../utils/defaultAvatarSetting'
 import { WebSocketContext } from '../../api/WebSocketProvider'
 import AvatarComponent from '../AvatarComponent/AvatarComponent'
 
@@ -18,36 +19,12 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
   const [friendName, setFriendName] = useState('')
   const [friendAddress, setFriendAddress] = useState('')
 
-  const [avatarOptions, setAvatarOptions] = useState({
-    topType: 'ShortHairDreads01',
-    accessoriesType: 'Round',
-    hairColor: 'BrownDark',
-    facialHairType: 'Blank',
-    facialHairColor: 'BrownDark',
-    clotheType: 'Hoodie',
-    clotheColor: 'Black',
-    eyeType: 'Happy',
-    eyebrowType: 'UpDown',
-    mouthType: 'Smile',
-    skinColor: 'Light',
-  })
+  const [avatarOptions, setAvatarOptions] = useState(avatarSettings)
 
   const resetForm = () => {
     setFriendName('')
     setFriendAddress('')
-    setAvatarOptions({
-      topType: 'ShortHairDreads01',
-      accessoriesType: 'Round',
-      hairColor: 'BrownDark',
-      facialHairType: 'Blank',
-      facialHairColor: 'BrownDark',
-      clotheType: 'Hoodie',
-      clotheColor: 'Black',
-      eyeType: 'Happy',
-      eyebrowType: 'UpDown',
-      mouthType: 'Smile',
-      skinColor: 'Light',
-    })
+    setAvatarOptions(avatarSettings)
   }
 
   const handleAddressChange = (event) => {
