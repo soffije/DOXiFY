@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { getAllUsers } from '../../api/indexDB'
+import { db } from '../../api/indexDB'
 
 const initialState = {
   friends: null,
@@ -16,7 +16,7 @@ export const fetchFriends = createAsyncThunk(
         .getFriends()
         .call({ from: address })
 
-      const savedFriends = await getAllUsers()
+      const savedFriends = await db.getAllFriends()
 
       const result = friends.map((item) => {
         const matchingItem = savedFriends.find(

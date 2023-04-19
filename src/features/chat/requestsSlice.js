@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { getAllUsers, deleteUser } from '../../api/indexDB'
+import { db } from '../../api/indexDB'
 
 const initialState = {
   requests: null,
@@ -16,7 +16,7 @@ export const fetchRequests = createAsyncThunk(
         .getRequests()
         .call({ from: address })
 
-      const savedFriends = await getAllUsers()
+      const savedFriends = await db.getAllFriends()
 
       const result = requests?.map((item) => {
         const matchingItem = savedFriends.find(
@@ -67,7 +67,7 @@ export const rejectRequest = createAsyncThunk(
                 element.address.toLowerCase() ===
                 args.friendAddress.toLowerCase()
               ) {
-                deleteUser(args.friendAddress.toLowerCase())
+                db.deleteFriend(args.friendAddress.toLowerCase())
                 dispatch(removeUserFromRequests(args.friendAddress))
               }
             })

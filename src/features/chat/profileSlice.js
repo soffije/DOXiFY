@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { deleteUser, getUser } from '../../api/indexDB'
+import { db } from '../../api/indexDB'
 
 import {
   addIncomingFriendRequest,
@@ -158,7 +158,7 @@ export const handleIncomingFriendRequestEvent = createAsyncThunk(
     try {
       const state = getState()
       const requester = args.returnValues.requester.toLowerCase()
-      const savedFriend = await getUser(requester)
+      const savedFriend = await db.getFriend(requester)
 
       const requests = state.requests.requests
       if (requests.length > 0)
@@ -198,7 +198,7 @@ export const handleRejectingFriendRequestEvent = createAsyncThunk(
       if (indexRequests > -1) dispatch(removeUserFromRequests(requester))
       if (indexPendings > -1) dispatch(removeUserFromPendings(requester))
 
-      deleteUser(requester)
+      db.deleteFriend(requester)
     } catch (error) {
       console.log(error)
       return { error: error.message }

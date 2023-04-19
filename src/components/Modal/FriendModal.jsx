@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Button, Form, Modal } from 'react-bootstrap'
 
-import { addUser } from '../../api/indexDB'
+import { db } from '../../api/indexDB'
 import { WebSocketContext } from '../../api/WebSocketProvider'
 import AvatarComponent from '../AvatarComponent/AvatarComponent'
 
@@ -74,7 +74,7 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
       }
       await dispatch(addFriend(args))
       handleClose()
-      await addUser({
+      await db.addFriend({
         address: friendAddress,
         name: friendName,
         avatarOptions: avatarOptions,
@@ -92,7 +92,7 @@ function FriendModal({ type, show, handleClose, friend_address = null }) {
       }
       await dispatch(addFriend(args))
       handleClose()
-      await addUser({
+      await db.addFriend({
         address: friend_address,
         name: friendName,
         avatarOptions: avatarOptions,

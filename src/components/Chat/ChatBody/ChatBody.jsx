@@ -5,7 +5,7 @@ import { Form } from 'react-bootstrap'
 
 import Loader from '../../Loader/Loader'
 import ChatMessages from './ChatMessages'
-import { getUser } from '../../../api/indexDB'
+import { db } from '../../../api/indexDB'
 import { WebSocketContext } from '../../../api/WebSocketProvider'
 
 import {
@@ -46,7 +46,7 @@ function ChatBody() {
   useEffect(() => {
     const getSavedFriend = async () => {
       if (!selectedUserAddress?.address) return
-      await getUser(selectedUserAddress.address)
+      await db.getFriend(selectedUserAddress.address)
     }
 
     getSavedFriend()
