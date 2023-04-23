@@ -1,6 +1,6 @@
 import React from 'react'
 
-import formatMessageDate from '../../../helpers/formatMessageDate'
+import formatMessageDate from '../../../utils/formatMessageDate'
 
 import './ChatMessage.css'
 

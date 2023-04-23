@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { db } from '../../api/indexDB'
+import { db } from '../../app/indexDB'
 
 const initialState = {
   friends: null,

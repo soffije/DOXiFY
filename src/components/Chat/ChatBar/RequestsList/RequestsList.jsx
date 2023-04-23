@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { WebSocketContext } from '../../../../api/WebSocketProvider'
+import { WebSocketContext } from '../../../../app/WebSocketProvider'
 import UserRequest from '../User/UserRequest'
 
 import {

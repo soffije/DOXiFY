@@ -6,7 +6,7 @@ import { Container } from 'react-bootstrap'
 
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
-import isMetaMaskInstalled from '../helpers/isMetaMaskInstalled'
+import isMetaMaskInstalled from '../utils/isMetaMaskInstalled'
 import { isUserConnected } from '../features/user/userSlice'
 
 export default function AppLayout() {

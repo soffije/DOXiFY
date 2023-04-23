@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Tab, Tabs } from 'react-bootstrap'
 
-import { WebSocketContext } from '../../../api/WebSocketProvider'
+import { WebSocketContext } from '../../../app/WebSocketProvider'
 import ChatHeader from './ChatHeader/ChatHeader'
 import PendingList from './PendingList/PendingList'
 import FriendsList from './FriendsList/FriendsList'

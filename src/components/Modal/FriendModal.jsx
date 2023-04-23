@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Button, Form, Modal } from 'react-bootstrap'
 
-import { db } from '../../api/indexDB'
+import { db } from '../../app/indexDB'
 import avatarSettings from '../../utils/defaultAvatarSetting'
-import { WebSocketContext } from '../../api/WebSocketProvider'
+import { WebSocketContext } from '../../app/WebSocketProvider'
 import AvatarComponent from '../AvatarComponent/AvatarComponent'
 
 import { addFriend } from '../../features/chat/profileSlice'

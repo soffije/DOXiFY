@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { WebSocketContext } from '../../api/WebSocketProvider'
+import { WebSocketContext } from '../../app/WebSocketProvider'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { addFriend } from '../../features/chat/chatSlice'
 import { getUserAddress } from '../../features/user/userSlice'
-import { addUser } from '../../api/indexDB'
+import { addUser } from '../../app/indexDB'
 
 function AddFriendModal() {
   const dispatch = useDispatch()
