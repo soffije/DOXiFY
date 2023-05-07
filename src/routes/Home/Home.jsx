@@ -5,7 +5,7 @@ import './Home.css'
 
 import Chat from '../../components/Chat/Chat'
 import Loading from '../../components/Loading/Loading'
-import WebSocketProvider from '../../api/WebSocketProvider'
+import WebSocketProvider from '../../app/WebSocketProvider'
 import LandingPage from '../../components/LandingPage/LandingPage'
 
 import { getUserAddress, getUserLoading } from '../../features/user/userSlice'

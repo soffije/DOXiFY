@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { db } from '../../api/indexDB'
+import { db } from '../../app/indexDB'
 
 import {
   addIncomingFriendRequest,

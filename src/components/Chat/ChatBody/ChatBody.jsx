@@ -5,8 +5,8 @@ import { Form } from 'react-bootstrap'
 
 import Loader from '../../Loader/Loader'
 import ChatMessages from './ChatMessages'
-import { db } from '../../../api/indexDB'
-import { WebSocketContext } from '../../../api/WebSocketProvider'
+import { db } from '../../../app/indexDB'
+import { WebSocketContext } from '../../../app/WebSocketProvider'
 
 import {
   getSelectedAccountAddress,

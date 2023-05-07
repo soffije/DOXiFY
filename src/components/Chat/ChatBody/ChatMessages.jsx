@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import './ChatMessages.css'
 
 import ChatMessage from './ChatMessage'
-import { WebSocketContext } from '../../../api/WebSocketProvider'
+import { WebSocketContext } from '../../../app/WebSocketProvider'
 
 import {
   fetchMessages,
