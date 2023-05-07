@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import forge from 'node-forge'
+import cryptoRandomString from 'crypto-random-string'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -6,6 +8,7 @@ import './Login.css'
 
 import Loader from '../../components/Loader/Loader'
 import MetaMaskLogo from '../../components/MetaMaskLogo/MetaMaskLogo'
+import { generateKeysAndSaveToLocalStorage } from '../../utils/rsa'
 
 import {
   connectUser,
@@ -27,6 +30,11 @@ function Login() {
   }, [isUserConnected])
 
   const onConnectButtonClick = () => {
+    // const entropy = cryptoRandomString({ length: 64 }) // Generate a 256-bit (32-byte) random string
+    const { publicKey } = generateKeysAndSaveToLocalStorage()
+
+    console.log('===', publicKey)
+
     dispatch(connectUser())
   }
 
