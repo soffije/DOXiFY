@@ -100,7 +100,13 @@ const abi = [
     type: 'function',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'pubkey',
+        type: 'string',
+      },
+    ],
     name: 'addMe',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -235,6 +241,11 @@ const abi = [
             internalType: 'address[]',
             name: 'pending',
             type: 'address[]',
+          },
+          {
+            internalType: 'string',
+            name: 'public_key',
+            type: 'string',
           },
         ],
         internalType: 'struct Chat.User',

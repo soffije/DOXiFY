@@ -7,6 +7,7 @@ contract Chat {
         address[] friends;
         address[] requests;
         address[] pending;
+        string public_key;
     }
     
     struct Message {
@@ -31,13 +32,14 @@ contract Chat {
     
 
 
-    function addMe() public {
+    function addMe(string memory pubkey) public {
        if(users[msg.sender].selfAddress == address(0)){
 
         User memory newUser;
         address sender = msg.sender;
-
+        
         newUser.selfAddress = sender;
+        newUser.public_key=pubkey;
         users[sender] = newUser;
         usersArray.push(sender);
        }
