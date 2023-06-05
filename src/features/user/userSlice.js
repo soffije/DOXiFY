@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import isMetaMaskInstalled from '../../helpers/isMetaMaskInstalled'
+import isMetaMaskInstalled from '../../utils/isMetaMaskInstalled'
 import { generateKeysAndSaveToLocalStorage } from '../../utils/rsa'
 
 const initialState = {
