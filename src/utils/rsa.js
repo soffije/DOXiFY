@@ -1,31 +1,53 @@
 import forge from 'node-forge'
+import secureLocalStorage from 'react-secure-storage'
+
+const rsa = forge.pki.rsa
 
 const generateKeys = () => {
-  const {
-    rsa: { generateKeyPair },
-    privateKeyToPem,
-    publicKeyToPem,
-  } = forge.pki
-
-  const { privateKey, publicKey } = generateKeyPair({ bits: 2048, workers: 2 })
+  const { publicKey, privateKey } = rsa.generateKeyPair({
+    bits: 2048,
+    e: 0x10001,
+  })
 
   return {
-    privateKey,
     publicKey,
+    privateKey,
   }
 }
 
 export const generateKeysAndSaveToLocalStorage = () => {
-  const { privateKey, publicKey } = generateKeys()
+  const publicKeyExists = secureLocalStorage.getItem('publicKey') !== null
+  const privateKeyExists = secureLocalStorage.getItem('privateKey') !== null
 
-  localStorage.setItem('privateKey', privateKey)
-  localStorage.setItem('publicKey', publicKey)
+  if (publicKeyExists && privateKeyExists) return
+
+  const { privateKey, publicKey } = generateKeys()
+  const privateKeyPem = forge.pki.privateKeyToPem(privateKey)
+  const publicKeyPem = forge.pki.publicKeyToPem(publicKey)
+  secureLocalStorage.setItem('publicKey', publicKeyPem)
+  secureLocalStorage.setItem('privateKey', privateKeyPem)
 }
 
-export const getPublicKey = () => localStorage.getItem('publicKey')
+export const getPublicKey = () => {
+  const publicKeyPem = secureLocalStorage.getItem('publicKey')
+  return forge.pki.publicKeyFromPem(publicKeyPem)
+}
 
-export const getPrivateKey = () => localStorage.getItem('privateKey')
+export const getPrivateKey = () => {
+  const privateKeyPem = secureLocalStorage.getItem('privateKey')
+  return forge.pki.privateKeyFromPem(privateKeyPem)
+}
 
-export const encript = (msg) => getPublicKey().encypt(msg)
+export const encrypt = (msg) => {
+  const encrypted = getPublicKey().encrypt(
+    forge.util.encodeUtf8(msg),
+    'RSA-OAEP'
+  )
+  return forge.util.encode64(encrypted)
+}
 
-export const decript = (msg) => getPrivateKey().decript(msg)
+export const decrypt = (msg) => {
+  const encrypted = forge.util.decode64(msg)
+  const decrypted = getPrivateKey().decrypt(encrypted, 'RSA-OAEP')
+  return forge.util.decodeUtf8(decrypted)
+}

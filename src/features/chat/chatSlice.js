@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { encript } from '../../utils/rsa'
+
+import { encrypt } from '../../utils/rsa'
 
 const initialState = {
   selectedAccount: null,
@@ -17,26 +18,21 @@ export const sendMessage = createAsyncThunk(
     { dispatch }
   ) => {
     try {
-      console.log(encript(userMessage))
-
       const request = await axios({
         method: 'post',
         url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
         // prettier-ignore
-        data: { "message": encript(userMessage) },
+        data: { "message": encrypt(userMessage) },
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
           pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
           'Content-Type': 'application/json',
         },
       })
-
       const gasPrice = await web3.eth.getGasPrice()
-
       const functionAbi = contract.methods
         .sendMessage(selectedUserAddress.address, 'text', request.data.IpfsHash)
         .encodeABI()
-
       await window.ethereum
         .request({
           method: 'eth_sendTransaction',

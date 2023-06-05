@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import isMetaMaskInstalled from '../../utils/isMetaMaskInstalled'
+import isMetaMaskInstalled from '../../helpers/isMetaMaskInstalled'
+import { generateKeysAndSaveToLocalStorage } from '../../utils/rsa'
 
 const initialState = {
   address: null,
@@ -18,6 +19,8 @@ export const connectUser = createAsyncThunk('user/connect', async () => {
       method: 'eth_requestAccounts',
     })
     const address = accounts[0]
+
+    generateKeysAndSaveToLocalStorage()
 
     return { address }
   } catch (error) {
@@ -38,6 +41,7 @@ export const isUserConnected = createAsyncThunk(
         })
         if (accounts.length > 0) {
           const address = accounts[0]
+          generateKeysAndSaveToLocalStorage()
           return { isConnected: true, address }
         }
       }
