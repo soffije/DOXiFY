@@ -1,10 +1,11 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { encrypt } from '../../utils/rsa'
+import { encrypt, decrypt } from '../../utils/rsa'
 
 const initialState = {
   selectedAccount: null,
+  selectedAccountPublicKey: null,
   messages: [],
   messagesLoading: 'idle',
   sendingMessageLoading: 'idle',
@@ -14,21 +15,32 @@ const initialState = {
 export const sendMessage = createAsyncThunk(
   'chat/sendUserMessage',
   async (
-    { web3, contract, address, selectedUserAddress, userMessage },
+    {
+      web3,
+      contract,
+      address,
+      selectedUserAddress,
+      selectedUserPublicKey,
+      userMessage,
+    },
     { dispatch }
   ) => {
     try {
+      const message = await encrypt(selectedUserPublicKey, userMessage)
+
       const request = await axios({
         method: 'post',
         url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
         // prettier-ignore
-        data: { "message": encrypt(userMessage) },
+        data: { "message": message },
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
           pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
           'Content-Type': 'application/json',
         },
       })
+      console.log(request.data.IpfsHash)
+
       const gasPrice = await web3.eth.getGasPrice()
       const functionAbi = contract.methods
         .sendMessage(selectedUserAddress.address, 'text', request.data.IpfsHash)
@@ -95,7 +107,11 @@ export const fetchMessages = createAsyncThunk(
           )
             newItem[key] = item[key]
 
-        newItem.fileHash = retrievedHashes[index].message
+        console.log('message to decrypt: ', retrievedHashes[index].message)
+        const decryptedMessage = decrypt(retrievedHashes[index].message)
+        console.log(decryptedMessage)
+
+        newItem.fileHash = decryptedMessage
         return newItem
       })
 
@@ -113,6 +129,9 @@ export const chatSlice = createSlice({
   reducers: {
     setSelectedAccount: (state, action) => {
       state.selectedAccount = action.payload
+    },
+    setSelectedAccountPublicKey: (state, action) => {
+      state.selectedAccountPublicKey = action.payload
     },
     addIncomingMessage: (state, action) => {
       state.messages.push(action.payload)
@@ -147,10 +166,16 @@ export const chatSlice = createSlice({
 })
 
 export const getSelectedAccountAddress = (state) => state.chat.selectedAccount
+export const getSelectedAccountPublicKey = (state) =>
+  state.chat.selectedAccountPublicKey
 export const getSelectedAccountMessages = (state) => state.chat.messages
 export const getSendingMessageLoading = (state) =>
   state.chat.sendingMessageLoading
 
-export const { setSelectedAccount, addIncomingMessage } = chatSlice.actions
+export const {
+  setSelectedAccount,
+  setSelectedAccountPublicKey,
+  addIncomingMessage,
+} = chatSlice.actions
 
 export default chatSlice.reducer

@@ -9,7 +9,10 @@ import {
   resetNumberOfUnreadMessages,
 } from '../../../../features/chat/friendsSlice'
 import { getSearchQuery } from '../../../../features/chat/profileSlice'
-import { setSelectedAccount } from '../../../../features/chat/chatSlice'
+import {
+  setSelectedAccount,
+  setSelectedAccountPublicKey,
+} from '../../../../features/chat/chatSlice'
 
 function Friends() {
   const dispatch = useDispatch()
@@ -18,6 +21,7 @@ function Friends() {
 
   const handleUserClick = (user) => {
     dispatch(setSelectedAccount(user))
+    dispatch(setSelectedAccountPublicKey(user.publicKey))
     dispatch(resetNumberOfUnreadMessages(user.address))
   }
 

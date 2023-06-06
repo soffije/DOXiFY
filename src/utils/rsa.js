@@ -1,4 +1,5 @@
 import forge from 'node-forge'
+import { Buffer } from 'buffer'
 import secureLocalStorage from 'react-secure-storage'
 
 const rsa = forge.pki.rsa
@@ -38,11 +39,33 @@ export const getPrivateKey = () => {
   return forge.pki.privateKeyFromPem(privateKeyPem)
 }
 
-export const encrypt = (msg) => {
-  const encrypted = getPublicKey().encrypt(
-    forge.util.encodeUtf8(msg),
-    'RSA-OAEP'
-  )
+export const getPublicKeyForSmartContract = () => {
+  const publicKeyPem = secureLocalStorage.getItem('publicKey')
+  const publicKey = forge.pki.publicKeyFromPem(publicKeyPem)
+
+  const publicKeyDer = forge.asn1
+    .toDer(forge.pki.publicKeyToAsn1(publicKey))
+    .getBytes()
+  const publicKeyBytes = Array.from(publicKeyDer, (byte) => byte.charCodeAt(0))
+  const publicKeyHex = publicKeyBytes
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('')
+
+  return `0x${publicKeyHex}`
+}
+
+export const encrypt = (publicKeyFromContract, msg) => {
+  console.log('Message: ', msg)
+
+  const publicKeyDer = forge.util.hexToBytes(publicKeyFromContract.slice(2))
+  const publicKeyAsn1 = forge.asn1.fromDer(publicKeyDer)
+  const publicKey = forge.pki.publicKeyFromAsn1(publicKeyAsn1)
+
+  const encrypted = publicKey.encrypt(msg, 'RSA-OAEP')
+  console.log('Encrypted message: ', encrypted)
+
+  const decrypted = getPrivateKey().decrypt(encrypted, 'RSA-OAEP')
+  console.log('Decrypted message: ', decrypted)
   return forge.util.encode64(encrypted)
 }
 

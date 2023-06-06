@@ -10,6 +10,7 @@ import { WebSocketContext } from '../../../app/WebSocketProvider'
 
 import {
   getSelectedAccountAddress,
+  getSelectedAccountPublicKey,
   getSendingMessageLoading,
 } from '../../../features/chat/chatSlice'
 import { sendMessage } from '../../../features/chat/chatSlice'
@@ -20,6 +21,7 @@ function ChatBody() {
   const address = useSelector(getUserAddress)
   const { web3, contract } = useContext(WebSocketContext)
   const selectedUserAddress = useSelector(getSelectedAccountAddress)
+  const selectedUserPublicKey = useSelector(getSelectedAccountPublicKey)
   const sendingButtonLoading = useSelector(getSendingMessageLoading)
 
   const [userMessage, setUserMessage] = useState('')
@@ -37,6 +39,7 @@ function ChatBody() {
         contract,
         address,
         selectedUserAddress,
+        selectedUserPublicKey,
         userMessage,
       })
     )

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 import { db } from '../../app/indexDB'
+import { getPublicKeyForSmartContract } from '../../utils/rsa'
 
 import {
   addIncomingFriendRequest,
@@ -32,7 +33,9 @@ export const subscribeUser = createAsyncThunk(
     try {
       const gasPrice = await web3.eth.getGasPrice()
 
-      const functionAbi = contract.methods.addMe().encodeABI()
+      const publicKey = getPublicKeyForSmartContract()
+
+      const functionAbi = contract.methods.addMe(publicKey).encodeABI()
       window.ethereum
         .request({
           method: 'eth_sendTransaction',
@@ -40,7 +43,7 @@ export const subscribeUser = createAsyncThunk(
             {
               from: address,
               to: process.env.REACT_APP_CONTRACT_ADDRESS,
-              gas: web3.utils.toHex(300000),
+              gas: web3.utils.toHex(15000000),
               gasPrice: web3.utils.toHex(gasPrice),
               data: functionAbi,
             },

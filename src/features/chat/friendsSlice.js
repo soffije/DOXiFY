@@ -16,14 +16,18 @@ export const fetchFriends = createAsyncThunk(
         .getFriends()
         .call({ from: address })
 
+      console.log(friends)
+
       const savedFriends = await db.getAllFriends()
 
       const result = friends.map((item) => {
         const matchingItem = savedFriends.find(
-          (firstItem) => firstItem.address.toLowerCase() === item.toLowerCase()
+          (firstItem) =>
+            firstItem.address.toLowerCase() === item.friendAddress.toLowerCase()
         )
         return {
-          address: item.toLowerCase(),
+          address: item.friendAddress.toLowerCase(),
+          publicKey: item.public_key,
           name: matchingItem?.name,
           avatarOptions: matchingItem?.avatarOptions,
           numberOfUnreadMessages: 0,

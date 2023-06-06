@@ -102,9 +102,9 @@ const abi = [
   {
     inputs: [
       {
-        internalType: 'string',
+        internalType: 'bytes',
         name: 'pubkey',
-        type: 'string',
+        type: 'bytes',
       },
     ],
     name: 'addMe',
@@ -117,9 +117,21 @@ const abi = [
     name: 'getFriends',
     outputs: [
       {
-        internalType: 'address[]',
+        components: [
+          {
+            internalType: 'address',
+            name: 'friendAddress',
+            type: 'address',
+          },
+          {
+            internalType: 'bytes',
+            name: 'public_key',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct Chat.Friend[]',
         name: '',
-        type: 'address[]',
+        type: 'tuple[]',
       },
     ],
     stateMutability: 'view',
@@ -243,9 +255,9 @@ const abi = [
             type: 'address[]',
           },
           {
-            internalType: 'string',
+            internalType: 'bytes',
             name: 'public_key',
-            type: 'string',
+            type: 'bytes',
           },
         ],
         internalType: 'struct Chat.User',
@@ -404,4 +416,5 @@ const abi = [
     type: 'function',
   },
 ]
+
 export default abi
