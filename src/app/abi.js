@@ -1,5 +1,31 @@
 const abi = [
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'friendAddress',
+        type: 'address',
+      },
+    ],
+    name: 'addFriend',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'pubkey',
+        type: 'string',
+      },
+    ],
+    name: 'addMe',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -94,7 +120,7 @@ const abi = [
         type: 'address',
       },
     ],
-    name: 'addFriend',
+    name: 'rejectPending',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -102,13 +128,69 @@ const abi = [
   {
     inputs: [
       {
-        internalType: 'bytes',
-        name: 'pubkey',
-        type: 'bytes',
+        internalType: 'address',
+        name: 'friendAddress',
+        type: 'address',
       },
     ],
-    name: 'addMe',
+    name: 'rejectRequest',
     outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: 'content',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'fileHash',
+        type: 'string',
+      },
+    ],
+    name: 'sendMessage',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'string',
+            name: 'content',
+            type: 'string',
+          },
+          {
+            internalType: 'address',
+            name: 'sender',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'recipient',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'timestamp',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'fileHash',
+            type: 'string',
+          },
+        ],
+        internalType: 'struct Chat.Message',
+        name: '',
+        type: 'tuple',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -124,9 +206,9 @@ const abi = [
             type: 'address',
           },
           {
-            internalType: 'bytes',
+            internalType: 'string',
             name: 'public_key',
-            type: 'bytes',
+            type: 'string',
           },
         ],
         internalType: 'struct Chat.Friend[]',
@@ -255,9 +337,9 @@ const abi = [
             type: 'address[]',
           },
           {
-            internalType: 'bytes',
+            internalType: 'string',
             name: 'public_key',
-            type: 'bytes',
+            type: 'string',
           },
         ],
         internalType: 'struct Chat.User',
@@ -285,88 +367,6 @@ const abi = [
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'friendAddress',
-        type: 'address',
-      },
-    ],
-    name: 'rejectPending',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'friendAddress',
-        type: 'address',
-      },
-    ],
-    name: 'rejectRequest',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'string',
-        name: 'content',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: 'fileHash',
-        type: 'string',
-      },
-    ],
-    name: 'sendMessage',
-    outputs: [
-      {
-        components: [
-          {
-            internalType: 'string',
-            name: 'content',
-            type: 'string',
-          },
-          {
-            internalType: 'address',
-            name: 'sender',
-            type: 'address',
-          },
-          {
-            internalType: 'address',
-            name: 'recipient',
-            type: 'address',
-          },
-          {
-            internalType: 'uint256',
-            name: 'timestamp',
-            type: 'uint256',
-          },
-          {
-            internalType: 'string',
-            name: 'fileHash',
-            type: 'string',
-          },
-        ],
-        internalType: 'struct Chat.Message',
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {

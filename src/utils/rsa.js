@@ -28,48 +28,14 @@ export const generateKeysAndSaveToLocalStorage = () => {
   secureLocalStorage.setItem('privateKey', privateKeyPem)
 }
 
-export const getPublicKey = () => {
-  const publicKeyPem = secureLocalStorage.getItem('publicKey')
-  return forge.pki.publicKeyFromPem(publicKeyPem)
-}
+export const getPublicKey = () => secureLocalStorage.getItem('publicKey')
 
 export const getPrivateKey = () => {
   const privateKeyPem = secureLocalStorage.getItem('privateKey')
   return forge.pki.privateKeyFromPem(privateKeyPem)
 }
 
-export const getPublicKeyForSmartContract = () => {
-  const publicKeyPem = secureLocalStorage.getItem('publicKey')
-  const publicKey = forge.pki.publicKeyFromPem(publicKeyPem)
+export const encrypt = (publicKeyFromContract, msg) =>
+  forge.pki.publicKeyFromPem(publicKeyFromContract).encrypt(msg, 'RSA-OAEP')
 
-  const publicKeyDer = forge.asn1
-    .toDer(forge.pki.publicKeyToAsn1(publicKey))
-    .getBytes()
-  const publicKeyBytes = Array.from(publicKeyDer, (byte) => byte.charCodeAt(0))
-  const publicKeyHex = publicKeyBytes
-    .map((byte) => byte.toString(16).padStart(2, '0'))
-    .join('')
-
-  return `0x${publicKeyHex}`
-}
-
-export const encrypt = (publicKeyFromContract, msg) => {
-  console.log('Message: ', msg)
-
-  const publicKeyDer = forge.util.hexToBytes(publicKeyFromContract.slice(2))
-  const publicKeyAsn1 = forge.asn1.fromDer(publicKeyDer)
-  const publicKey = forge.pki.publicKeyFromAsn1(publicKeyAsn1)
-
-  const encrypted = publicKey.encrypt(msg, 'RSA-OAEP')
-  console.log('Encrypted message: ', encrypted)
-
-  const decrypted = getPrivateKey().decrypt(encrypted, 'RSA-OAEP')
-  console.log('Decrypted message: ', decrypted)
-  return forge.util.encode64(encrypted)
-}
-
-export const decrypt = (msg) => {
-  const encrypted = forge.util.decode64(msg)
-  const decrypted = getPrivateKey().decrypt(encrypted, 'RSA-OAEP')
-  return forge.util.decodeUtf8(decrypted)
-}
+export const decrypt = (msg) => getPrivateKey().decrypt(msg, 'RSA-OAEP')

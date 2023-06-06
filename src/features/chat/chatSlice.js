@@ -39,7 +39,6 @@ export const sendMessage = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
-      console.log(request.data.IpfsHash)
 
       const gasPrice = await web3.eth.getGasPrice()
       const functionAbi = contract.methods
@@ -107,9 +106,7 @@ export const fetchMessages = createAsyncThunk(
           )
             newItem[key] = item[key]
 
-        console.log('message to decrypt: ', retrievedHashes[index].message)
         const decryptedMessage = decrypt(retrievedHashes[index].message)
-        console.log(decryptedMessage)
 
         newItem.fileHash = decryptedMessage
         return newItem

@@ -16,8 +16,6 @@ export const fetchFriends = createAsyncThunk(
         .getFriends()
         .call({ from: address })
 
-      console.log(friends)
-
       const savedFriends = await db.getAllFriends()
 
       const result = friends.map((item) => {

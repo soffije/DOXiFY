@@ -90,8 +90,6 @@ function ContactForm() {
     setFormErrors(errors)
     const isFormValid = Object.keys(errors).every((key) => errors[key] === '')
     if (isFormValid) {
-      console.log(formData)
-
       setShow(true)
       setVariant('success')
       setMessage('Form sended success!')

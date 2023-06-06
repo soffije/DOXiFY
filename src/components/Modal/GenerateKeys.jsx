@@ -23,7 +23,6 @@ function GenerateModal(props) {
     }
     setCurrentWords(selectedWords)
     setRemainingWords(remainingWords)
-    console.log(selectedWords)
   }
 
   const handleGenerateNewWords = () => {
@@ -38,8 +37,6 @@ function GenerateModal(props) {
       }
     }
     setNewWords(newWords)
-
-    console.log(newWords)
   }
 
   const handleCopyWords = () => {
