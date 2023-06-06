@@ -1,5 +1,4 @@
 import forge from 'node-forge'
-import { Buffer } from 'buffer'
 import secureLocalStorage from 'react-secure-storage'
 
 const rsa = forge.pki.rsa
