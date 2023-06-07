@@ -1,14 +1,12 @@
 .Toast {
-  top: -30px;
-  right: -175px;
+  margin-left: -8rem;
   position: absolute;
-  z-index: 9999;
+  min-width: 15rem;
 }
 
 @media (max-width: 576px) {
   .Toast {
     top: 70px;
-    right: 10px;
   }
 }
 .Toast.error {
