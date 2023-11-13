@@ -1,0 +1,14 @@
+.wave-container {
+  z-index: 0;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.wave-container-footer {
+  z-index: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}

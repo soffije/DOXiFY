@@ -1,0 +1,43 @@
+.home-image {
+  width: 100%;
+  height: auto;
+}
+.home-title {
+  font-size: 80px;
+}
+.feature-image {
+  display: block;
+  max-width: 250px;
+  max-height: 250px;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+.carousel-color {
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.carousel-item-container {
+  background-color: #fff;
+  border-radius: 10px;
+  margin-top: 5px;
+  padding: 20px;
+}
+.section-container {
+  min-height: 400px;
+}
+.us-image {
+  display: block;
+  max-width: 250px;
+  max-height: 250px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%);
+}
