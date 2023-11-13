@@ -1,4 +1,7 @@
 # DOXiFY
+![image](https://github.com/soffije/DOXiFY/assets/93443981/fff2b19e-e555-47da-98e7-8c79939d9c02)
+
+[Watch](https://drive.google.com/file/d/1gbfp0V-xgBa-L2UlfFsfV7myzXg4cBeb/view?usp=drive_link)
 
 ## Overview
 DOXiFY is a decentralized chat application leveraging Avalanche blockchain, EVM smart contracts, and the decentralized IPFS file system for secure, user-controlled communication. It aims to offer a platform free from central servers or third-party control, where messages are stored on a distributed network.
